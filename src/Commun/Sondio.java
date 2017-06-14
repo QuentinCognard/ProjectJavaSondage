@@ -24,7 +24,6 @@ public class Sondio extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		this.cont = this.getContentPane();
-		this.modelecommun = new ModeleCommun (this);
 		afficherConnexion();
 		this.setVisible(true);
 	}
@@ -32,6 +31,7 @@ public class Sondio extends JFrame {
 	public void afficherConnexion () {
 		this.cont.removeAll();
 		
+		this.modelecommun = new ModeleCommun (this);
 		this.modconnexion = new Connexion (this.modelecommun);
 		this.cont.add(modconnexion);
 		
