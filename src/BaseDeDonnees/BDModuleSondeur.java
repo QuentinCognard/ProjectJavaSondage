@@ -18,6 +18,25 @@ public class BDModuleSondeur {
 		
 		}
 	}
+
+	
+	
+	
+	public void insererReponse (Repondre r) {
+		try {
+			String requete = "INSERT INTO REPONDRE (idQ, numQ, idC, valeur) VALUES (?,?,?,?);";
+			PreparedStatement ps = this.connexion.mysql.prepareStatement(requete);
+			ps.setInt(1, r.getIdQuestionnaire());
+			ps.setInt(2, r.getNumQuestion());
+			ps.setString(3, String.valueOf(r.getIdCaracteristique()));
+			ps.setString(4, r.getValeur());
+			ps.executeUpdate();
+		}
+		
+		catch (SQLException e) {
+			
+		}
+	}
 	
 	public void questionnairePretPourAnalyste (int idQuestionnaire) {
 		try {

@@ -19,6 +19,10 @@ public class BDModuleConcepteur {
 		}
 	}
 	
+	
+	
+	
+	
 	public int maxIdentifiantQuestionnaire () {
 		try {
 	        String requete = "SELECT MAX(idQ) idMax FROM QUESTIONNAIRE;";
