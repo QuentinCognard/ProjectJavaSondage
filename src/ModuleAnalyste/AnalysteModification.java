@@ -33,7 +33,7 @@ import org.jfree.data.general.DefaultPieDataset;
 public class AnalysteModification extends JPanel {
 	
 	public AnalysteModification(Analyste ana){
-		Container cont = ana.getContentPane();
+		Container cont = ana;
 		cont.removeAll();
 		ana.afficherPanelDuHaut(cont);
 		MofifierPanelDuHaut(cont);

@@ -22,20 +22,15 @@ import javax.swing.table.DefaultTableModel;
 
 import Commun.Sondio;
 
-public class Analyste extends JFrame {
+public class Analyste extends JPanel {
 	
 	public Analyste () {
-		super("Module Analyste");
-		this.setSize(1000,800);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Container cont = this.getContentPane();
-		cont.setLayout(new BorderLayout());
-		afficherPanelDuHaut (cont);
-		afficherPanelCentre(cont);
-		afficherPanelGauche(cont);
-		afficherPanelDroit(cont);
-		new AnalysteModification(this);
-		this.setVisible(true);
+		this.setLayout(new BorderLayout());
+		afficherPanelDuHaut (this);
+		afficherPanelCentre(this);
+		afficherPanelGauche(this);
+		afficherPanelDroit(this);
+		//new AnalysteModification(this);
 	}
 	
 	public void afficherPanelDroit(Container cont){
@@ -110,9 +105,5 @@ public class Analyste extends JFrame {
 		JButton bValider = new JButton("VALIDER");
 		pValider.add(bValider);
 		
-	}
-	
-	public static void main (String [] args) {
-		Analyste a = new Analyste();
 	}
 }
