@@ -59,8 +59,6 @@ public class BDGeneral {
 	  }
   }
   
-  
-  
   public Client getClientDuQuestionnaireX (int idQuestionnaire) {
       try {
         String requete = "SELECT * FROM CLIENT WHERE numC = (SELECT numC FROM QUESTIONNAIRE WHERE idQ = "+idQuestionnaire+");";

@@ -19,6 +19,19 @@ public class BDModuleConcepteur {
 		}
 	}
 	
+	public int maxIdentifiantQuestionnaire () {
+		try {
+	        String requete = "SELECT MAX(idQ) idMax FROM QUESTIONNAIRE;";
+	        ResultSet rs = this.st.executeQuery(requete);
+	        rs.next();
+	        return rs.getInt("idMax");
+	      }
+		
+		catch (SQLException e) {
+	         return -1;
+	      }
+	}
+	
 	public void insererQuestionnaire (Questionnaire q) {
 		try {
 			String requete = "INSERT INTO QUESTIONNAIRE (idQ, Titre, Etat, numC, idU, idPan) VALUES (?,?,?,?,?,?);";
@@ -35,6 +48,34 @@ public class BDModuleConcepteur {
 		catch (SQLException e) {
       
 		}
+	}
+	
+	public void supprimerQuestionnaire (int identifiantQuestionnaire) {
+		try {
+	        String requete = "DELETE FROM QUESTIONNAIRE WHERE idQ = "+identifiantQuestionnaire+";";
+	        this.st.executeUpdate(requete);
+		}
+		
+		catch (SQLException e) {
+	        
+	    }
+	}
+	
+	
+	
+	
+	
+	public int maxIdentifiantClient () {
+		try {
+	        String requete = "SELECT MAX(numC) idMax FROM CLIENT;";
+	        ResultSet rs = this.st.executeQuery(requete);
+	        rs.next();
+	        return rs.getInt("idMax");
+	      }
+		
+		catch (SQLException e) {
+	         return -1;
+	      }
 	}
 	
 	public void insererClient (Client c) {
@@ -55,6 +96,51 @@ public class BDModuleConcepteur {
 		catch (SQLException e) {
 			
 		}
+	}
+
+	
+	
+	
+	
+	public int maxIdentifiantQuestion () {
+		try {
+	        String requete = "SELECT MAX(numQ) idMax FROM QUESTION;";
+	        ResultSet rs = this.st.executeQuery(requete);
+	        rs.next();
+	        return rs.getInt("idMax");
+	      }
+		
+		catch (SQLException e) {
+	         return -1;
+	      }
+	}
+	
+	public void insererQuestion (Question q) {
+		try {
+			String requete = "INSERT INTO QUESTION (idQ, numQ, texteQ, MaxVal, idT) VALUES (?,?,?,?,?);";
+			PreparedStatement ps = this.connexion.mysql.prepareStatement(requete);
+			ps.setInt(1, q.getIdQuestionnaire());
+			ps.setInt(2, q.getNumeroQuestion());
+			ps.setString(3, q.getTexteQuestion());
+			ps.setInt(4, q.getMaxValeur());
+			ps.setString(5, String.valueOf(q.getIdTypeQuestion()));
+			ps.executeUpdate();
+		}
+
+		catch (SQLException e) {
+
+		}
+	}
+
+	public void supprimerQuestion (int idQuestionnaire, int numeroQuestion) {
+		try {
+	        String requete = "DELETE FROM QUESTION WHERE idQ = "+idQuestionnaire+" AND numQ = "+numeroQuestion+";";
+	        this.st.executeUpdate(requete);
+		}
+		
+		catch (SQLException e) {
+	        
+	    }
 	}
 
 }

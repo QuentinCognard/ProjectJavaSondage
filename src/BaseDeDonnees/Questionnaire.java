@@ -1,7 +1,7 @@
 package BaseDeDonnees;
 
 public class Questionnaire {
-	private int numeroQuestionnaire;
+	private int idQuestionnaire;
 	private String titreQuestionnaire;
 	private char etatQuestionnaire;
 	private int numClient;
@@ -12,8 +12,8 @@ public class Questionnaire {
 	static char PRETPOURLESONDAGE = 'S';
 	static char PRETPOURANALYSTE = 'A';
 	
-	public Questionnaire (int nq, String tq, char eq, int nc, int iu, int ip) {
-		this.numeroQuestionnaire = nq;
+	public Questionnaire (int idq, String tq, char eq, int nc, int iu, int ip) {
+		this.idQuestionnaire = idq;
 		this.titreQuestionnaire = tq;
 		this.etatQuestionnaire = eq;
 		this.numClient = nc;
@@ -22,11 +22,11 @@ public class Questionnaire {
 	}
 
 	public int getNumeroQuestionnaire() {
-		return numeroQuestionnaire;
+		return idQuestionnaire;
 	}
 
 	public void setNumeroQuestionnaire(int numeroQuestionnaire) {
-		this.numeroQuestionnaire = numeroQuestionnaire;
+		this.idQuestionnaire = numeroQuestionnaire;
 	}
 
 	public String getTitreQuestionnaire() {

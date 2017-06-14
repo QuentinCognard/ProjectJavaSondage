@@ -1,34 +1,34 @@
 package BaseDeDonnees;
 
 public class Question {
-	private int idQuestion;
-	private int numeroQuestionnaire;
+	private int idQuestionnaire;
+	private int numeroQuestion;
 	private String texteQuestion;
 	private int maxValeur;
 	private char idTypeQuestion;
 	
 	public Question (int idq, int numq, String tq, int mv, char idtq) {
-		this.idQuestion = idq;
-		this.numeroQuestionnaire = numq;
+		this.idQuestionnaire = idq;
+		this.numeroQuestion = numq;
 		this.texteQuestion = tq;
 		this.maxValeur = mv;
 		this.idTypeQuestion = idtq;
 	}
 
-	public int getIdQuestion() {
-		return idQuestion;
+	public int getIdQuestionnaire() {
+		return idQuestionnaire;
 	}
 
-	public void setIdQuestion(int idQuestion) {
-		this.idQuestion = idQuestion;
+	public void setIdQuestionnaire(int idQuestionnaire) {
+		this.idQuestionnaire = idQuestionnaire;
 	}
 
-	public int getNumeroQuestionnaire() {
-		return numeroQuestionnaire;
+	public int getNumeroQuestion() {
+		return numeroQuestion;
 	}
 
-	public void setNumeroQuestionnaire(int numeroQuestionnaire) {
-		this.numeroQuestionnaire = numeroQuestionnaire;
+	public void setNumeroQuestion(int numeroQuestion) {
+		this.numeroQuestion = numeroQuestion;
 	}
 
 	public String getTexteQuestion() {
@@ -54,6 +54,8 @@ public class Question {
 	public void setIdTypeQuestion(char idTypeQuestion) {
 		this.idTypeQuestion = idTypeQuestion;
 	}
+
+	
 	
 	
 }

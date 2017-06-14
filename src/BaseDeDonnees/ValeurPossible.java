@@ -2,32 +2,32 @@ package BaseDeDonnees;
 
 public class ValeurPossible {
 	
-	private int idQuestion;
-	private int numeroQuestionnaire;
+	private int idQuestionnaire;
+	private int numeroQuestion;
 	private int idValeur;
 	private String valeur;
 	
 	public ValeurPossible (int idq, int numq, int idv, String v) {
-		this.idQuestion = idq;
-		this.numeroQuestionnaire = numq;
+		this.idQuestionnaire = idq;
+		this.numeroQuestion = numq;
 		this.idValeur = idv;
 		this.valeur = v;
 	}
 
-	public int getIdQuestion() {
-		return idQuestion;
+	public int getIdQuestionnaire() {
+		return idQuestionnaire;
 	}
 
-	public void setIdQuestion(int idQuestion) {
-		this.idQuestion = idQuestion;
+	public void setIdQuestionnaire(int idQuestionnaire) {
+		this.idQuestionnaire = idQuestionnaire;
 	}
 
-	public int getNumeroQuestionnaire() {
-		return numeroQuestionnaire;
+	public int getNumeroQuestion() {
+		return numeroQuestion;
 	}
 
-	public void setNumeroQuestionnaire(int numeroQuestionnaire) {
-		this.numeroQuestionnaire = numeroQuestionnaire;
+	public void setNumeroQuestion(int numeroQuestion) {
+		this.numeroQuestion = numeroQuestion;
 	}
 
 	public int getIdValeur() {
@@ -45,6 +45,8 @@ public class ValeurPossible {
 	public void setValeur(String valeur) {
 		this.valeur = valeur;
 	}
+
+	
 	
 	
 }
