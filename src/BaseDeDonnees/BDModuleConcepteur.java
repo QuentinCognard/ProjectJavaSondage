@@ -144,4 +144,17 @@ public class BDModuleConcepteur {
 	    }
 	}
 
+	
+	
+	
+	public void questionnairePretPourSondage (int idQuestionnaire) {
+		try {
+			String requete = "UPDATE QUESTIONNAIRE SET Etat = 'S' WHERE idQ = "+idQuestionnaire+";";
+			this.st.executeUpdate(requete);
+		}
+		
+		catch (SQLException e) {
+			
+		}
+	}
 }
