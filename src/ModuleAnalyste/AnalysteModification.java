@@ -26,19 +26,22 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
+import ModuleAnalyste.AnalysteController.ModifController;
 
 
 
 
-public class AnalysteModification extends JPanel {
+
+public class AnalysteModification {
+	
+	private ModifController mc;
 	
 	public AnalysteModification(Analyste ana){
-		Container cont = ana;
-		cont.removeAll();
-		ana.afficherPanelDuHaut(cont);
-		MofifierPanelDuHaut(cont);
-		afficherPanelCentre(cont);
-		afficherPanelBas(cont);
+		mc = new ModifController(ana);
+		ana.afficherPanelDuHaut();
+		MofifierPanelDuHaut(ana);
+		afficherPanelCentre(ana);
+		afficherPanelBas(ana);
 	}
 	
 	public void MofifierPanelDuHaut(Container cont){
@@ -55,9 +58,11 @@ public class AnalysteModification extends JPanel {
 		pGeneGauche.add(pBouttonModifSup,"South");
 		
 		JButton modif = new JButton("Modifier");
+		modif.addActionListener(mc);
 		pBouttonModifSup.add(modif);
 		
 		JButton supp = new JButton("Supprimer");
+		supp.addActionListener(mc);
 		pBouttonModifSup.add(supp);
 	}
 	
@@ -68,9 +73,11 @@ public class AnalysteModification extends JPanel {
 		pGeneDroit.add(pBouttonAnnuleSave,"South");
 		
 		JButton annule = new JButton("Annuler");
+		annule.addActionListener(mc);
 		pBouttonAnnuleSave.add(annule);
 		
 		JButton save = new JButton("Enregistrer");
+		save.addActionListener(mc);
 		pBouttonAnnuleSave.add(save);
 		
 		afficherPanelDeconnexion(pGeneDroit);
@@ -81,6 +88,7 @@ public class AnalysteModification extends JPanel {
 		pHaut.add(pRetour,"South");
 		
 		JButton retour = new JButton("<== Retour");
+		retour.addActionListener(mc);
 		pRetour.add(retour);
 	}
 	
@@ -89,6 +97,7 @@ public class AnalysteModification extends JPanel {
 		pGeneDroit.add(pDeconnexion,"East");
 		
 		JButton deco = new JButton("Se deconnecter");
+		deco.addActionListener(mc);
 		pDeconnexion.add(deco);
 	}
 	
@@ -121,6 +130,7 @@ public class AnalysteModification extends JPanel {
 		JPanel pPDF = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		panelDuBas.add(pPDF);
 		JButton bPDF = new JButton("Generer un PDF");
+		bPDF.addActionListener(mc);
 		pPDF.add(bPDF);
 	}
 	
@@ -128,7 +138,7 @@ public class AnalysteModification extends JPanel {
 		JPanel pResultats = new JPanel();
 		pResultats.setLayout(new BoxLayout(pResultats, BoxLayout.Y_AXIS));
 		jsp.setViewportView(pResultats);
-		for (int i = 0; i< 20; i++){ //TODO: ï¿½ modifier
+		for (int i = 0; i< 20; i++){ //TODO: à modifier
 				afficherQuestion(pResultats,i+1,"Quel est le plus grand con de tout les temps ?");
 				JPanel pvide = new JPanel();
 				pvide.setLayout(new BoxLayout(pvide, BoxLayout.Y_AXIS));

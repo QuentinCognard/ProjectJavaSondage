@@ -21,31 +21,49 @@ import javax.swing.ScrollPaneLayout;
 import javax.swing.table.DefaultTableModel;
 
 import Commun.Sondio;
+import ModuleAnalyste.AnalysteController.RechercherController;
+import ModuleAnalyste.AnalysteController.ValiderController;
 
 public class Analyste extends JPanel {
 	
+	private JTable tab;
+	private JTextField champRecherche;
+	
 	public Analyste () {
 		this.setLayout(new BorderLayout());
-		afficherPanelDuHaut (this);
-		afficherPanelCentre(this);
-		afficherPanelGauche(this);
-		afficherPanelDroit(this);
+		afficherPanelBase();
 		//new AnalysteModification(this);
 	}
 	
-	public void afficherPanelDroit(Container cont){
+	public JTable getTableau(){
+		return tab;
+	}
+	
+	public String getTexteRecherche(){
+		return champRecherche.getText();
+	}
+	
+	public void afficherPanelBase(){
+		this.removeAll();
+		afficherPanelDuHaut ();
+		afficherPanelCentre();
+		afficherPanelGauche();
+		afficherPanelDroit();
+	}
+	
+	public void afficherPanelDroit(){
 		JLabel l1 = new JLabel("                              ");
-		cont.add(l1, "East");
+		this.add(l1, "East");
 	}
 	
-	public void afficherPanelGauche(Container cont){
+	public void afficherPanelGauche(){
 		JLabel l2 = new JLabel("                              ");
-		cont.add(l2, "West");
+		this.add(l2, "West");
 	}
 	
-	public void afficherPanelDuHaut (Container cont) {
+	public void afficherPanelDuHaut () {
 		JPanel panelduhaut = new JPanel(new BorderLayout());
-		cont.add(panelduhaut, "North");
+		this.add(panelduhaut, "North");
 		
 		JPanel boiteImage = new JPanel ();
 		panelduhaut.add(boiteImage, "Center");
@@ -59,10 +77,10 @@ public class Analyste extends JPanel {
 			
 	}
 	
-	public void afficherPanelCentre(Container cont){
+	public void afficherPanelCentre(){
 		JPanel panelDuCentre = new JPanel();
 		panelDuCentre.setLayout(new BoxLayout(panelDuCentre,BoxLayout.Y_AXIS));
-		cont.add(panelDuCentre, "Center");
+		this.add(panelDuCentre, "Center");
 		
 		//TITRE
 		JPanel pTitre = new JPanel( new FlowLayout(FlowLayout.CENTER));
@@ -75,10 +93,11 @@ public class Analyste extends JPanel {
 		JPanel pRecherche = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		panelDuCentre.add(pRecherche);
 		
-		JTextField champRecherche = new JTextField(30);
+		champRecherche = new JTextField(30);
 		pRecherche.add(champRecherche);
 		
 		JButton bRecherche = new JButton("Rechercher");
+		bRecherche.addActionListener(new RechercherController(this));
 		pRecherche.add(bRecherche);
 		
 		//TABLEAU et VALIDATION
@@ -95,15 +114,22 @@ public class Analyste extends JPanel {
 		       return false;
 		    }
 		};
-		JTable tab = new JTable();
+		tab = new JTable();
 		tab.setModel(modele);
 		tab.setFont(new Font("Arial", Font.PLAIN, 17));
 		pTableau.setViewportView(tab);
 		
+		//validation
 		JPanel pValider = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		panelDuCentre.add(pValider);
 		JButton bValider = new JButton("VALIDER");
+		bValider.addActionListener(new ValiderController(this));
 		pValider.add(bValider);
 		
+	}
+	
+	public void afficherAnalysteModification(){
+		this.removeAll();
+		new AnalysteModification(this);
 	}
 }

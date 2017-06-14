@@ -24,7 +24,7 @@ public class Sondio extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		this.cont = this.getContentPane();
-		afficherConnexion();
+		afficherAnalyste();
 		this.setVisible(true);
 	}
 	
