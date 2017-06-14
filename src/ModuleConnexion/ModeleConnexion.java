@@ -2,16 +2,21 @@ package ModuleConnexion;
 
 import BaseDeDonnees.BDConnexionMySQL;
 import BaseDeDonnees.BDModuleConnexion;
+import Commun.ModeleCommun;
 
 public class ModeleConnexion {
 	
 	Connexion connexion;
+	
+	ModeleCommun modelecommun;
+	
 	BDConnexionMySQL bdconnexionsql;
 	BDModuleConnexion bdmoduleconnexion;
 	
 	ModeleConnexion (Connexion c) {
 		this.connexion = c;
-		this.bdconnexionsql = new BDConnexionMySQL ("localhost", "Sondio", "essai", "essai");
+		this.modelecommun = c.modelecommun;
+		this.bdconnexionsql = this.modelecommun.getBdConnexion();
 		this.bdmoduleconnexion = new BDModuleConnexion (this.bdconnexionsql);
 	}
 	

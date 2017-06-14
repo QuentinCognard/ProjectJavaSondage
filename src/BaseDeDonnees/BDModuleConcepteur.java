@@ -50,6 +50,7 @@ public class BDModuleConcepteur {
 		}
 	}
 	
+	// A REFAIRE
 	public void supprimerQuestionnaire (int identifiantQuestionnaire) {
 		try {
 	        String requete = "DELETE FROM QUESTIONNAIRE WHERE idQ = "+identifiantQuestionnaire+";";
