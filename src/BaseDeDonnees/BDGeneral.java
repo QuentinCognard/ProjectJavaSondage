@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 80fb324f205bfa9a992110759d85ceca811db55a
 package BaseDeDonnees;
 
 import java.sql.*;
@@ -117,7 +120,12 @@ public class BDGeneral {
 	  }
   }
   
-  
-  
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
+>>>>>>> 80fb324f205bfa9a992110759d85ceca811db55a
 }

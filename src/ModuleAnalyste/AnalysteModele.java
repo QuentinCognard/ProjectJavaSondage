@@ -11,15 +11,16 @@ import BaseDeDonnees.Questionnaire;
 public class AnalysteModele {
 	BDGeneral BDGen;
 	
-	public AnalysteModele(){
+	public AnalysteModele(BDGeneral bdgen){
 		/*TODO: recuperer la classe BD générale qui devra etre créer dans Sondio.java (avec BDConnexion)
 		 * et crer BDModuleAnalyste
 		 */
+		this.BDGen = bdgen;
 	}
 	
 	public ArrayList<Questionnaire> getQuestionnaireFini(){
-		//TODO: utiliser la méthode de la classe BDGeneral
-		return null;
+		System.out.println(BDGen.getListeQuestionnaire ('A'));
+		return BDGen.getListeQuestionnaire ('A');
 	}
 	
 	public ArrayList<Question> getListeQuestion(int idQuestionnaire){

@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/master
+>>>>>>> 80fb324f205bfa9a992110759d85ceca811db55a
 package BaseDeDonnees;
 
 import java.sql.*;
@@ -67,7 +74,7 @@ public class BDModuleConcepteur {
 	      }
 		
 		catch (SQLException e) {
-	         return -1;
+	         return 0;
 	      }
 	}
 	
@@ -95,16 +102,16 @@ public class BDModuleConcepteur {
 	
 	
 	
-	public int maxIdentifiantQuestion () {
+	public int maxIdentifiantQuestion (int identifiantQuestionnaire) {
 		try {
-	        String requete = "SELECT MAX(numQ) idMax FROM QUESTION;";
+	        String requete = "SELECT IFNULL(MAX(numQ),0) idMax FROM QUESTION WHERE idQ = "+identifiantQuestionnaire+";";
 	        ResultSet rs = this.st.executeQuery(requete);
 	        rs.next();
 	        return rs.getInt("idMax");
 	      }
 		
 		catch (SQLException e) {
-	         return -1;
+	         return 0;
 	      }
 	}
 	
@@ -149,4 +156,8 @@ public class BDModuleConcepteur {
 			
 		}
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 80fb324f205bfa9a992110759d85ceca811db55a

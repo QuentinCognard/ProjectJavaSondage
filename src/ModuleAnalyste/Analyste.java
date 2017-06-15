@@ -5,6 +5,8 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -20,6 +22,8 @@ import javax.swing.JViewport;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.table.DefaultTableModel;
 
+import BaseDeDonnees.Questionnaire;
+import Commun.ModeleCommun;
 import Commun.Sondio;
 import ModuleAnalyste.AnalysteController.RechercherController;
 import ModuleAnalyste.AnalysteController.ValiderController;
@@ -28,8 +32,10 @@ public class Analyste extends JPanel {
 	
 	private JTable tab;
 	private JTextField champRecherche;
+	private AnalysteModele anaMod;
 	
-	public Analyste () {
+	public Analyste (ModeleCommun modelecommun) {
+		anaMod = new AnalysteModele(modelecommun.getBdGeneral());
 		this.setLayout(new BorderLayout());
 		afficherPanelBase();
 		//new AnalysteModification(this);
@@ -105,8 +111,40 @@ public class Analyste extends JPanel {
 		pTableau.setLayout(new ScrollPaneLayout());
 		panelDuCentre.add(pTableau);
 		
-		String[] ColumnNames = new String[]{"ID", "NOM", "Prenom"};
-		String[][] values = new String[][]{{"001","Lee","Charles"},{"002","La Chouette","Jean-Charles"}};
+
+		try{
+			pTableau.setViewportView(creationTableau());
+		}
+		catch (TableauVideExeption e){
+			JPanel tabVide = new JPanel(new FlowLayout(FlowLayout.CENTER));
+			tabVide.add(new JLabel("Aucun élément trouvé"));
+			pTableau.setViewportView(tabVide);
+		}
+		
+		//validation
+		JPanel pValider = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		panelDuCentre.add(pValider);
+		JButton bValider = new JButton("VALIDER");
+		bValider.addActionListener(new ValiderController(this));
+		pValider.add(bValider);
+		
+	}
+	
+	public String[][] creationListeQuestionnaires(){
+		ArrayList<Questionnaire> listeQuestionnaire = anaMod.getQuestionnaireFini();
+		String[][] values = new String[listeQuestionnaire.size()][3];
+		for (int i = 0; i< listeQuestionnaire.size(); i++){
+				values[i][0] = listeQuestionnaire.get(i).getNumeroQuestionnaire() + "";
+				values[i][1] = listeQuestionnaire.get(i).getTitreQuestionnaire();
+				values[i][2] = listeQuestionnaire.get(i).getNumClient() + "";
+		}
+			
+		return values;
+	}
+	
+	public JTable creationTableau() throws TableauVideExeption{
+		String[] ColumnNames = new String[]{"ID", "NOM QUESTIONNAIRE", "NUM CLIENT"};
+		String[][] values = creationListeQuestionnaires();
 		DefaultTableModel modele = new DefaultTableModel(values,ColumnNames){
 			@Override
 		    public boolean isCellEditable(int row, int column) {
@@ -117,15 +155,11 @@ public class Analyste extends JPanel {
 		tab = new JTable();
 		tab.setModel(modele);
 		tab.setFont(new Font("Arial", Font.PLAIN, 17));
-		pTableau.setViewportView(tab);
 		
-		//validation
-		JPanel pValider = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		panelDuCentre.add(pValider);
-		JButton bValider = new JButton("VALIDER");
-		bValider.addActionListener(new ValiderController(this));
-		pValider.add(bValider);
+		if (tab.getRowCount() == 0)
+			throw new TableauVideExeption();
 		
+		return tab;
 	}
 	
 	public void afficherAnalysteModification(){

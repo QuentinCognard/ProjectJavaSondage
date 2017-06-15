@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/master
+>>>>>>> 80fb324f205bfa9a992110759d85ceca811db55a
 package Commun;
 
 import java.awt.Container;
@@ -60,7 +67,7 @@ public class Sondio extends JFrame {
 	public void afficherAnalyste () {
 		this.cont.removeAll();
 		
-		this.modanalyste = new Analyste ();
+		this.modanalyste = new Analyste (modelecommun);
 		this.cont.add(modanalyste);
 		
 		this.cont.validate();
@@ -73,4 +80,12 @@ public class Sondio extends JFrame {
 
 
 
+<<<<<<< HEAD
 }
+=======
+}
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/master
+>>>>>>> 80fb324f205bfa9a992110759d85ceca811db55a
