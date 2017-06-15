@@ -40,6 +40,24 @@ public class BDGeneral {
 		  return null;
 	  }
   }
+
+  public void supprimerQuestionnaire (int identifiantQuestionnaire) {
+	  try {
+		  String supprimerQuestionnaire = "DELETE FROM QUESTIONNAIRE WHERE idQ = "+identifiantQuestionnaire+";";
+		  String supprimerQuestions = "DELETE FROM QUESTION WHERE idQ = "+identifiantQuestionnaire+";";
+		  String supprimerValeursPossibles = "DELETE FROM VALPOSSIBLE WHERE idQ = "+identifiantQuestionnaire+";";
+		  String supprimerReponses = "DELETE FROM REPONDRE WHERE idQ = "+identifiantQuestionnaire+";";
+		  this.st.executeUpdate(supprimerValeursPossibles);
+		  this.st.executeUpdate(supprimerReponses);
+		  this.st.executeUpdate(supprimerQuestions);
+		  this.st.executeUpdate(supprimerQuestionnaire);
+	  }
+		
+	  catch (SQLException e) {    
+		  
+	  }
+	}
+	
 	
   public ArrayList <Question> getListeQuestion (int idQuestionnaire) {
 	  ArrayList <Question> listeQuestions = new ArrayList <Question> ();
