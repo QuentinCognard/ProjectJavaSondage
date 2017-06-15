@@ -115,10 +115,4 @@ public class BDGeneral {
 		  return null;
 	  }
   }
-  
-
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 }

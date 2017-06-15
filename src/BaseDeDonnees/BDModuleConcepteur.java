@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
 package BaseDeDonnees;
 
 import java.sql.*;
@@ -142,7 +139,22 @@ public class BDModuleConcepteur {
 
 	
 	
-	
+	public void insererValeurPossible (ValeurPossible vp) {
+		try {
+			String requete = "INSERT INTO VALPOSSIBLE (idQ, numQ, idV, Valeur) VALUES (?,?,?,?);";
+			PreparedStatement ps = this.connexion.mysql.prepareStatement("requete");
+			ps.setInt(1, vp.getIdQuestionnaire());
+			ps.setInt(2, vp.getNumeroQuestion());
+			ps.setInt(3, vp.getIdValeur());
+			ps.setString(4, vp.getValeur());
+			ps.executeUpdate();
+		}
+		
+		catch (SQLException e) {
+			
+		}
+	}
+
 	public void questionnairePretPourSondage (int idQuestionnaire) {
 		try {
 			String requete = "UPDATE QUESTIONNAIRE SET Etat = 'S' WHERE idQ = "+idQuestionnaire+";";
