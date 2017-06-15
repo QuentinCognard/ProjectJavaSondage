@@ -46,24 +46,23 @@ public class AnalysteModification {
 	
 	public void MofifierPanelDuHaut(Container cont){
 		JPanel pHaut = (JPanel) cont.getComponent(0);
-		afficherPanelModif(pHaut);
+		afficherPanelSupp(pHaut);
 		afficherPanelEnregistrerEtDeco(pHaut);
-		afficherPanelRetour(pHaut);
 	}
 	
-	public void afficherPanelModif(JPanel pHaut){
+	public void afficherPanelSupp(JPanel pHaut){
 		JPanel pGeneGauche = new JPanel(new BorderLayout());
 		pHaut.add(pGeneGauche,"West");
-		JPanel pBouttonModifSup = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		pGeneGauche.add(pBouttonModifSup,"South");
+		JPanel pBouttonSupRetour = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		pGeneGauche.add(pBouttonSupRetour,"South");
 		
-		JButton modif = new JButton("Modifier");
-		modif.addActionListener(mc);
-		pBouttonModifSup.add(modif);
+		JButton retour = new JButton("<== Retour");
+		retour.addActionListener(mc);
+		pBouttonSupRetour.add(retour);
 		
 		JButton supp = new JButton("Supprimer");
 		supp.addActionListener(mc);
-		pBouttonModifSup.add(supp);
+		pBouttonSupRetour.add(supp);
 	}
 	
 	public void afficherPanelEnregistrerEtDeco(JPanel pHaut){
@@ -81,15 +80,6 @@ public class AnalysteModification {
 		pBouttonAnnuleSave.add(save);
 		
 		afficherPanelDeconnexion(pGeneDroit);
-	}
-	
-	public void afficherPanelRetour(JPanel pHaut){
-		JPanel pRetour = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		pHaut.add(pRetour,"South");
-		
-		JButton retour = new JButton("<== Retour");
-		retour.addActionListener(mc);
-		pRetour.add(retour);
 	}
 	
 	public void afficherPanelDeconnexion(JPanel pGeneDroit){
@@ -138,7 +128,7 @@ public class AnalysteModification {
 		JPanel pResultats = new JPanel();
 		pResultats.setLayout(new BoxLayout(pResultats, BoxLayout.Y_AXIS));
 		jsp.setViewportView(pResultats);
-		for (int i = 0; i< 20; i++){ //TODO: à modifier
+		for (int i = 0; i< 20; i++){ //TODO: ï¿½ modifier
 				afficherQuestion(pResultats,i+1,"Quel est le plus grand con de tout les temps ?");
 				JPanel pvide = new JPanel();
 				pvide.setLayout(new BoxLayout(pvide, BoxLayout.Y_AXIS));
