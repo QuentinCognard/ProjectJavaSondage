@@ -35,7 +35,7 @@ public class Analyste extends JPanel {
 	private AnalysteModele anaMod;
 	
 	public Analyste (ModeleCommun modelecommun) {
-		anaMod = new AnalysteModele(modelecommun.getBdGeneral());
+		anaMod = new AnalysteModele(modelecommun);
 		this.setLayout(new BorderLayout());
 		afficherPanelBase();
 		//new AnalysteModification(this);
@@ -47,6 +47,10 @@ public class Analyste extends JPanel {
 	
 	public String getTexteRecherche(){
 		return champRecherche.getText();
+	}
+	
+	public AnalysteModele getModeleAnalyste(){
+		return anaMod;
 	}
 	
 	public void afficherPanelBase(){

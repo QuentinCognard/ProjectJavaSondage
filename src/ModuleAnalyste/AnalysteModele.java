@@ -1,6 +1,7 @@
 package ModuleAnalyste;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -8,27 +9,42 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import BaseDeDonnees.BDGeneral;
+import BaseDeDonnees.BDModuleAnalyste;
 import BaseDeDonnees.Question;
 import BaseDeDonnees.Questionnaire;
+import BaseDeDonnees.Repondre;
+import Commun.ModeleCommun;
 
 public class AnalysteModele {
 	BDGeneral BDGen;
+	BDModuleAnalyste BDAnalyste;
+	private HashMap<Question,ArrayList<Repondre>> listeQuestionsReponses;
 	
-	public AnalysteModele(BDGeneral bdgen){
+	public AnalysteModele( ModeleCommun modCommun){
 		/*TODO: recuperer la classe BD générale qui devra etre créer dans Sondio.java (avec BDConnexion)
 		 * et crer BDModuleAnalyste
 		 */
-		this.BDGen = bdgen;
+		this.BDGen = modCommun.getBdGeneral();
+		this.BDAnalyste = new BDModuleAnalyste(modCommun.getBdConnexion());
+	}
+	
+	public void createListesQuestionsReponses(int idQuestionnaireChoisi){
+		ArrayList<Question> listeQuestions = getListeQuestions(idQuestionnaireChoisi);
+		for(int i = 0; i<listeQuestions.size(); i++){
+			listeQuestionsReponses.put(listeQuestions.get(i), getReponsesQuestion(idQuestionnaireChoisi, i+1) );
+		}
 	}
 	
 	public ArrayList<Questionnaire> getQuestionnaireFini(){
-		System.out.println(BDGen.getListeQuestionnaire ('A'));
 		return BDGen.getListeQuestionnaire ('A');
 	}
 	
-	public ArrayList<Question> getListeQuestion(int idQuestionnaire){
-		//TODO: utiliser la méthode de la classe BDGeneral
-		return null;
+	public ArrayList<Question> getListeQuestions(int idQuestionnaire){
+		return BDGen.getListeQuestion (idQuestionnaire);
+	}
+	
+	public ArrayList <Repondre> getReponsesQuestion(int idQuestionnaire, int numeroQuestion){
+		return BDAnalyste.getReponsesQuestion(idQuestionnaire, numeroQuestion);
 	}
 	
 	public void deconnexion(){
