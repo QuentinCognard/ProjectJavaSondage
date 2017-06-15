@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
->>>>>>> 80fb324f205bfa9a992110759d85ceca811db55a
 package Commun;
 
 import java.awt.Container;
@@ -47,7 +40,7 @@ public class Sondio extends JFrame {
 	public void afficherConcepteur () {
 		this.cont.removeAll();
 		
-		this.modconcepteur = new Concepteur ();
+		this.modconcepteur = new Concepteur(modelecommun);
 		this.cont.add(modconcepteur);
 		
 		this.cont.validate();
@@ -77,15 +70,4 @@ public class Sondio extends JFrame {
 	public static void main (String [] args) {
 		Sondio s = new Sondio ();
 	}
-
-
-
-<<<<<<< HEAD
 }
-=======
-}
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
->>>>>>> 80fb324f205bfa9a992110759d85ceca811db55a

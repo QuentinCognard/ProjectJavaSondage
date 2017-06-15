@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.awt.Image;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -21,7 +20,6 @@ import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.table.DefaultTableModel;
-
 import BaseDeDonnees.Questionnaire;
 import Commun.ModeleCommun;
 import Commun.Sondio;
