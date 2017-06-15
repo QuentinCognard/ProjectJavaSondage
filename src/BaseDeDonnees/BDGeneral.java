@@ -115,9 +115,4 @@ public class BDGeneral {
 		  return null;
 	  }
   }
-  
-  
-  
-
-
 }

@@ -67,7 +67,7 @@ public class BDModuleConcepteur {
 	      }
 		
 		catch (SQLException e) {
-	         return -1;
+	         return 0;
 	      }
 	}
 	
@@ -95,16 +95,16 @@ public class BDModuleConcepteur {
 	
 	
 	
-	public int maxIdentifiantQuestion () {
+	public int maxIdentifiantQuestion (int identifiantQuestionnaire) {
 		try {
-	        String requete = "SELECT MAX(numQ) idMax FROM QUESTION;";
+	        String requete = "SELECT IFNULL(MAX(numQ),0) idMax FROM QUESTION WHERE idQ = "+identifiantQuestionnaire+";";
 	        ResultSet rs = this.st.executeQuery(requete);
 	        rs.next();
 	        return rs.getInt("idMax");
 	      }
 		
 		catch (SQLException e) {
-	         return -1;
+	         return 0;
 	      }
 	}
 	
@@ -138,7 +138,22 @@ public class BDModuleConcepteur {
 
 	
 	
-	
+	public void insererValeurPossible (ValeurPossible vp) {
+		try {
+			String requete = "INSERT INTO VALPOSSIBLE (idQ, numQ, idV, Valeur) VALUES (?,?,?,?);";
+			PreparedStatement ps = this.connexion.mysql.prepareStatement("requete");
+			ps.setInt(1, vp.getIdQuestionnaire());
+			ps.setInt(2, vp.getNumeroQuestion());
+			ps.setInt(3, vp.getIdValeur());
+			ps.setString(4, vp.getValeur());
+			ps.executeUpdate();
+		}
+		
+		catch (SQLException e) {
+			
+		}
+	}
+
 	public void questionnairePretPourSondage (int idQuestionnaire) {
 		try {
 			String requete = "UPDATE QUESTIONNAIRE SET Etat = 'S' WHERE idQ = "+idQuestionnaire+";";
