@@ -58,7 +58,8 @@ public class BDGeneral {
 	  }
 	}
 	
-	
+
+  
   public ArrayList <Question> getListeQuestion (int idQuestionnaire) {
 	  ArrayList <Question> listeQuestions = new ArrayList <Question> ();
 	  try {
@@ -77,6 +78,8 @@ public class BDGeneral {
 	  }
   }
   
+  
+  
   public Client getClientDuQuestionnaireX (int idQuestionnaire) {
       try {
         String requete = "SELECT * FROM CLIENT WHERE numC = (SELECT numC FROM QUESTIONNAIRE WHERE idQ = "+idQuestionnaire+");";
@@ -90,6 +93,30 @@ public class BDGeneral {
       }
   }
 
+  
+  
+  // '1' pour les concepteurs
+  // '2' pour les sondeurs
+  // '3' pour les analystes
+  public ArrayList <Utilisateur> getListeUtilisateursSelonRole (char roleUtilisateur) {
+	  ArrayList <Utilisateur> listeUsers = new ArrayList <Utilisateur> ();
+	  try {
+		  String requete = "SELECT * FROM UTILISATEUR WHERE idR = '"+roleUtilisateur+"';";
+		  ResultSet rs = this.st.executeQuery(requete);
+		  while (rs.next()) {
+			  Utilisateur u = new Utilisateur (rs.getInt("idU"), rs.getString("nomU"), rs.getString("prenomU"), rs.getString("login"), rs.getString("motDePasse"), rs.getString("idR").charAt(0));
+			  listeUsers.add(u);
+		  }
+		  rs.close();
+		  return listeUsers;
+	  }
+	  
+	  catch (SQLException e) {
+		  return null;
+	  }
+  }
+  
+  
   
 
 }
