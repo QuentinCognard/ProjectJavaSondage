@@ -1,11 +1,8 @@
 package ModuleAnalyste;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.HashMap;
 
-=======
->>>>>>> 14fe5f0a0268b1da5a1e0465a8dc379bd61334eb
 import javax.swing.table.DefaultTableModel;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;

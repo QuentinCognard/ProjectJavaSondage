@@ -2,6 +2,7 @@ package BaseDeDonnees;
 
 import java.sql.*;
 import java.util.ArrayList;
+import BaseDeDonnees.BDConnexionMySQL;
 
 public class BDGeneral {
 
