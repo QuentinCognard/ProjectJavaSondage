@@ -117,4 +117,8 @@ public class BDGeneral {
   }
   
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 }
