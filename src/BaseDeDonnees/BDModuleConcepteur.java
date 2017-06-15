@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 package BaseDeDonnees;
 
 import java.sql.*;

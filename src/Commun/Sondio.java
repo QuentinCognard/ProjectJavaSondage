@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 package Commun;
 
 import java.awt.Container;
@@ -74,12 +70,4 @@ public class Sondio extends JFrame {
 	public static void main (String [] args) {
 		Sondio s = new Sondio ();
 	}
-<<<<<<< HEAD
-
-
-
 }
-
-=======
-}
->>>>>>> origin/master
