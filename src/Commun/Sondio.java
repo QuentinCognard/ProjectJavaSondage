@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 package Commun;
+
 import java.awt.Container;
 import javax.swing.JFrame;
-
 import ModuleAnalyste.Analyste;
 import ModuleConcepteur.Concepteur;
 import ModuleConnexion.Connexion;
@@ -11,9 +14,7 @@ import ModuleSondeur.Sondeur;
 public class Sondio extends JFrame {
 
 	Container cont;
-	
 	ModeleCommun modelecommun;
-	
 	Connexion modconnexion;
 	Concepteur modconcepteur;
 	Sondeur modsondeur;
@@ -43,7 +44,7 @@ public class Sondio extends JFrame {
 	public void afficherConcepteur () {
 		this.cont.removeAll();
 		
-		this.modconcepteur = new Concepteur ();
+		this.modconcepteur = new Concepteur(modelecommun);
 		this.cont.add(modconcepteur);
 		
 		this.cont.validate();
@@ -73,8 +74,12 @@ public class Sondio extends JFrame {
 	public static void main (String [] args) {
 		Sondio s = new Sondio ();
 	}
+<<<<<<< HEAD
 
 
 
 }
 
+=======
+}
+>>>>>>> origin/master

@@ -1,12 +1,9 @@
 package ModuleAnalyste;
 
 import java.util.ArrayList;
-
 import javax.swing.table.DefaultTableModel;
-
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
-
 import BaseDeDonnees.BDGeneral;
 import BaseDeDonnees.Question;
 import BaseDeDonnees.Questionnaire;

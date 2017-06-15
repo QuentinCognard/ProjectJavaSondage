@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import Commun.ModeleCommun;
 
 
 public class Concepteur extends JPanel {
@@ -25,7 +26,7 @@ public class Concepteur extends JPanel {
 	private JPanel listeQuestionnaires;
 	
 	
-	public Concepteur () {
+	public Concepteur (ModeleCommun m) {
 		super();
 		this.setLayout(new BorderLayout());
 		afficherPanelHaut(); 
