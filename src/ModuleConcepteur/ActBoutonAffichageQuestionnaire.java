@@ -6,15 +6,19 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import BaseDeDonnees.Questionnaire;
+
 public class ActBoutonAffichageQuestionnaire implements ActionListener {
 
 	Concepteur concepteur;
 	AffichageQuestionnaire vue;
+	Questionnaire q;
 	
-	public ActBoutonAffichageQuestionnaire(Concepteur concepteur,AffichageQuestionnaire vue) {
+	public ActBoutonAffichageQuestionnaire(Concepteur concepteur,AffichageQuestionnaire vue, Questionnaire q) {
 		super();
 		this.concepteur = concepteur;
 		this.vue = vue;
+		this.q = q;
 	}
 	
 	
@@ -24,10 +28,10 @@ public class ActBoutonAffichageQuestionnaire implements ActionListener {
 			this.concepteur.afficherConcepteur();
 		}
 		if (((JButton)arg0.getSource()).getText().equals("Modifier informations")){
-			this.concepteur.afficherModifQuestionnaire(vue.getId(),vue.getNom(),vue.getPanel(),vue.getSociete(),vue.getTauxReponse());
+			this.concepteur.afficherModifQuestionnaire(q);
 		}
 		if (((JButton)arg0.getSource()).getText().equals("Ajouter question")){
-			this.concepteur.afficherAjouterQuestion(vue);
+			this.concepteur.afficherAjouterQuestion(vue,q);
 		}
 		if (((JButton)arg0.getSource()).getText().equals("Supprimer questionnaire")){
 			int box = JOptionPane.showConfirmDialog(

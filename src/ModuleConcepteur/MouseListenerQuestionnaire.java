@@ -5,6 +5,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 
+import BaseDeDonnees.Questionnaire;
+
 
 public class MouseListenerQuestionnaire implements MouseListener{
 	Concepteur c;
@@ -16,7 +18,10 @@ public class MouseListenerQuestionnaire implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		c.afficherInfoQuestionnaire("7","Le questionnaire de Babouche","-50 ans","Société couckecouckecoucke","80%");
+		//get le questionnaire du panel cliqué
+		Questionnaire q = ((QuestionnairePanel)arg0.getSource()).getQuestionnaire();
+		c.afficherInfoQuestionnaire(q);
+		
 	}
 
 	@Override
