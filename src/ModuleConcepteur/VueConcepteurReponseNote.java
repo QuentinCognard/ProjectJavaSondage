@@ -39,7 +39,7 @@ public class VueConcepteurReponseNote extends JPanel implements TypeReponse{
 		this.panel.add(this.valider);
 		try{
 			if (Integer.parseInt(this.max.getJTextField().getText())<=Integer.parseInt(this.min.getJTextField().getText())){
-				this.panel.add(new JLabel("Valeur maximal inférieur ou egal au minimun"));
+				this.panel.add(new JLabel("Valeur maximal inférieur ou egal au minimum"));
 			}
 		}catch (NumberFormatException e){
 			this.panel.add(new JLabel("Erreur dans les champs"));

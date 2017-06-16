@@ -21,7 +21,7 @@ public class VueConcepteurReponseClassement extends JPanel implements TypeRepons
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		ActionListenerReponse act = new ActionListenerReponse(this);
 		this.nb = new VuePanelTextAvecField("Nombre de réponse",5);
-		this.nbRep = new VuePanelTextAvecField("Nombre de réponse a classé",5);
+		this.nbRep = new VuePanelTextAvecField("Nombre de réponse à classer",5);
 		this.panel = new JPanel();
 		this.panel.add(this.nb);
 		this.panel.add(this.nbRep);
