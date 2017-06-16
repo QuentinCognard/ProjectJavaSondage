@@ -103,7 +103,7 @@ public void actionPerformed(ActionEvent e) {
 
 		}
 		
-		else if (((JButton)e.getSource()).getText().equals("Précédent")){
+		else if (((JButton)e.getSource()).getText().equals("PrÃ©cÃ©dent")){
 			vueLibre.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueLibre.quest.getNumeroQuestion(), vueLibre.quest.getIdTypeQuestion(), val);
 			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
 				this.s.afficherEchelle(laquestionpre,questionnaire,lesonde,vueLibre.modrep);

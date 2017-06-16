@@ -161,14 +161,14 @@ public class Vue_Echelle extends JPanel {
 			btnValide.addActionListener(new ControleurEchelle(this));
 			panelValid.add(btnValide);
 			
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("PrÃ©cÃ©dent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new ControleurEchelle(this));
 			panelNavi.add(btnPrecedent);
 		}
 		
 		else {
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("PrÃ©cÃ©dent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new ControleurEchelle(this));
 			panelNavi.add(btnPrecedent);

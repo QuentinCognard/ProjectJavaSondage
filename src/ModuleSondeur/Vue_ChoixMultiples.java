@@ -152,14 +152,14 @@ public class Vue_ChoixMultiples extends JPanel {
 			btnValide.addActionListener(new ControleurChoixMultiples(this));
 			panelValid.add(btnValide);
 			
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("PrÃ©cÃ©dent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new ControleurChoixMultiples(this));
 			panelNavi.add(btnPrecedent);
 		}
 		
 		else {
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("PrÃ©cÃ©dent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new ControleurChoixMultiples(this));
 			panelNavi.add(btnPrecedent);

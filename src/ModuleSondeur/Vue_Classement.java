@@ -110,7 +110,7 @@ public class Vue_Classement extends JPanel {
 			intituleQuestion.setAlignmentX(Component.CENTER_ALIGNMENT);
 			panelQuestion.add(intituleQuestion);
 			
-			JButton btnRein = new JButton("Réinitialiser");
+			JButton btnRein = new JButton("Rï¿½initialiser");
 			btnRein.setBounds(750, 10, 150, 30);
 			btnRein.addActionListener(new ControleurClassement(this));
 			panelQuestion.add(btnRein);
@@ -180,14 +180,14 @@ public class Vue_Classement extends JPanel {
 			btnValide.addActionListener(new ControleurClassement(this));
 			panelValid.add(btnValide);
 			
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("PrÃ©cÃ©dent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new ControleurClassement(this));
 			panelNavi.add(btnPrecedent);
 		}
 		
 		else {
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("PrÃ©cÃ©dent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new ControleurClassement(this));
 			panelNavi.add(btnPrecedent);

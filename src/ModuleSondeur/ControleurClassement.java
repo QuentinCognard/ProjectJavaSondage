@@ -108,7 +108,7 @@ public class ControleurClassement implements ActionListener {
 
 		}
 		
-		else if (((JButton)e.getSource()).getText().equals("Précédent")){
+		else if (((JButton)e.getSource()).getText().equals("PrÃ©cÃ©dent")){
 			vueClassement.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueClassement.quest.getNumeroQuestion(), vueClassement.quest.getIdTypeQuestion(), val);
 			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
 				this.s.afficherEchelle(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
@@ -129,7 +129,7 @@ public class ControleurClassement implements ActionListener {
 		}
 		
 		
-		else if (((JButton)e.getSource()).getText().equals("Réinitialiser")){
+		else if (((JButton)e.getSource()).getText().equals("RÃ©initialiser")){
 			for (JLabel label : vueClassement.leslabelschoix){
 				label.setText(": 0");
 				

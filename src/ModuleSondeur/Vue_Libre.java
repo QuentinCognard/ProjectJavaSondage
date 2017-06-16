@@ -166,14 +166,14 @@ public class Vue_Libre extends JPanel{
 			btnValide.addActionListener(new Contr_Libre(this));
 			panelValid.add(btnValide);
 			
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("PrÃ©cÃ©dent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new Contr_Libre(this));
 			panelNavi.add(btnPrecedent);
 		}
 		
 		else {
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("PrÃ©cÃ©dent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new Contr_Libre(this));
 			panelNavi.add(btnPrecedent);
