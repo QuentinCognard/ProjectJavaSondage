@@ -53,7 +53,7 @@ public class BDModuleSondeur {
 	public ArrayList <Sonde> getListeSondesNonInterroges (Questionnaire q) {
 		ArrayList <Sonde> listeSondes = new ArrayList <Sonde> ();
 		try {
-			String requete = "SELECT * FROM SONDE NATURAL JOIN CONSTITUER WHERE idPan = "+q.getIdentifiantPanel()+" AND numSond NOT IN (SELECT numSond FROM INTERROGER WHERE idQ = "+q.getNumeroQuestionnaire()+");";
+			String requete = "SELECT * FROM SONDE NATURAL JOIN CONSTITUER WHERE idPan = "+q.getIdentifiantPanel()+" AND numSond NOT IN (SELECT numSond FROM INTERROGER WHERE idQ = "+q.getNumeroQuestionnaire()+") ORDER BY numSond;";
 			ResultSet rs = this.st.executeQuery(requete);
 			while (rs.next()) {
 				Sonde s = new Sonde (rs.getInt("numSond"), rs.getString("nomSond"), rs.getString("prenomSond"), rs.getDate("dateNaisSond"), rs.getString("telephoneSond"), rs.getString("idC"));
