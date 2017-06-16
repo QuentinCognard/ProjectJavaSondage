@@ -26,7 +26,7 @@ public class Vue_PlusSondes extends JPanel {
 		panel_corp.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_principal.add(panel_corp);
 			
-		JLabel lblPlusDeSonds = new JLabel("Plus de sondé à appeler");
+		JLabel lblPlusDeSonds = new JLabel("Plus de sondÃ© Ã  appeler");
 		panel_corp.add(lblPlusDeSonds);
 		
 		JPanel panelRetour = new JPanel();

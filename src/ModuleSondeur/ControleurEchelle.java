@@ -101,7 +101,7 @@ public class ControleurEchelle implements ActionListener {
 
 		}
 		
-		else if (((JButton)e.getSource()).getText().equals("Précédent")){
+		else if (((JButton)e.getSource()).getText().equals("PrÃ©cÃ©dent")){
 			vueEchelle.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueEchelle.quest.getNumeroQuestion(), vueEchelle.quest.getIdTypeQuestion(), val);
 			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
 				fenetresondage.afficherEchelle(laquestionpre,questionnaire,lesonde,vueEchelle.modrep);

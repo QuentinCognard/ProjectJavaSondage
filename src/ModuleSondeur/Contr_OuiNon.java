@@ -101,7 +101,7 @@ public void actionPerformed(ActionEvent e) {
 
 		}
 		
-		else if (((JButton)e.getSource()).getText().equals("Précédent")){
+		else if (((JButton)e.getSource()).getText().equals("PrÃ©cÃ©dent")){
 			vueOuiNon.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueOuiNon.quest.getNumeroQuestion(), vueOuiNon.quest.getIdTypeQuestion(), val);
 			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
 				fenetresondage.afficherEchelle(laquestionpre,questionnaire,lesonde,vueOuiNon.modrep);

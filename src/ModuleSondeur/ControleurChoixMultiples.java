@@ -113,7 +113,7 @@ public class ControleurChoixMultiples implements ActionListener {
 
 		}
 		
-		else if (((JButton)e.getSource()).getText().equals("Précédent")){
+		else if (((JButton)e.getSource()).getText().equals("PrÃ©cÃ©dent")){
 			vueChoixmultiples.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueChoixmultiples.quest.getNumeroQuestion(), vueChoixmultiples.quest.getIdTypeQuestion(), val);
 			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
 				fenetresondage.afficherEchelle(laquestionpre,questionnaire,lesonde,vueChoixmultiples.modrep);

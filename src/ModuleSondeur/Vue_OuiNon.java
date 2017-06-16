@@ -174,14 +174,14 @@ public class Vue_OuiNon extends JPanel{
 			btnValide.addActionListener(new Contr_OuiNon(this));
 			panelValid.add(btnValide);
 			
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("PrÃ©cÃ©dent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new Contr_OuiNon(this));
 			panelNavi.add(btnPrecedent);
 		}
 		
 		else {
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("PrÃ©cÃ©dent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new Contr_OuiNon(this));
 			panelNavi.add(btnPrecedent);

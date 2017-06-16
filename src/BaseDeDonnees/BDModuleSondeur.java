@@ -88,7 +88,7 @@ public class BDModuleSondeur {
 		
 	}
 	
-	public void setSondeInterroger (Questionnaire q, Sonde s) {
+	public void setSondeInterroger(Questionnaire q, Sonde s) {
 		try {
 			String requete = "INSERT INTO INTERROGER (idU, numSond, idQ) VALUES (?,?,?);";
 			PreparedStatement ps = this.connexion.mysql.prepareStatement(requete);
@@ -102,4 +102,5 @@ public class BDModuleSondeur {
 			
 		}
 	}
+
 }
