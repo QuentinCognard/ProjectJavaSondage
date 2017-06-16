@@ -6,14 +6,17 @@ import java.awt.event.ActionListener;
 public class ControleurPlusSond implements ActionListener {
 	
 	Vue_PlusSondes vuePlusSonde;
+	private Sondeur s;
+
 
 	public ControleurPlusSond(Vue_PlusSondes vuePlusSonde){
 		this.vuePlusSonde=vuePlusSonde;
+		this.s=vuePlusSonde.s;
+
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		Sondeur fenetresondage=(Sondeur) vuePlusSonde.getRootPane().getParent();
-		fenetresondage.afficherPlusDeSonde();
+		this.s.afficherPlusDeSonde();
 	}
 
 }

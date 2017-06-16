@@ -28,6 +28,7 @@ public class Vue_Classement extends JPanel {
 	Question quest;
 	ModeleReponse modrep;
 	ArrayList<ValeurPossible> valeursPossibles;
+	Sondeur s;
 
 	
 	JPanel []lespanelschoix;
@@ -36,9 +37,10 @@ public class Vue_Classement extends JPanel {
 	
 	
 	
-	public Vue_Classement (Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
+	public Vue_Classement (Sondeur sondeur,Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
 		super();
-		
+		this.s=sondeur;
+
 		this.lesonde=lesonde;
 		this.quest=quest;
 		this.modrep=modrep;

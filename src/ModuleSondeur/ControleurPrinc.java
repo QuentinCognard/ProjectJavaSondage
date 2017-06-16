@@ -16,12 +16,14 @@ public class ControleurPrinc implements ActionListener {
 	private BDGeneral laBD;
 	private ModeleReponse modrep;
 	private BDModuleSondeur bdSond;
+	private Sondeur s;
 	
 	public ControleurPrinc(Vue_FenetrPrinc vueFenetrePrinc,Questionnaire questionnaire,BDGeneral laBD,BDModuleSondeur bdSond){
 		super();
 		this.vueFenetrePrinc=vueFenetrePrinc;
 		this.bdSond=bdSond;
 		this.laBD=laBD;
+		this.s=vueFenetrePrinc.s;
 		this.questionnaire=questionnaire;
 		this.laquestion=laBD.getListeQuestion(questionnaire.getNumeroQuestionnaire()).get(0);
 		
@@ -30,33 +32,32 @@ public class ControleurPrinc implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		
 		this.modrep= new ModeleReponse(laBD,bdSond,questionnaire);
-		Sondeur fenetresondage=(Sondeur) vueFenetrePrinc.getRootPane().getParent();
 		vueFenetrePrinc.progressBarSond.setMaximum(modrep.listeDeSondeInterroge.size()+modrep.listeDeSonde.size());
 		if (laquestion.getIdTypeQuestion() =='u' || laquestion.getIdTypeQuestion() =='n'){
 			vueFenetrePrinc.progressBarSond.setValue(modrep.listeDeSondeInterroge.size()+1);
-			fenetresondage.afficherEchelle(laquestion,questionnaire,modrep.lesonde,modrep);
+			this.s.afficherEchelle(laquestion,questionnaire,modrep.lesonde,modrep);
 		}
 		else if (laquestion.getIdTypeQuestion() =='m'){
 			vueFenetrePrinc.progressBarSond.setValue(modrep.listeDeSondeInterroge.size()+1);
 
-			fenetresondage.afficherChoixMultiples(laquestion,questionnaire,modrep.lesonde,modrep);
+			this.s.afficherChoixMultiples(laquestion,questionnaire,modrep.lesonde,modrep);
 
 		}
 		else if (laquestion.getIdTypeQuestion() =='c'){
 			vueFenetrePrinc.progressBarSond.setValue(modrep.listeDeSondeInterroge.size()+1);
 
-			fenetresondage.afficherClassement(laquestion,questionnaire,modrep.lesonde,modrep);
+			this.s.afficherClassement(laquestion,questionnaire,modrep.lesonde,modrep);
 
 		}
 		else if (laquestion.getIdTypeQuestion() =='l'){
 			vueFenetrePrinc.progressBarSond.setValue(modrep.listeDeSondeInterroge.size()+1);
 
-			fenetresondage.afficherLibre(laquestion,questionnaire,modrep.lesonde,modrep);
+			this.s.afficherLibre(laquestion,questionnaire,modrep.lesonde,modrep);
 
 		}
 
 		else if (modrep.listeDeSonde==null){
-			fenetresondage.afficherPlusDeSonde();
+			this.s.afficherPlusDeSonde();
 
 		}
 	}

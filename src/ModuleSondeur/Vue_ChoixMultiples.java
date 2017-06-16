@@ -31,11 +31,12 @@ public class Vue_ChoixMultiples extends JPanel {
 	ModeleReponse modrep;
 	Checkbox []lesCheckbox;
 	ArrayList<ValeurPossible> valeursPossibles;
+	Sondeur s;
 	
 	
-	public Vue_ChoixMultiples (Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
+	public Vue_ChoixMultiples (Sondeur sondeur,Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
 		super();
-		
+		this.s=sondeur;
 		this.lesonde=lesonde;
 		this.quest=quest;
 		this.modrep=modrep;

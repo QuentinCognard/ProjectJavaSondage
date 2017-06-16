@@ -31,9 +31,12 @@ public class Vue_FenetrPrinc extends JPanel {
 	BDGeneral laBD;
 	BDModuleSondeur bdSond;
 	JProgressBar progressBarSond;
-	
-	public Vue_FenetrPrinc (BDGeneral laBD,Sonde s,BDModuleSondeur bdSond) {
+	Sondeur s;
+
+	public Vue_FenetrPrinc (Sondeur sondeur,BDGeneral laBD,Sonde s,BDModuleSondeur bdSond) {
 		super();
+		this.s=sondeur;
+
 		this.bdSond=bdSond;
 		this.laBD=laBD;
 		this.lesQuestionnaire=laBD.getListeQuestionnaire('S');
