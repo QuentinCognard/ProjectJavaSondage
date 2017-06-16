@@ -27,16 +27,17 @@ public class ControleurEchelle implements ActionListener {
 		this.s=vueEchelle.s;
 
 		if (vueEchelle.quest.getNumeroQuestion()<vueEchelle.modrep.listeQuestion.size()){
-			this.laquestionsuiv=vueEchelle.modrep.listeQuestion.get(vueEchelle.quest.getNumeroQuestion()+1);
+			this.laquestionsuiv=vueEchelle.modrep.listeQuestion.get(vueEchelle.quest.getNumeroQuestion());
 		}
 		
-		if (vueEchelle.quest.getNumeroQuestion()>0){
+		if (vueEchelle.quest.getNumeroQuestion()>1){
 
 			this.laquestionpre=vueEchelle.modrep.listeQuestion.get(vueEchelle.quest.getNumeroQuestion()-1);
 		}
 		
 		this.lesonde=vueEchelle.lesonde;
 		this.questionnaire=vueEchelle.questnaire;
+		this.listeQuest= new ArrayList<Question>();
 		this.listeQuest=vueEchelle.modrep.bdgene.getListeQuestion(questionnaire.getNumeroQuestionnaire());
 
 		
@@ -57,6 +58,48 @@ public class ControleurEchelle implements ActionListener {
 			this.s.afficherFenetrePrinc();
 
 		}
+		
+	
+		else if (((JButton)e.getSource()).getText().equals("Suivant")){
+			vueEchelle.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueEchelle.quest.getNumeroQuestion(), vueEchelle.quest.getIdTypeQuestion(), val);
+			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
+				this.s.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueEchelle.modrep);
+			}
+			else if (laquestionsuiv.getIdTypeQuestion() =='m'){
+				this.s.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueEchelle.modrep);
+	
+			}
+			else if (laquestionsuiv.getIdTypeQuestion() =='c'){
+				this.s.afficherClassement(laquestionsuiv,questionnaire,lesonde,vueEchelle.modrep);
+	
+			}
+			else if (laquestionsuiv.getIdTypeQuestion() =='l'){
+				this.s.afficherLibre(laquestionsuiv,questionnaire,lesonde,vueEchelle.modrep);
+	
+			}
+
+		}
+		
+		else if (((JButton)e.getSource()).getText().equals("Precedent")){
+			vueEchelle.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueEchelle.quest.getNumeroQuestion(), vueEchelle.quest.getIdTypeQuestion(), val);
+			if (laquestionpre.getIdTypeQuestion() =='u' || laquestionpre.getIdTypeQuestion() =='n'){
+				this.s.afficherEchelle(laquestionpre,questionnaire,lesonde,vueEchelle.modrep);
+			}
+			else if (laquestionpre.getIdTypeQuestion() =='m'){
+				this.s.afficherChoixMultiples(laquestionpre,questionnaire,lesonde,vueEchelle.modrep);
+	
+			}
+			else if (laquestionpre.getIdTypeQuestion() =='c'){
+				this.s.afficherClassement(laquestionpre,questionnaire,lesonde,vueEchelle.modrep);
+	
+			}
+			else if (laquestionpre.getIdTypeQuestion() =='l'){
+				this.s.afficherLibre(laquestionpre,questionnaire,lesonde,vueEchelle.modrep);
+	
+			}
+
+		}
+		
 		
 		else if (Integer.parseInt(((JButton)e.getSource()).getText())<listeQuest.size()){
 			
@@ -81,47 +124,6 @@ public class ControleurEchelle implements ActionListener {
 			}
 
 		}
-	
-		else if (((JButton)e.getSource()).getText().equals("Suivant")){
-			vueEchelle.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueEchelle.quest.getNumeroQuestion(), vueEchelle.quest.getIdTypeQuestion(), val);
-			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
-				this.s.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueEchelle.modrep);
-			}
-			else if (laquestionsuiv.getIdTypeQuestion() =='m'){
-				this.s.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueEchelle.modrep);
-	
-			}
-			else if (laquestionsuiv.getIdTypeQuestion() =='c'){
-				this.s.afficherClassement(laquestionsuiv,questionnaire,lesonde,vueEchelle.modrep);
-	
-			}
-			else if (laquestionsuiv.getIdTypeQuestion() =='l'){
-				this.s.afficherLibre(laquestionsuiv,questionnaire,lesonde,vueEchelle.modrep);
-	
-			}
-
-		}
-		
-		else if (((JButton)e.getSource()).getText().equals("Précédent")){
-			vueEchelle.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueEchelle.quest.getNumeroQuestion(), vueEchelle.quest.getIdTypeQuestion(), val);
-			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
-				this.s.afficherEchelle(laquestionpre,questionnaire,lesonde,vueEchelle.modrep);
-			}
-			else if (laquestionpre.getIdTypeQuestion() =='m'){
-				this.s.afficherChoixMultiples(laquestionpre,questionnaire,lesonde,vueEchelle.modrep);
-	
-			}
-			else if (laquestionpre.getIdTypeQuestion() =='c'){
-				this.s.afficherClassement(laquestionpre,questionnaire,lesonde,vueEchelle.modrep);
-	
-			}
-			else if (laquestionpre.getIdTypeQuestion() =='l'){
-				this.s.afficherLibre(laquestionpre,questionnaire,lesonde,vueEchelle.modrep);
-	
-			}
-
-		}
-		
 
 	}
 

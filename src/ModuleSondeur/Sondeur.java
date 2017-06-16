@@ -44,8 +44,9 @@ public class Sondeur extends JPanel {
 	BDConnexionMySQL connexion;
 	
 	
-	public Sondeur (ModeleCommun modcom) {
+	public Sondeur (ModeleCommun mc) {
 		super();
+		this.modcom = mc;
 		this.connexion=this.modcom.getBdConnexion();
 		this.laBD=modcom.getBdGeneral();
 		this.bdSond= new BDModuleSondeur(this.connexion); 
@@ -127,7 +128,7 @@ public class Sondeur extends JPanel {
 		this.modrep=modrep;
 		afficherPanelDuHaut();
 		this.replibre = new Vue_Libre (this,lesonde,quest,questionnaire,modrep);
-		add(this.choixmultiples, "Center");
+		add(this.replibre, "Center");
 		validate();
 		repaint();
 	}
@@ -138,6 +139,8 @@ public class Sondeur extends JPanel {
 		afficherPanelDuHaut();
 		this.plusSondes=new Vue_PlusSondes(this);
 		add(this.fenetredebut,"Center");
+		validate();
+		repaint();
 
 
 	}

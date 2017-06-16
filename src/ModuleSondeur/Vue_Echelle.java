@@ -29,6 +29,7 @@ public class Vue_Echelle extends JPanel {
 	ModeleReponse modrep;
 	JSlider slider;
 	Sondeur s;
+	JButton [] lesboutons;
 
 	
 	public Vue_Echelle (Sondeur sondeur,Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
@@ -39,7 +40,8 @@ public class Vue_Echelle extends JPanel {
 		this.quest=quest;
 		this.modrep=modrep;
 		this.questnaire=questnaire;
-		
+		this.lesboutons=new JButton [modrep.bdgene.getListeQuestion(questnaire.getNumeroQuestionnaire()).size()];
+
 		afficherEchelle();
 	}
 	
@@ -64,7 +66,7 @@ public class Vue_Echelle extends JPanel {
 			panelHeader.add(panelInfoSond);
 			panelInfoSond.setLayout(new BoxLayout(panelInfoSond, BoxLayout.Y_AXIS));
 			
-			JLabel questionEtat = new JLabel("Question "+quest.getNumeroQuestion()+"/"+quest.getMaxValeur());
+			JLabel questionEtat = new JLabel("Question "+quest.getNumeroQuestion()+"/"+modrep.bdgene.getListeQuestion(questnaire.getNumeroQuestionnaire()).size());
 			questionEtat.setAlignmentX(Component.CENTER_ALIGNMENT);
 			questionEtat.setBorder(new EmptyBorder(20, 0, 5, 0));
 			panelInfoSond.add(questionEtat);
@@ -130,12 +132,11 @@ public class Vue_Echelle extends JPanel {
 		FlowLayout fl_panelLesQuestions = new FlowLayout(FlowLayout.CENTER, 5, 5);
 		panelLesQuestions.setLayout(fl_panelLesQuestions);
 		
-		JButton []lesboutons={};
 		for (Question q : modrep.bdgene.getListeQuestion(questnaire.getNumeroQuestionnaire()) ){
 			
-			lesboutons[q.getNumeroQuestion()]=new JButton(String.valueOf(q.getNumeroQuestion()));
+			lesboutons[q.getNumeroQuestion()-1] = new JButton(String.valueOf(q.getNumeroQuestion()));
 		
-			panelLesQuestions.add(lesboutons[q.getNumeroQuestion()]);
+			panelLesQuestions.add(lesboutons[q.getNumeroQuestion()-1]);
 
 		}
 		
@@ -147,7 +148,7 @@ public class Vue_Echelle extends JPanel {
 		panelNavi.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
 		
-		if (quest.getNumeroQuestion()==0){
+		if (quest.getNumeroQuestion()==1){
 			
 			JButton btnSuivant = new JButton("Suivant");
 			btnSuivant.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -161,14 +162,14 @@ public class Vue_Echelle extends JPanel {
 			btnValide.addActionListener(new ControleurEchelle(this));
 			panelValid.add(btnValide);
 			
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("Precedent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new ControleurEchelle(this));
 			panelNavi.add(btnPrecedent);
 		}
 		
 		else {
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("Precedent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new ControleurEchelle(this));
 			panelNavi.add(btnPrecedent);

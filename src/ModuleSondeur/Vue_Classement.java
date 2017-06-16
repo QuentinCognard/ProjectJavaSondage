@@ -29,13 +29,14 @@ public class Vue_Classement extends JPanel {
 	ModeleReponse modrep;
 	ArrayList<ValeurPossible> valeursPossibles;
 	Sondeur s;
+	int classement;
 
 	
 	JPanel []lespanelschoix;
 	JButton []lesboutonschoix;
 	JLabel []leslabelschoix;
 	
-	
+	JButton [] lesboutons;
 	
 	public Vue_Classement (Sondeur sondeur,Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
 		super();
@@ -46,7 +47,11 @@ public class Vue_Classement extends JPanel {
 		this.modrep=modrep;
 		this.questnaire=questnaire;
 		this.valeursPossibles=modrep.bdgene.getListeValPossible(questnaire.getNumeroQuestionnaire(), quest.getNumeroQuestion());
-
+		this.lesboutons=new JButton [modrep.bdgene.getListeQuestion(questnaire.getNumeroQuestionnaire()).size()];
+		this.lespanelschoix=new JPanel [valeursPossibles.size()];
+		this.lesboutonschoix=new JButton [valeursPossibles.size()];
+		this.leslabelschoix=new JLabel [valeursPossibles.size()];
+		
 		
 		afficherClassement();
 	}
@@ -71,7 +76,7 @@ public class Vue_Classement extends JPanel {
 			panelHeader.add(panelInfoSond);
 			panelInfoSond.setLayout(new BoxLayout(panelInfoSond, BoxLayout.Y_AXIS));
 			
-			JLabel questionEtat = new JLabel("Question "+quest.getNumeroQuestion()+"/"+quest.getMaxValeur());
+			JLabel questionEtat = new JLabel("Question "+quest.getNumeroQuestion()+"/"+modrep.bdgene.getListeQuestion(questnaire.getNumeroQuestionnaire()).size());
 			questionEtat.setAlignmentX(Component.CENTER_ALIGNMENT);
 			questionEtat.setBorder(new EmptyBorder(20, 0, 5, 0));
 			panelInfoSond.add(questionEtat);
@@ -110,7 +115,7 @@ public class Vue_Classement extends JPanel {
 			intituleQuestion.setAlignmentX(Component.CENTER_ALIGNMENT);
 			panelQuestion.add(intituleQuestion);
 			
-			JButton btnRein = new JButton("R�initialiser");
+			JButton btnRein = new JButton("Reinitialiser");
 			btnRein.setBounds(750, 10, 150, 30);
 			btnRein.addActionListener(new ControleurClassement(this));
 			panelQuestion.add(btnRein);
@@ -125,21 +130,26 @@ public class Vue_Classement extends JPanel {
 			
 			
 			for (ValeurPossible valpos : valeursPossibles){
-			
-				lespanelschoix[valpos.getIdValeur()]=new JPanel();
-				lespanelschoix[valpos.getIdValeur()].setMaximumSize(new Dimension(1000, 40));
-				lespanelschoix[valpos.getIdValeur()].setBorder(null);
-				panelListeChoix.add(lespanelschoix[valpos.getIdValeur()]);
-				lespanelschoix[valpos.getIdValeur()].setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+
+				lespanelschoix[valpos.getIdValeur()-1]=new JPanel();
+				lespanelschoix[valpos.getIdValeur()-1].setMaximumSize(new Dimension(1000, 40));
+				lespanelschoix[valpos.getIdValeur()-1].setBorder(null);
+				panelListeChoix.add(lespanelschoix[valpos.getIdValeur()-1]);
+				lespanelschoix[valpos.getIdValeur()-1].setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 				
-					lesboutonschoix[valpos.getIdValeur()] = new JButton(valpos.getValeur());
-					lesboutonschoix[valpos.getIdValeur()].addActionListener(new ControleurClassement(this));
-					lespanelschoix[valpos.getIdValeur()].add(lesboutonschoix[valpos.getIdValeur()]);
+					lesboutonschoix[valpos.getIdValeur()-1] = new JButton(valpos.getValeur());
+					lesboutonschoix[valpos.getIdValeur()-1].addActionListener(new ControleurClassement(this));
+					lespanelschoix[valpos.getIdValeur()-1].add(lesboutonschoix[valpos.getIdValeur()-1]);
 					
-					leslabelschoix[valpos.getIdValeur()] = new JLabel(": 0");
-					leslabelschoix[valpos.getIdValeur()].setBorder(new EmptyBorder(0, 100, 0, 0));
-					lespanelschoix[valpos.getIdValeur()].add(leslabelschoix[valpos.getIdValeur()]);
+					leslabelschoix[valpos.getIdValeur()-1] = new JLabel(": 0");
+					leslabelschoix[valpos.getIdValeur()-1].setBorder(new EmptyBorder(0, 100, 0, 0));
+					lespanelschoix[valpos.getIdValeur()-1].add(leslabelschoix[valpos.getIdValeur()-1]);
 			}
+		
+		System.out.println(lespanelschoix);
+		System.out.println(lesboutonschoix);
+		System.out.println(leslabelschoix);
 		
 		JPanel panelLesQuestions = new JPanel();
 		panelLesQuestions.setMaximumSize(new Dimension(1000, 1000));
@@ -149,12 +159,11 @@ public class Vue_Classement extends JPanel {
 		FlowLayout fl_panelLesQuestions = new FlowLayout(FlowLayout.CENTER, 5, 5);
 		panelLesQuestions.setLayout(fl_panelLesQuestions);
 		
-		JButton []lesboutons={};
 		for (Question q : modrep.bdgene.getListeQuestion(questnaire.getNumeroQuestionnaire()) ){
 			
-			lesboutons[q.getNumeroQuestion()]=new JButton(String.valueOf(q.getNumeroQuestion()));
+			lesboutons[q.getNumeroQuestion()-1]=new JButton(String.valueOf(q.getNumeroQuestion()));
 		
-			panelLesQuestions.add(lesboutons[q.getNumeroQuestion()]);
+			panelLesQuestions.add(lesboutons[q.getNumeroQuestion()-1]);
 
 		}
 		
@@ -166,7 +175,7 @@ public class Vue_Classement extends JPanel {
 		panelPrincipal.add(panelNavi);
 		panelNavi.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		if (quest.getNumeroQuestion()==0){
+		if (quest.getNumeroQuestion()==1){
 			
 			JButton btnSuivant = new JButton("Suivant");
 			btnSuivant.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -180,14 +189,14 @@ public class Vue_Classement extends JPanel {
 			btnValide.addActionListener(new ControleurClassement(this));
 			panelValid.add(btnValide);
 			
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("Precedent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new ControleurClassement(this));
 			panelNavi.add(btnPrecedent);
 		}
 		
 		else {
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("Precedent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new ControleurClassement(this));
 			panelNavi.add(btnPrecedent);

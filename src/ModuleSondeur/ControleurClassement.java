@@ -32,7 +32,7 @@ public class ControleurClassement implements ActionListener {
 
 		
 		if (vueClassement.quest.getNumeroQuestion()<vueClassement.modrep.listeQuestion.size()){
-			this.laquestionsuiv=vueClassement.modrep.listeQuestion.get(vueClassement.quest.getNumeroQuestion()+1);
+			this.laquestionsuiv=vueClassement.modrep.listeQuestion.get(vueClassement.quest.getNumeroQuestion());
 		}
 		
 		if (vueClassement.quest.getNumeroQuestion()>0){
@@ -43,16 +43,17 @@ public class ControleurClassement implements ActionListener {
 		this.lesonde=vueClassement.lesonde;
 		this.questionnaire=vueClassement.questnaire;
 		this.listeQuest=vueClassement.modrep.bdgene.getListeQuestion(questionnaire.getNumeroQuestionnaire());
-
+		this.listeclassee=new ArrayList<String>();
 		
 	}
 		
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		
-		this.val=listeclassee.toString();
-		
+		if (listeclassee!=null){
+			this.val=listeclassee.toString();
+		}
+		this.val="";
 		if (((JButton)e.getSource()).getText().equals("Annuler sondage")){
 			this.s.afficherFenetrePrinc();
 		}
@@ -62,6 +63,69 @@ public class ControleurClassement implements ActionListener {
 			vueClassement.modrep.bdsond.setSondeInterroger(questionnaire,lesonde);
 			this.s.afficherFenetrePrinc();
 
+		}
+		
+		
+		else if (((JButton)e.getSource()).getText().equals("Suivant")){
+			vueClassement.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueClassement.quest.getNumeroQuestion(), vueClassement.quest.getIdTypeQuestion(), val);
+			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
+				this.s.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
+			}
+			else if (laquestionsuiv.getIdTypeQuestion() =='m'){
+				this.s.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
+	
+			}
+			else if (laquestionsuiv.getIdTypeQuestion() =='c'){
+				this.s.afficherClassement(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
+	
+			}
+			else if (laquestionsuiv.getIdTypeQuestion() =='l'){
+				this.s.afficherLibre(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
+	
+			}
+
+		}
+		
+		else if (((JButton)e.getSource()).getText().equals("Precedent")){
+			vueClassement.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueClassement.quest.getNumeroQuestion(), vueClassement.quest.getIdTypeQuestion(), val);
+			if (laquestionpre.getIdTypeQuestion() =='u' || laquestionpre.getIdTypeQuestion() =='n'){
+				this.s.afficherEchelle(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
+			}
+			else if (laquestionpre.getIdTypeQuestion() =='m'){
+				this.s.afficherChoixMultiples(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
+	
+			}
+			else if (laquestionpre.getIdTypeQuestion() =='c'){
+				this.s.afficherClassement(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
+	
+			}
+			else if (laquestionpre.getIdTypeQuestion() =='l'){
+				this.s.afficherLibre(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
+	
+			}
+
+		}
+		
+		
+		
+		else if (((JButton)e.getSource()).getText().equals("Reinitialiser")){
+			for (JLabel label : vueClassement.leslabelschoix){
+				label.setText(": 0");
+				
+			}
+			vueClassement.classement=0;
+			this.val="";
+		}
+		
+		else if (((JButton)e.getSource()).getText().length()>1){
+			listeclassee.add(((JButton)e.getSource()).getText());
+			vueClassement.classement+=1;
+			for (int i = 0; i<vueClassement.lesboutonschoix.length;i++){
+				if (vueClassement.lesboutonschoix[i].getText()==((JButton)e.getSource()).getText()){
+					this.idvalpos=i;
+				}
+			}
+			vueClassement.leslabelschoix[idvalpos].setText(": "+String.valueOf(vueClassement.classement));
 		}
 		
 		else if (Integer.parseInt(((JButton)e.getSource()).getText())<listeQuest.size()){
@@ -86,67 +150,6 @@ public class ControleurClassement implements ActionListener {
 	
 			}
 
-		}
-		
-		else if (((JButton)e.getSource()).getText().equals("Suivant")){
-			vueClassement.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueClassement.quest.getNumeroQuestion(), vueClassement.quest.getIdTypeQuestion(), val);
-			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
-				this.s.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
-			}
-			else if (laquestionsuiv.getIdTypeQuestion() =='m'){
-				this.s.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
-	
-			}
-			else if (laquestionsuiv.getIdTypeQuestion() =='c'){
-				this.s.afficherClassement(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
-	
-			}
-			else if (laquestionsuiv.getIdTypeQuestion() =='l'){
-				this.s.afficherLibre(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
-	
-			}
-
-		}
-		
-		else if (((JButton)e.getSource()).getText().equals("Précédent")){
-			vueClassement.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueClassement.quest.getNumeroQuestion(), vueClassement.quest.getIdTypeQuestion(), val);
-			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
-				this.s.afficherEchelle(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
-			}
-			else if (laquestionpre.getIdTypeQuestion() =='m'){
-				this.s.afficherChoixMultiples(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
-	
-			}
-			else if (laquestionpre.getIdTypeQuestion() =='c'){
-				this.s.afficherClassement(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
-	
-			}
-			else if (laquestionpre.getIdTypeQuestion() =='l'){
-				this.s.afficherLibre(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
-	
-			}
-
-		}
-		
-		
-		else if (((JButton)e.getSource()).getText().equals("Réinitialiser")){
-			for (JLabel label : vueClassement.leslabelschoix){
-				label.setText(": 0");
-				
-			}
-			this.classement=0;
-			this.val="";
-		}
-		
-		else{
-			listeclassee.add(((JButton)e.getSource()).getText());
-			this.classement+=1;
-			for (int i = 0; i<vueClassement.lesboutonschoix.length;i++){
-				if (vueClassement.lesboutonschoix[i].getText()==((JButton)e.getSource()).getText()){
-					this.idvalpos=i;
-				}
-			}
-			vueClassement.leslabelschoix[idvalpos].setText(": "+String.valueOf(classement));
 		}
 		
 
