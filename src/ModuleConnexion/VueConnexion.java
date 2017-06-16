@@ -91,6 +91,7 @@ public class VueConnexion extends JPanel {
 			login.setFont(login.getFont().deriveFont(25f));
 
 			this.zonedesaisielogin = new JTextField (20);
+			this.zonedesaisielogin.addKeyListener(new ActionSeConnecterKeyListener(this.connexion));
 			boiteLogin.add(this.zonedesaisielogin);
 		
 		// partie saisie du mot de passe
@@ -104,6 +105,7 @@ public class VueConnexion extends JPanel {
 
 			this.zonedesaisiemotdepasse = new JPasswordField (20);
 			this.zonedesaisiemotdepasse.setEchoChar('*');
+			this.zonedesaisiemotdepasse.addKeyListener(new ActionSeConnecterKeyListener(this.connexion));
 			boiteMotDePasse.add(this.zonedesaisiemotdepasse);
 		
 		// partie mot de passe oublie
