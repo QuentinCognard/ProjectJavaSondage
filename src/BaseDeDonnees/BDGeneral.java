@@ -48,10 +48,12 @@ public class BDGeneral {
 		  String supprimerQuestions = "DELETE FROM QUESTION WHERE idQ = "+identifiantQuestionnaire+";";
 		  String supprimerValeursPossibles = "DELETE FROM VALPOSSIBLE WHERE idQ = "+identifiantQuestionnaire+";";
 		  String supprimerReponses = "DELETE FROM REPONDRE WHERE idQ = "+identifiantQuestionnaire+";";
+		  String supprimerInterroger = "DELETE FROM INTERROGER WHERE idQ = "+identifiantQuestionnaire+";";
 		  this.st.executeUpdate(supprimerValeursPossibles);
 		  this.st.executeUpdate(supprimerReponses);
 		  this.st.executeUpdate(supprimerQuestions);
 		  this.st.executeUpdate(supprimerQuestionnaire);
+		  this.st.executeUpdate(supprimerInterroger);
 	  }
 		
 	  catch (SQLException e) {    
