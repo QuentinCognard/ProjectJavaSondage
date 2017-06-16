@@ -20,12 +20,15 @@ public class ControleurChoixMultiples implements ActionListener {
 	private Questionnaire questionnaire;
 	private String val;
 	private ArrayList<String> listechoix;
-	
+	private Sondeur s;
+
 	private ArrayList<Question> listeQuest;
 
 	
 	public ControleurChoixMultiples(Vue_ChoixMultiples vueChoixmultiples){
 		this.vueChoixmultiples=vueChoixmultiples;
+		this.s=vueChoixmultiples.s;
+
 		if (vueChoixmultiples.quest.getNumeroQuestion()<vueChoixmultiples.modrep.listeQuestion.size()){
 			this.laquestionsuiv=vueChoixmultiples.modrep.listeQuestion.get(vueChoixmultiples.quest.getNumeroQuestion()+1);
 		}
@@ -45,7 +48,6 @@ public class ControleurChoixMultiples implements ActionListener {
 		
 	public void actionPerformed(ActionEvent e) {
 		
-		Sondeur fenetresondage=(Sondeur) vueChoixmultiples.getRootPane().getParent();
 		
 		for (Checkbox choix : vueChoixmultiples.lesCheckbox ){
 			if (choix.getState()==true){
@@ -59,13 +61,13 @@ public class ControleurChoixMultiples implements ActionListener {
 		val=listechoix.toString();
 		
 		if (((JButton)e.getSource()).getText().equals("Annuler sondage")){
-			fenetresondage.afficherFenetrePrinc();
+			this.s.afficherFenetrePrinc();
 		}
 		
 		else if (((JButton)e.getSource()).getText().equals("Valider sondage")){
 			vueChoixmultiples.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueChoixmultiples.quest.getNumeroQuestion(), vueChoixmultiples.quest.getIdTypeQuestion(), val);
 			vueChoixmultiples.modrep.bdsond.setSondeInterroger(questionnaire,lesonde);
-			fenetresondage.afficherFenetrePrinc();
+			this.s.afficherFenetrePrinc();
 
 		}
 		
@@ -76,18 +78,18 @@ public class ControleurChoixMultiples implements ActionListener {
 			vueChoixmultiples.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueChoixmultiples.quest.getNumeroQuestion(), vueChoixmultiples.quest.getIdTypeQuestion(), val);
 			
 			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
-				fenetresondage.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
+				this.s.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='m'){
-				fenetresondage.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
+				this.s.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
 	
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='c'){
-				fenetresondage.afficherClassement(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
+				this.s.afficherClassement(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
 	
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='l'){
-				fenetresondage.afficherLibre(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
+				this.s.afficherLibre(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
 	
 			}
 
@@ -96,18 +98,18 @@ public class ControleurChoixMultiples implements ActionListener {
 		else if (((JButton)e.getSource()).getText().equals("Suivant")){
 			vueChoixmultiples.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueChoixmultiples.quest.getNumeroQuestion(), vueChoixmultiples.quest.getIdTypeQuestion(), val);
 			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
-				fenetresondage.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
+				this.s.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='m'){
-				fenetresondage.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
+				this.s.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
 	
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='c'){
-				fenetresondage.afficherClassement(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
+				this.s.afficherClassement(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
 	
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='l'){
-				fenetresondage.afficherLibre(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
+				this.s.afficherLibre(laquestionsuiv,questionnaire,lesonde,vueChoixmultiples.modrep);
 	
 			}
 
@@ -116,18 +118,18 @@ public class ControleurChoixMultiples implements ActionListener {
 		else if (((JButton)e.getSource()).getText().equals("Précédent")){
 			vueChoixmultiples.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueChoixmultiples.quest.getNumeroQuestion(), vueChoixmultiples.quest.getIdTypeQuestion(), val);
 			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
-				fenetresondage.afficherEchelle(laquestionpre,questionnaire,lesonde,vueChoixmultiples.modrep);
+				this.s.afficherEchelle(laquestionpre,questionnaire,lesonde,vueChoixmultiples.modrep);
 			}
 			else if (laquestionpre.getIdTypeQuestion() =='m'){
-				fenetresondage.afficherChoixMultiples(laquestionpre,questionnaire,lesonde,vueChoixmultiples.modrep);
+				this.s.afficherChoixMultiples(laquestionpre,questionnaire,lesonde,vueChoixmultiples.modrep);
 	
 			}
 			else if (laquestionpre.getIdTypeQuestion() =='c'){
-				fenetresondage.afficherClassement(laquestionpre,questionnaire,lesonde,vueChoixmultiples.modrep);
+				this.s.afficherClassement(laquestionpre,questionnaire,lesonde,vueChoixmultiples.modrep);
 	
 			}
 			else if (laquestionpre.getIdTypeQuestion() =='l'){
-				fenetresondage.afficherLibre(laquestionpre,questionnaire,lesonde,vueChoixmultiples.modrep);
+				this.s.afficherLibre(laquestionpre,questionnaire,lesonde,vueChoixmultiples.modrep);
 	
 			}
 

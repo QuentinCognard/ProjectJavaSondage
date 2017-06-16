@@ -28,11 +28,13 @@ public class Vue_Echelle extends JPanel {
 	Question quest;
 	ModeleReponse modrep;
 	JSlider slider;
+	Sondeur s;
 
 	
-	public Vue_Echelle (Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
+	public Vue_Echelle (Sondeur sondeur,Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
 		super();
-		
+		this.s=sondeur;
+
 		this.lesonde=lesonde;
 		this.quest=quest;
 		this.modrep=modrep;

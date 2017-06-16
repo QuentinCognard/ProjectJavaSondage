@@ -74,7 +74,7 @@ public class Sondeur extends JPanel {
 	public void afficherFenetrePrinc(){
 		removeAll();
 		afficherPanelDuHaut();
-		this.fenetredebut=new Vue_FenetrPrinc(this.laBD,lesonde,bdSond);
+		this.fenetredebut=new Vue_FenetrPrinc(this,this.laBD,lesonde,bdSond);
 		add(this.fenetredebut,"Center");
 
 
@@ -87,7 +87,7 @@ public class Sondeur extends JPanel {
 		this.questionnaire=questionnaire;
 		this.modrep=modrep;
 		afficherPanelDuHaut();
-		this.choixmultiples = new Vue_ChoixMultiples (lesonde,quest,questionnaire,modrep);
+		this.choixmultiples = new Vue_ChoixMultiples (this,lesonde,quest,questionnaire,modrep);
 		add(this.choixmultiples, "Center");
 		validate();
 		repaint();
@@ -100,7 +100,7 @@ public class Sondeur extends JPanel {
 		this.questionnaire=questionnaire;
 		afficherPanelDuHaut();
 		this.modrep=modrep;
-		this.classement = new Vue_Classement (lesonde,quest,questionnaire,modrep);
+		this.classement = new Vue_Classement (this,lesonde,quest,questionnaire,modrep);
 		add(this.classement, "Center");
 		validate();
 		repaint();
@@ -113,7 +113,7 @@ public class Sondeur extends JPanel {
 		this.questionnaire=questionnaire;
 		this.modrep=modrep;
 		afficherPanelDuHaut();
-		this.echelle = new Vue_Echelle (lesonde,quest,questionnaire,modrep);
+		this.echelle = new Vue_Echelle (this,lesonde,quest,questionnaire,modrep);
 		add(this.echelle, "Center");
 		validate();
 		repaint();
@@ -126,7 +126,7 @@ public class Sondeur extends JPanel {
 		this.questionnaire=questionnaire;
 		this.modrep=modrep;
 		afficherPanelDuHaut();
-		this.replibre = new Vue_Libre (lesonde,quest,questionnaire,modrep);
+		this.replibre = new Vue_Libre (this,lesonde,quest,questionnaire,modrep);
 		add(this.choixmultiples, "Center");
 		validate();
 		repaint();
@@ -136,7 +136,7 @@ public class Sondeur extends JPanel {
 	public void afficherPlusDeSonde(){
 		removeAll();
 		afficherPanelDuHaut();
-		this.plusSondes=new Vue_PlusSondes();
+		this.plusSondes=new Vue_PlusSondes(this);
 		add(this.fenetredebut,"Center");
 
 

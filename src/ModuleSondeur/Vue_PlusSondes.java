@@ -9,9 +9,12 @@ import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 
 public class Vue_PlusSondes extends JPanel {
-	public Vue_PlusSondes () {
+	Sondeur s;
+	
+	public Vue_PlusSondes (Sondeur sondeur) {
 		super();
 		
+		this.s=sondeur;
 		afficher();
 	}
 	

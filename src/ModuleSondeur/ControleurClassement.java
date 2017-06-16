@@ -20,13 +20,16 @@ public class ControleurClassement implements ActionListener {
 	private String val;
 	private int classement;
 	private int idvalpos;
-	
+	private Sondeur s;
+
 	private ArrayList<Question> listeQuest;
 	
 	private ArrayList<String> listeclassee;
 	
 	public ControleurClassement(Vue_Classement vueClassement){
 		this.vueClassement=vueClassement;
+		this.s=vueClassement.s;
+
 		
 		if (vueClassement.quest.getNumeroQuestion()<vueClassement.modrep.listeQuestion.size()){
 			this.laquestionsuiv=vueClassement.modrep.listeQuestion.get(vueClassement.quest.getNumeroQuestion()+1);
@@ -47,18 +50,17 @@ public class ControleurClassement implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		Sondeur fenetresondage=(Sondeur) vueClassement.getRootPane().getParent();
 		
 		this.val=listeclassee.toString();
 		
 		if (((JButton)e.getSource()).getText().equals("Annuler sondage")){
-			fenetresondage.afficherFenetrePrinc();
+			this.s.afficherFenetrePrinc();
 		}
 		
 		else if (((JButton)e.getSource()).getText().equals("Valider sondage")){
 			vueClassement.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueClassement.quest.getNumeroQuestion(), vueClassement.quest.getIdTypeQuestion(), val);
 			vueClassement.modrep.bdsond.setSondeInterroger(questionnaire,lesonde);
-			fenetresondage.afficherFenetrePrinc();
+			this.s.afficherFenetrePrinc();
 
 		}
 		
@@ -69,18 +71,18 @@ public class ControleurClassement implements ActionListener {
 			vueClassement.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueClassement.quest.getNumeroQuestion(), vueClassement.quest.getIdTypeQuestion(), val);
 			
 			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
-				fenetresondage.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
+				this.s.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='m'){
-				fenetresondage.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
+				this.s.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
 	
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='c'){
-				fenetresondage.afficherClassement(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
+				this.s.afficherClassement(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
 	
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='l'){
-				fenetresondage.afficherLibre(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
+				this.s.afficherLibre(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
 	
 			}
 
@@ -89,18 +91,18 @@ public class ControleurClassement implements ActionListener {
 		else if (((JButton)e.getSource()).getText().equals("Suivant")){
 			vueClassement.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueClassement.quest.getNumeroQuestion(), vueClassement.quest.getIdTypeQuestion(), val);
 			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
-				fenetresondage.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
+				this.s.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='m'){
-				fenetresondage.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
+				this.s.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
 	
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='c'){
-				fenetresondage.afficherClassement(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
+				this.s.afficherClassement(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
 	
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='l'){
-				fenetresondage.afficherLibre(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
+				this.s.afficherLibre(laquestionsuiv,questionnaire,lesonde,vueClassement.modrep);
 	
 			}
 
@@ -109,18 +111,18 @@ public class ControleurClassement implements ActionListener {
 		else if (((JButton)e.getSource()).getText().equals("Précédent")){
 			vueClassement.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueClassement.quest.getNumeroQuestion(), vueClassement.quest.getIdTypeQuestion(), val);
 			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
-				fenetresondage.afficherEchelle(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
+				this.s.afficherEchelle(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
 			}
 			else if (laquestionpre.getIdTypeQuestion() =='m'){
-				fenetresondage.afficherChoixMultiples(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
+				this.s.afficherChoixMultiples(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
 	
 			}
 			else if (laquestionpre.getIdTypeQuestion() =='c'){
-				fenetresondage.afficherClassement(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
+				this.s.afficherClassement(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
 	
 			}
 			else if (laquestionpre.getIdTypeQuestion() =='l'){
-				fenetresondage.afficherLibre(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
+				this.s.afficherLibre(laquestionpre,questionnaire,lesonde,vueClassement.modrep);
 	
 			}
 

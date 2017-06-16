@@ -37,9 +37,11 @@ public class Vue_Libre extends JPanel{
 	Question quest;
 	ModeleReponse modrep;
 	JTextField reponse;
-	
-	public Vue_Libre(Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
+	Sondeur s;
+
+	public Vue_Libre(Sondeur sondeur,Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
 		super();
+		this.s=sondeur;
 
 		this.lesonde=lesonde;
 		this.quest=quest;

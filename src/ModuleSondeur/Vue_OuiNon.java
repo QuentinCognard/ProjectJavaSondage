@@ -40,9 +40,11 @@ public class Vue_OuiNon extends JPanel{
 	Questionnaire questnaire;
 	Sonde lesonde;
 	JPanel panelPrincipal;
-	
-	public Vue_OuiNon(Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
+	Sondeur s;
+
+	public Vue_OuiNon(Sondeur sondeur,Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
 		super();
+		this.s=sondeur;
 
 		this.lesonde=lesonde;
 		this.quest=quest;
