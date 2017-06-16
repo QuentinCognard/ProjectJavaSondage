@@ -6,14 +6,18 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import BaseDeDonnees.Questionnaire;
+
 public class VueAjouterQuestion extends JPanel{
 	Concepteur c;
+	Questionnaire q;
 	VuePanelAjouterQuestion vue;
 	AffichageQuestionnaire vueQuestionnaire;
 	
-	VueAjouterQuestion(Concepteur c,AffichageQuestionnaire vueQuestionnaire){
+	VueAjouterQuestion(Concepteur c,AffichageQuestionnaire vueQuestionnaire,Questionnaire q){
 		super();
 		this.c = c;
+		this.q = q;
 		this.vueQuestionnaire = vueQuestionnaire;
 		this.vue = new VuePanelAjouterQuestion();
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -31,7 +35,7 @@ public class VueAjouterQuestion extends JPanel{
 		boutonAnnuler.setFont(police);
 		JButton boutonCreer = new JButton("Créer");
 		boutonCreer.setFont(police);
-		ActBoutonInfoAjouterQuestion actBouton = new ActBoutonInfoAjouterQuestion(c,this,vueQuestionnaire);
+		ActBoutonInfoAjouterQuestion actBouton = new ActBoutonInfoAjouterQuestion(c,this,vueQuestionnaire,this.q);
 		boutonAnnuler.addActionListener(actBouton);
 		boutonCreer.addActionListener(actBouton);
 		panelBoutons.add(boutonAnnuler);

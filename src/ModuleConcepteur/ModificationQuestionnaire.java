@@ -16,26 +16,30 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import BaseDeDonnees.Questionnaire;
+
 public class ModificationQuestionnaire extends JPanel{
 	Concepteur c;
+	Questionnaire q;
 	private JPanel panelCentral;
 	private JTextField valId;
 	private JTextField valNom;
 	private JTextField valPanel;
-	private JTextField valSociete;
+	private JTextField valClient;
 	private JTextField valTauxReponse;
-	private String id;
+	private int id;
 	private String nom;
-	private String panel;
-	private String societe;
+	private int panel;
+	private int client;
 	private String tauxReponse;
-	ModificationQuestionnaire(Concepteur c,String id,String nom, String panel, String societe,String tauxReponse){
+	ModificationQuestionnaire(Concepteur c,Questionnaire q){
 		this.c = c;
+		this.q = q;
 		this.panelCentral = new JPanel();
-		this.id = id;
-		this.nom = nom;
-		this.panel = panel;
-		this.societe = societe;
+		this.id = q.getNumeroQuestionnaire();
+		this.nom = q.getTitreQuestionnaire();
+		this.panel = q.getIdentifiantPanel();
+		this.client = q.getNumClient();
 		this.tauxReponse = tauxReponse;
 		panelCentral();
 		c.add(panelCentral);
@@ -103,10 +107,10 @@ public class ModificationQuestionnaire extends JPanel{
 		JLabel societe = new JLabel("Société concernée : ");
 		societe.setBorder(new EmptyBorder(10,30,10,10));
 		societe.setFont(police);
-		this.valSociete = new JTextField(this.societe);
-		valSociete.setFont(police);
+		this.valClient = new JTextField(this.client);
+		valClient.setFont(police);
 		panelSociete.add(societe);
-		panelSociete.add(valSociete);
+		panelSociete.add(valClient);
 		JPanel panelTauxReponse = new JPanel();
 		panelTauxReponse.setLayout(new FlowLayout(FlowLayout.LEFT,20,0));
 		JLabel tauxReponse = new JLabel("Taux de réponses minimum : ");
@@ -163,7 +167,7 @@ public class ModificationQuestionnaire extends JPanel{
 		JButton modifier = new JButton("Modifier");
 		panelQuestionBis.add(modifier);
 		JButton supprimer = new JButton("X");
-		ActBoutonModifQuestionnaire actBouton = new ActBoutonModifQuestionnaire(this.c,this);
+		ActBoutonModifQuestionnaire actBouton = new ActBoutonModifQuestionnaire(this.c,this,this.q);
 		supprimer.addActionListener(actBouton);
 		panelQuestionBis.add(supprimer);
 		panelQuestion.setBorder(new EmptyBorder(3,10,3,10));
@@ -175,7 +179,7 @@ public class ModificationQuestionnaire extends JPanel{
 		JPanel panelBoutons = new JPanel();
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER,120,0));
 		panelBoutons.setBorder(new EmptyBorder(50,10,50,10));
-		ActBoutonModifQuestionnaire actBoutons = new ActBoutonModifQuestionnaire(this.c,this);
+		ActBoutonModifQuestionnaire actBoutons = new ActBoutonModifQuestionnaire(this.c,this,this.q);
 		JButton boutonRetour = new JButton("Annuler");
 		boutonRetour.addActionListener(actBoutons);
 		boutonRetour.setFont(police);
@@ -195,23 +199,23 @@ public class ModificationQuestionnaire extends JPanel{
 	public String getPanel(){
 		return this.valPanel.getText();
 	}
-	public String getSociete(){
-		return this.valSociete.getText();
+	public String getClient(){
+		return this.valClient.getText();
 	}
 	public String getTauxReponse(){
 		return this.valTauxReponse.getText();
 	}
-	public String getIdAnnuler(){
+	public int getIdAnnuler(){
 		return this.id;
 	}
 	public String getNomAnnuler(){
 		return this.nom;
 	}
-	public String getPanelAnnuler(){
+	public int getPanelAnnuler(){
 		return this.panel;
 	}
-	public String getSocieteAnnuler(){
-		return this.societe;
+	public int getClientAnnuler(){
+		return this.client;
 	}
 	public String getTauxReponseAnnuler(){
 		return this.tauxReponse;
