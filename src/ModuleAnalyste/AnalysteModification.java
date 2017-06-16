@@ -5,7 +5,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -26,6 +26,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
+import BaseDeDonnees.Question;
+import BaseDeDonnees.Repondre;
 import ModuleAnalyste.AnalysteController.ModifController;
 
 
@@ -36,12 +38,17 @@ public class AnalysteModification {
 	
 	private ModifController mc;
 	
+	
 	public AnalysteModification(Analyste ana){
-		mc = new ModifController(ana);
+		mc = new ModifController(ana);//controller des boutons
 		ana.afficherPanelDuHaut();
 		MofifierPanelDuHaut(ana);
 		afficherPanelCentre(ana);
 		afficherPanelBas(ana);
+	}
+	
+	private void creerListeRéponses(){
+		
 	}
 	
 	public void MofifierPanelDuHaut(Container cont){
@@ -159,6 +166,7 @@ public class AnalysteModification {
 			pReponse.add(pGraph,"West");
 			
 			//Tableau
+			JScrollPane pTab = new JScrollPane();
 			String[] ColumnNames = new String[]{"Regpmt/Rep","Moi", "Lui", "Trump"};
 			String[][] values = new String[][]{{"18-25 ans","25","12","85"},{"25-35 ans","2","12","952"}};
 			DefaultTableModel modele = new DefaultTableModel(values,ColumnNames){
@@ -171,7 +179,8 @@ public class AnalysteModification {
 			JTable tab = new JTable();
 			tab.setModel(modele);
 			tab.setFont(new Font("Arial", Font.PLAIN, 14));
-			pGraph.add(tab,"Tableau");
+			pTab.setViewportView(tab);
+			pGraph.add(pTab,"Tableau");
 			
 			//Graphique Camembert
 			DefaultPieDataset data = new DefaultPieDataset();
