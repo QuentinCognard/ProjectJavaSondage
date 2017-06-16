@@ -35,9 +35,10 @@ public class BDModuleAnalyste {
 		}
 		
 		catch (SQLException e) {
-			return null;
+			return listeReponses;
 		}
 	}
 
+	
 
 }

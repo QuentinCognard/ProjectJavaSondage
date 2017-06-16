@@ -135,7 +135,7 @@ public class VueConnexion extends JPanel {
 			boiteBouton.add(this.boutonconnexion);
 			this.boutonconnexion.setPreferredSize(new Dimension(250, 50));
 			this.boutonconnexion.setFont(this.boutonconnexion.getFont().deriveFont(20f));
-			this.boutonconnexion.addActionListener(new ActionSeConnecter(this.connexion));
+			this.boutonconnexion.addActionListener(new ActionSeConnecter(this.connexion));		
 	}
 
 }

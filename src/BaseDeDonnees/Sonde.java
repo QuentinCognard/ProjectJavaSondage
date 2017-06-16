@@ -8,9 +8,9 @@ public class Sonde {
 	private String prenomSonde;
 	private Date dateNaissanceSonde;
 	private String telephoneSonde;
-	private char identifiantCaracteristique;
+	private String identifiantCaracteristique;
 	
-	public Sonde (int nums, String noms, String ps, Date ddns, String ts, char idc) {
+	public Sonde (int nums, String noms, String ps, Date ddns, String ts, String idc) {
 		this.numeroSonde = nums;
 		this.nomSonde = noms;
 		this.prenomSonde = ps;
@@ -39,7 +39,7 @@ public class Sonde {
 		return telephoneSonde;
 	}
 
-	public char getIdentifiantCaracteristique() {
+	public String getIdentifiantCaracteristique() {
 		return identifiantCaracteristique;
 	}
 	
