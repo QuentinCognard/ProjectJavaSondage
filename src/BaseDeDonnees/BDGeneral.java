@@ -79,7 +79,23 @@ public class BDGeneral {
 	  }
   }
   
-  
+  public ArrayList <ValeurPossible> getListeValPossible (int idQuestionnaire, int idQuestion) {
+	  ArrayList <ValeurPossible> listevaleur = new ArrayList <ValeurPossible> ();
+	  try {
+		  String requete = "SELECT * FROM VALPOSSIBLE WHERE idQ = "+idQuestionnaire+" and numQ = "+idQuestion+";";
+		  ResultSet rs = this.st.executeQuery(requete);
+		  while (rs.next()) {
+			  ValeurPossible val = new ValeurPossible (rs.getInt("idQ"), rs.getInt("numQ"), rs.getInt("idV"), rs.getString("Valeur"));
+			  listevaleur.add(val);
+		  }
+		  rs.close();
+		  return listevaleur;
+	  }
+	  
+	  catch (SQLException e) {
+		  return listevaleur;
+	  }
+  }
   
   public Client getClientDuQuestionnaireX (int idQuestionnaire) {
       try {
