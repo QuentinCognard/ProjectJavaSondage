@@ -37,9 +37,11 @@ import ModuleAnalyste.AnalysteController.ModifController;
 public class AnalysteModification {
 	
 	private ModifController mc;
+	private Analyste ana;
 	
 	
 	public AnalysteModification(Analyste ana){
+		this.ana = ana;
 		mc = new ModifController(ana);//controller des boutons
 		ana.afficherPanelDuHaut();
 		MofifierPanelDuHaut(ana);
@@ -103,7 +105,6 @@ public class AnalysteModification {
 		panelDuCentre.setLayout(new BoxLayout(panelDuCentre,BoxLayout.Y_AXIS));
 		cont.add(panelDuCentre, "Center");
 		
-
 		
 		//FENETRE DU MILIEU
 		JScrollPane f = new JScrollPane();
@@ -135,8 +136,9 @@ public class AnalysteModification {
 		JPanel pResultats = new JPanel();
 		pResultats.setLayout(new BoxLayout(pResultats, BoxLayout.Y_AXIS));
 		jsp.setViewportView(pResultats);
-		for (int i = 0; i< 20; i++){ //TODO: � modifier
-				afficherQuestion(pResultats,i+1,"Quel est le plus grand con de tout les temps ?");
+		//ana.getModeleAnalyste().getListeQuestionsReponses();int i = 0; i< ana.getModeleAnalyste().getListeQuestionsReponses().size(); i++
+		for (Question q : ana.getModeleAnalyste().getListeQuestionsReponses().keySet()){
+				afficherQuestion(pResultats,q);
 				JPanel pvide = new JPanel();
 				pvide.setLayout(new BoxLayout(pvide, BoxLayout.Y_AXIS));
 				for ( int j = 0; j<5;j++){
@@ -146,7 +148,7 @@ public class AnalysteModification {
 		}
 	}
 
-	public void afficherQuestion(JPanel pResultats, int i, String titreQuestion){
+	public void afficherQuestion(JPanel pResultats,Question q){
 		JPanel pReponse = new JPanel(new BorderLayout());
 		pResultats.add(pReponse);
 		
@@ -154,7 +156,7 @@ public class AnalysteModification {
 			JPanel pTitreQuestion = new JPanel(new FlowLayout(FlowLayout.CENTER));
 			pReponse.add(pTitreQuestion, "North");
 			
-			JLabel titre = new JLabel("Question "+i+" : "+titreQuestion);
+			JLabel titre = new JLabel("Question "+q.getNumeroQuestion()+" : "+q.getTexteQuestion());
 			pTitreQuestion.add(titre);
 			titre.setFont(new Font("Arial", Font.PLAIN, 20));
 		

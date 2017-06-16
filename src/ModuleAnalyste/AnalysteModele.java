@@ -1,6 +1,7 @@
 package ModuleAnalyste;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import javax.swing.table.DefaultTableModel;
@@ -24,6 +25,11 @@ public class AnalysteModele {
 		 */
 		this.BDGen = modCommun.getBdGeneral();
 		this.BDAnalyste = new BDModuleAnalyste(modCommun.getBdConnexion());
+		this.listeQuestionsReponses = new HashMap<Question,ArrayList<Repondre>>();
+	}
+	
+	public HashMap<Question,ArrayList<Repondre>> getListeQuestionsReponses(){
+		return listeQuestionsReponses;
 	}
 	
 	public void createListesQuestionsReponses(int idQuestionnaireChoisi){
