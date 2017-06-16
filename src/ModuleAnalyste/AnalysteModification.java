@@ -47,7 +47,7 @@ public class AnalysteModification {
 		afficherPanelBas(ana);
 	}
 	
-	private void creerListeRéponses(){
+	private void creerListeReponses(){
 		
 	}
 	

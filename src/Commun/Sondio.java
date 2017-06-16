@@ -50,7 +50,7 @@ public class Sondio extends JFrame {
 	public void afficherSondeur () {
 		this.cont.removeAll();
 		
-		this.modsondeur = new Sondeur ();
+		this.modsondeur = new Sondeur (modelecommun);
 		this.cont.add(modsondeur);
 		
 		this.cont.validate();

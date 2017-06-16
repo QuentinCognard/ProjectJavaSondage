@@ -13,12 +13,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
+import BaseDeDonnees.BDConnexionMySQL;
 import BaseDeDonnees.BDGeneral;
 import BaseDeDonnees.BDModuleSondeur;
 import BaseDeDonnees.Question;
 import BaseDeDonnees.Questionnaire;
 import BaseDeDonnees.Sonde;
+import Commun.ModeleCommun;
 
 
 
@@ -39,12 +40,15 @@ public class Sondeur extends JPanel {
 	Questionnaire questionnaire;
 	Sonde lesonde;
 	int numQuestion;
+	ModeleCommun modcom;
+	BDConnexionMySQL connexion;
 	
 	
-	public Sondeur (BDGeneral laBD,BDModuleSondeur bdSond) {
+	public Sondeur (ModeleCommun modcom) {
 		super();
-		this.laBD=laBD;
-		this.bdSond=bdSond; 
+		this.connexion=this.modcom.getBdConnexion();
+		this.laBD=modcom.getBdGeneral();
+		this.bdSond= new BDModuleSondeur(this.connexion); 
 		this.numQuestion=0;
 		this.setLayout(new BorderLayout());
 		afficherFenetrePrinc();
