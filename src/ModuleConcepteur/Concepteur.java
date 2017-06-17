@@ -145,7 +145,7 @@ public class Concepteur extends JPanel {
 		this.removeAll();
 		this.afficherPanelHaut();
 		this.afficherPanelMilieu();
-		AffichageQuestionnaire affichageQuestionnaire = new AffichageQuestionnaire(this,q);
+		new AffichageQuestionnaire(this,q);
 		this.validate();
 		this.repaint();
 	}
@@ -159,9 +159,9 @@ public class Concepteur extends JPanel {
 	}
 	public void afficherModifQuestionnaire(Questionnaire q){
 		this.removeAll();
-		afficherPanelHaut();
-		afficherPanelMilieu();
-		ModificationQuestionnaire modifQuestionnaire = new ModificationQuestionnaire(this,q);
+		this.afficherPanelHaut();
+		this.afficherPanelMilieu();
+		new ModificationQuestionnaire(this,q);
 		this.validate();
 		this.repaint();
 	}

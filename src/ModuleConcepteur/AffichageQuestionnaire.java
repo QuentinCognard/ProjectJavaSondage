@@ -34,7 +34,7 @@ public class AffichageQuestionnaire extends JPanel{
 		this.nom = q.getTitreQuestionnaire();
 		this.panel = q.getIdentifiantPanel();
 		this.client = q.getNumClient();
-		this.tauxReponse = tauxReponse;
+		this.tauxReponse = 80;
 		panelCentral();
 		c.add(panelCentral);
 
@@ -51,7 +51,7 @@ public class AffichageQuestionnaire extends JPanel{
 		afficherHeader();
 		afficherPanelInfos();
 		afficherListeQuestions();
-		afficherBoutons();	
+		afficherBoutons();
 	}
 	private void afficherHeader(){
 		JPanel panelHeader = new JPanel();
