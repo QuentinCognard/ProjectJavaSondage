@@ -4,11 +4,26 @@ import java.sql.*;
 import java.util.ArrayList;
 import BaseDeDonnees.BDConnexionMySQL;
 
+/**
+ * BDGeneral est une classe qui va regrouper les fonctions jdbc qui seront utilisées dans plusieurs modules
+ * @author nathan
+ *
+ */
 public class BDGeneral {
-
+  /**
+   * La connexion mysql
+   * @see BDConnexionMySQL
+   */
   BDConnexionMySQL connexion;
+  /**
+   * Ordres SQL
+   */
   Statement st;
-  
+  /**
+   * 
+   * @param c
+   * 		La connexion mysql
+   */
   public BDGeneral (BDConnexionMySQL c) {
 		this.connexion = c;
 		try {
@@ -20,10 +35,12 @@ public class BDGeneral {
 		}
 	}
 
-  
-  // 'C' pour les questionnaires en cours de creation (Concepteur)
-  // 'S' pour les questionnaires prets a etre sondé (Sondeurs)
-  // 'A' pour les questionnaires prets a etre analysé (Analystes)
+  /**
+   * Retourne la liste de questionnaires selon l'état du questionnaire
+   * @param etat
+   * 	 'C' (en cours de création), 'S' (prêt pour sondeur), 'A' (prêt pour analyste)
+   * @return une ArrayList de questionnaire
+   */
   public ArrayList <Questionnaire> getListeQuestionnaire (char etat) {
 	  ArrayList <Questionnaire> listeQu = new ArrayList <Questionnaire> ();
 	  try {
@@ -42,7 +59,10 @@ public class BDGeneral {
 		  return null;
 	  }
   }
-
+  /**
+   * Supprime le questionnaire
+   * @param identifiantQuestionnaire
+   */
   public void supprimerQuestionnaire (int identifiantQuestionnaire) {
 	  try {
 		  String supprimerQuestionnaire = "DELETE FROM QUESTIONNAIRE WHERE idQ = "+identifiantQuestionnaire+";";
@@ -64,6 +84,12 @@ public class BDGeneral {
 	
 
   
+  /**
+   * Retourne le client selon l'identifiant du questionnaire
+   * @param idQuestionnaire
+   * @return le Client du questionnaire
+   * @see Client
+   */
   public Client getClientDuQuestionnaireX (int idQuestionnaire) {
       try {
         String requete = "SELECT * FROM CLIENT WHERE numC = (SELECT numC FROM QUESTIONNAIRE WHERE idQ = "+idQuestionnaire+");";
@@ -76,7 +102,12 @@ public class BDGeneral {
         return null;
       }
   }
-
+  /**
+   * Retourne le panel selon l'identifiant du questionnaire
+   * @param idQuestionnaire
+   * @return le Panel du questionnaire
+   * @see Panel
+   */
   public Panel getPanelDuQuestionnaireX (int idQuestionnaire) {
 	  try {
 		  String requete = "SELECT * FROM PANEL WHERE idPan IN (SELECT idPan FROM QUESTIONNAIRE WHERE idQ = "+idQuestionnaire+";";
@@ -89,7 +120,12 @@ public class BDGeneral {
 		  return null;
 	  }
   }
-  
+  /**
+   * Retourne les questions selon l'identifiant du questionnaire
+   * @param idQuestionnaire
+   * @return une ArrayList de Question
+   * @see Question
+   */
   public ArrayList <Question> getListeQuestion (int idQuestionnaire) {
 	  ArrayList <Question> listeQuestions = new ArrayList <Question> ();
 	  try {
@@ -110,6 +146,13 @@ public class BDGeneral {
  
   
   
+  /**
+   * Retourne les valeurs possibles d'une question d'un questionnaire
+   * @param idQuestionnaire
+   * @param idQuestion
+   * @return une ArrayList de ValeurPossible
+   * @see ValeurPossible
+   */
   public ArrayList <ValeurPossible> getListeValPossible (int idQuestionnaire, int idQuestion) {
 	  ArrayList <ValeurPossible> listevaleur = new ArrayList <ValeurPossible> ();
 	  try {
@@ -130,9 +173,13 @@ public class BDGeneral {
   
 
   
-  // '1' pour les concepteurs
-  // '2' pour les sondeurs
-  // '3' pour les analystes
+  /**
+   * Retourne les utilisateurs d'un role précis
+   * @param roleUtilisateur
+   * 		'1' pour les concepteurs, '2' pour les sondeurs, '3' pour les analystes
+   * @return une ArrayList d'Utilisateur
+   * @see Utilisateur
+   */
   public ArrayList <Utilisateur> getListeUtilisateursSelonRole (char roleUtilisateur) {
 	  ArrayList <Utilisateur> listeUsers = new ArrayList <Utilisateur> ();
 	  try {
