@@ -28,7 +28,7 @@ public class ActBoutonModifQuestionnaire implements ActionListener {
 			this.concepteur.afficherInfoQuestionnaire(this.q);
 		}
 		if (((JButton)arg0.getSource()).getText().equals("Sauvegarder")){
-			//Implémenter la sauvegarde
+			q.setTitreQuestionnaire(vue.getNom());
 			
 			this.concepteur.afficherInfoQuestionnaire(this.q);
 		}

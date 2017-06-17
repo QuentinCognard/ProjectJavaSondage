@@ -27,14 +27,12 @@ public class Concepteur extends JPanel {
 	private JPanel base;
 	private JPanel panelDuBas;
 	private JPanel listeQuestionnaires;
-	private ModeleCommun modele;
 	private BDGeneral bdgeneral;
 	
 	
 	public Concepteur (ModeleCommun modele) {
 		super();
 		this.setLayout(new BorderLayout());
-		this.modele = modele;
 		this.bdgeneral = modele.getBdGeneral();
 		afficherPanelHaut(); 
 		afficherPanelMilieu();
