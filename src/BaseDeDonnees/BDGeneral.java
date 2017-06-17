@@ -20,9 +20,10 @@ public class BDGeneral {
 		}
 	}
 
-  // 'C' pour les concepteurs
-  // 'S' pour les sondeurs
-  // 'A' pour les analystes
+  
+  // 'C' pour les questionnaires en cours de creation (Concepteur)
+  // 'S' pour les questionnaires prets a etre sondé (Sondeurs)
+  // 'A' pour les questionnaires prets a etre analysé (Analystes)
   public ArrayList <Questionnaire> getListeQuestionnaire (char etat) {
 	  ArrayList <Questionnaire> listeQu = new ArrayList <Questionnaire> ();
 	  try {
@@ -63,42 +64,6 @@ public class BDGeneral {
 	
 
   
-  public ArrayList <Question> getListeQuestion (int idQuestionnaire) {
-	  ArrayList <Question> listeQuestions = new ArrayList <Question> ();
-	  try {
-		  String requete = "SELECT * FROM QUESTION WHERE idQ = "+idQuestionnaire+" ORDER BY numQ;";
-		  ResultSet rs = this.st.executeQuery(requete);
-		  while (rs.next()) {
-			  Question q = new Question (rs.getInt("idQ"), rs.getInt("numQ"), rs.getString("texteQ"), rs.getInt("MaxVal"), rs.getString("idT").charAt(0));
-			  listeQuestions.add(q);
-		  }
-		  rs.close();
-		  return listeQuestions;
-	  }
-	  
-	  catch (SQLException e) {
-		  return listeQuestions;
-	  }
-  }
-  
-  public ArrayList <ValeurPossible> getListeValPossible (int idQuestionnaire, int idQuestion) {
-	  ArrayList <ValeurPossible> listevaleur = new ArrayList <ValeurPossible> ();
-	  try {
-		  String requete = "SELECT * FROM VALPOSSIBLE WHERE idQ = "+idQuestionnaire+" and numQ = "+idQuestion+" ORDER BY idV;";
-		  ResultSet rs = this.st.executeQuery(requete);
-		  while (rs.next()) {
-			  ValeurPossible val = new ValeurPossible (rs.getInt("idQ"), rs.getInt("numQ"), rs.getInt("idV"), rs.getString("Valeur"));
-			  listevaleur.add(val);
-		  }
-		  rs.close();
-		  return listevaleur;
-	  }
-	  
-	  catch (SQLException e) {
-		  return listevaleur;
-	  }
-  }
-  
   public Client getClientDuQuestionnaireX (int idQuestionnaire) {
       try {
         String requete = "SELECT * FROM CLIENT WHERE numC = (SELECT numC FROM QUESTIONNAIRE WHERE idQ = "+idQuestionnaire+");";
@@ -124,6 +89,46 @@ public class BDGeneral {
 		  return null;
 	  }
   }
+  
+  public ArrayList <Question> getListeQuestion (int idQuestionnaire) {
+	  ArrayList <Question> listeQuestions = new ArrayList <Question> ();
+	  try {
+		  String requete = "SELECT * FROM QUESTION WHERE idQ = "+idQuestionnaire+" ORDER BY numQ;";
+		  ResultSet rs = this.st.executeQuery(requete);
+		  while (rs.next()) {
+			  Question q = new Question (rs.getInt("idQ"), rs.getInt("numQ"), rs.getString("texteQ"), rs.getInt("MaxVal"), rs.getString("idT").charAt(0));
+			  listeQuestions.add(q);
+		  }
+		  rs.close();
+		  return listeQuestions;
+	  }
+	  
+	  catch (SQLException e) {
+		  return listeQuestions;
+	  }
+  }
+ 
+  
+  
+  public ArrayList <ValeurPossible> getListeValPossible (int idQuestionnaire, int idQuestion) {
+	  ArrayList <ValeurPossible> listevaleur = new ArrayList <ValeurPossible> ();
+	  try {
+		  String requete = "SELECT * FROM VALPOSSIBLE WHERE idQ = "+idQuestionnaire+" and numQ = "+idQuestion+" ORDER BY idV;";
+		  ResultSet rs = this.st.executeQuery(requete);
+		  while (rs.next()) {
+			  ValeurPossible val = new ValeurPossible (rs.getInt("idQ"), rs.getInt("numQ"), rs.getInt("idV"), rs.getString("Valeur"));
+			  listevaleur.add(val);
+		  }
+		  rs.close();
+		  return listevaleur;
+	  }
+	  
+	  catch (SQLException e) {
+		  return listevaleur;
+	  }
+  }
+  
+
   
   // '1' pour les concepteurs
   // '2' pour les sondeurs

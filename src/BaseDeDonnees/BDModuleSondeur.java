@@ -39,15 +39,25 @@ public class BDModuleSondeur {
 		}
 	}
 	
-	public void questionnairePretPourAnalyste (int idQuestionnaire) {
+	
+	
+	public ArrayList <Sonde> getListeSondesInterroges (Questionnaire q) {
+		ArrayList <Sonde> listeSondes = new ArrayList <Sonde> ();
 		try {
-			String requete = "UPDATE QUESTIONNAIRE SET Etat = 'A' WHERE idQ = "+idQuestionnaire+";";
-			this.st.executeUpdate(requete);
+			String requete = "SELECT * FROM SONDE WHERE numSond IN (SELECT numSond FROM INTERROGER WHERE idQ = "+q.getNumeroQuestionnaire()+") ORDER BY numSond;";
+			ResultSet rs = this.st.executeQuery(requete);
+			while (rs.next()) {
+				Sonde s = new Sonde (rs.getInt("numSond"), rs.getString("nomSond"), rs.getString("prenomSond"), rs.getDate("dateNaisSond"), rs.getString("telephoneSond"), rs.getString("idC"));
+				listeSondes.add(s);
+			}
+			rs.close();
+			return listeSondes;
 		}
 		
 		catch (SQLException e) {
-			
+			return listeSondes;
 		}
+		
 	}
 	
 	public ArrayList <Sonde> getListeSondesNonInterroges (Questionnaire q) {
@@ -69,24 +79,7 @@ public class BDModuleSondeur {
 		
 	}
 
-	public ArrayList <Sonde> getListeSondesInterroges (Questionnaire q) {
-		ArrayList <Sonde> listeSondes = new ArrayList <Sonde> ();
-		try {
-			String requete = "SELECT * FROM SONDE WHERE numSond IN (SELECT numSond FROM INTERROGER WHERE idQ = "+q.getNumeroQuestionnaire()+") ORDER BY numSond;";
-			ResultSet rs = this.st.executeQuery(requete);
-			while (rs.next()) {
-				Sonde s = new Sonde (rs.getInt("numSond"), rs.getString("nomSond"), rs.getString("prenomSond"), rs.getDate("dateNaisSond"), rs.getString("telephoneSond"), rs.getString("idC"));
-				listeSondes.add(s);
-			}
-			rs.close();
-			return listeSondes;
-		}
-		
-		catch (SQLException e) {
-			return listeSondes;
-		}
-		
-	}
+	
 	
 	public void setSondeInterroger(Questionnaire q, Sonde s) {
 		try {
@@ -103,4 +96,16 @@ public class BDModuleSondeur {
 		}
 	}
 
+	
+	
+	public void questionnairePretPourAnalyste (int idQuestionnaire) {
+		try {
+			String requete = "UPDATE QUESTIONNAIRE SET Etat = 'A' WHERE idQ = "+idQuestionnaire+";";
+			this.st.executeUpdate(requete);
+		}
+		
+		catch (SQLException e) {
+			
+		}
+	}
 }

@@ -21,6 +21,7 @@ public class BDModuleAnalyste {
 	}
 	
 	
+	
 	public ArrayList <Repondre> getReponsesQuestion (int idQuestionnaire, int numeroQuestion) {
 		ArrayList <Repondre> listeReponses = new ArrayList <Repondre> ();
 		try {

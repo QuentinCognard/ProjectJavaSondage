@@ -25,7 +25,7 @@ public class BDModuleConcepteur {
 	
 	public int maxIdentifiantQuestionnaire () {
 		try {
-	        String requete = "SELECT MAX(idQ) idMax FROM QUESTIONNAIRE;";
+	        String requete = "SELECT IFNULL(MAX(idQ),0) idMax FROM QUESTIONNAIRE;";
 	        ResultSet rs = this.st.executeQuery(requete);
 	        rs.next();
 	        return rs.getInt("idMax");
@@ -56,18 +56,16 @@ public class BDModuleConcepteur {
 	
 	
 	
-	
-	
 	public int maxIdentifiantClient () {
 		try {
-	        String requete = "SELECT MAX(numC) idMax FROM CLIENT;";
+	        String requete = "SELECT IFNULL(MAX(numC),15008) idMax FROM CLIENT;";
 	        ResultSet rs = this.st.executeQuery(requete);
 	        rs.next();
 	        return rs.getInt("idMax");
 	      }
 		
 		catch (SQLException e) {
-	         return 0;
+	         return 15008;
 	      }
 	}
 	
@@ -91,8 +89,6 @@ public class BDModuleConcepteur {
 		}
 	}
 
-	
-	
 	
 	
 	public int maxIdentifiantQuestion (int identifiantQuestionnaire) {
@@ -138,6 +134,19 @@ public class BDModuleConcepteur {
 
 	
 	
+	public int maxValeurPossible (int identifiantQuestionnaire, int numeroQuestion) {
+		try {
+	        String requete = "SELECT IFNULL(MAX(idV),0) idMax FROM VALPOSSIBLE WHERE idQ = "+identifiantQuestionnaire+" AND numQ = "+numeroQuestion+";";
+	        ResultSet rs = this.st.executeQuery(requete);
+	        rs.next();
+	        return rs.getInt("idMax");
+	      }
+		
+		catch (SQLException e) {
+	         return 0;
+	      }
+	}
+
 	public void insererValeurPossible (ValeurPossible vp) {
 		try {
 			String requete = "INSERT INTO VALPOSSIBLE (idQ, numQ, idV, Valeur) VALUES (?,?,?,?);";
@@ -153,7 +162,19 @@ public class BDModuleConcepteur {
 			
 		}
 	}
-
+	
+	public void supprimerValeurPossible (int identifiantQuestionnaire, int numeroQuestion, int identifiantValeur) {
+		try {
+	        String requete = "DELETE FROM VALPOSSIBLE WHERE idQ = "+identifiantQuestionnaire+" AND numQ = "+numeroQuestion+" AND idV = "+identifiantValeur+";";
+	        this.st.executeUpdate(requete); 
+		}
+		
+		catch (SQLException e) {
+	        
+	    }
+	}
+	
+	
 	public void questionnairePretPourSondage (int idQuestionnaire) {
 		try {
 			String requete = "UPDATE QUESTIONNAIRE SET Etat = 'S' WHERE idQ = "+idQuestionnaire+";";

@@ -19,6 +19,8 @@ public class BDModuleConnexion {
 	
 	}
 	
+	
+	
 	public int maxIdentifiantUtilisateur () {
 		try {
 	        String requete = "SELECT MAX(idU) idMax FROM UTILISATEUR;";
@@ -51,6 +53,9 @@ public class BDModuleConnexion {
 		}
 		
 	}
+	
+	
+	
 	
 	public Utilisateur connectionUtilisateur (String log, String mdp) {
 		try {
