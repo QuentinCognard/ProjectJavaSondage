@@ -39,15 +39,25 @@ public class BDModuleSondeur {
 		}
 	}
 	
-	public void questionnairePretPourAnalyste (int idQuestionnaire) {
+	
+	
+	public ArrayList <Sonde> getListeSondesInterroges (Questionnaire q) {
+		ArrayList <Sonde> listeSondes = new ArrayList <Sonde> ();
 		try {
-			String requete = "UPDATE QUESTIONNAIRE SET Etat = 'A' WHERE idQ = "+idQuestionnaire+";";
-			this.st.executeUpdate(requete);
+			String requete = "SELECT * FROM SONDE WHERE numSond IN (SELECT numSond FROM INTERROGER WHERE idQ = "+q.getNumeroQuestionnaire()+") ORDER BY numSond;";
+			ResultSet rs = this.st.executeQuery(requete);
+			while (rs.next()) {
+				Sonde s = new Sonde (rs.getInt("numSond"), rs.getString("nomSond"), rs.getString("prenomSond"), rs.getDate("dateNaisSond"), rs.getString("telephoneSond"), rs.getString("idC"));
+				listeSondes.add(s);
+			}
+			rs.close();
+			return listeSondes;
 		}
 		
 		catch (SQLException e) {
-			
+			return listeSondes;
 		}
+		
 	}
 	
 	public ArrayList <Sonde> getListeSondesNonInterroges (Questionnaire q) {
@@ -69,7 +79,9 @@ public class BDModuleSondeur {
 		
 	}
 
-	public void setSondeInterroger (Questionnaire q, Sonde s) {
+	
+	
+	public void setSondeInterroger(Questionnaire q, Sonde s) {
 		try {
 			String requete = "INSERT INTO INTERROGER (idU, numSond, idQ) VALUES (?,?,?);";
 			PreparedStatement ps = this.connexion.mysql.prepareStatement(requete);
@@ -77,6 +89,19 @@ public class BDModuleSondeur {
 			ps.setInt(2, s.getNumeroSonde());
 			ps.setInt(3, q.getNumeroQuestionnaire());
 			ps.executeUpdate();
+		}
+		
+		catch (SQLException e) {
+			
+		}
+	}
+
+	
+	
+	public void questionnairePretPourAnalyste (int idQuestionnaire) {
+		try {
+			String requete = "UPDATE QUESTIONNAIRE SET Etat = 'A' WHERE idQ = "+idQuestionnaire+";";
+			this.st.executeUpdate(requete);
 		}
 		
 		catch (SQLException e) {

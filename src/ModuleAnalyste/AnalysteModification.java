@@ -30,6 +30,7 @@ import BaseDeDonnees.Question;
 import BaseDeDonnees.Repondre;
 import ModuleAnalyste.AnalysteController.ModifController;
 import ModuleAnalyste.AnalysteController.RegroupementController;
+import ModuleAnalyste.AnalysteController.TabbedController;
 
 
 
@@ -40,6 +41,7 @@ public class AnalysteModification {
 	private ModifController mc;
 	private Analyste ana;
 	private ArrayList<JTabbedPane> listepGraphs;
+	private ArrayList<JComboBox<String>> listeBoutonsRegroupement;
 	//private ArrayList<JPanel> listePanelQuestions;
 	
 	
@@ -47,13 +49,14 @@ public class AnalysteModification {
 		this.ana = ana;
 		mc = new ModifController(ana);//controller des boutons
 		listepGraphs = new ArrayList<JTabbedPane>();
+		listeBoutonsRegroupement = new ArrayList<JComboBox<String>>();
 		ana.afficherPanelDuHaut();
 		MofifierPanelDuHaut(ana);
 		afficherPanelBas(ana);
 	}
 	
-	private void creerListeRéponses(){
-		
+	public ArrayList<JComboBox<String>> getListeBoutonsRegroupement(){
+		return listeBoutonsRegroupement;
 	}
 	
 	public void MofifierPanelDuHaut(Container cont){
@@ -149,6 +152,23 @@ public class AnalysteModification {
 				}
 				pResultats.add(pvide);
 		}
+		//PANEL COMMENTAIRE FINAL
+			JPanel pCommentaireFinal = new JPanel();
+			pCommentaireFinal.setLayout(new BoxLayout(pCommentaireFinal, BoxLayout.Y_AXIS));
+			pResultats.add(pCommentaireFinal);
+			
+			JPanel pLabelCommentaire = new JPanel(new FlowLayout(FlowLayout.CENTER));
+			JLabel labelCommentaire = new JLabel("Commentaire final (obligatoire) : ");
+			pLabelCommentaire.add(labelCommentaire);
+			pCommentaireFinal.add(pLabelCommentaire);
+			
+			JPanel gpFieldCF = new JPanel(new FlowLayout(FlowLayout.CENTER));
+			JScrollPane pFieldCommentaireFinal = new JScrollPane();
+			pFieldCommentaireFinal.setLayout(new ScrollPaneLayout());
+			gpFieldCF.add(pFieldCommentaireFinal);
+			pCommentaireFinal.add(gpFieldCF);
+			JTextArea fieldCommentaire = new JTextArea(10,80);
+			pFieldCommentaireFinal.setViewportView(fieldCommentaire);
 	}
 
 	public void afficherQuestion(JPanel pResultats,Question q){
@@ -170,32 +190,23 @@ public class AnalysteModification {
 			JTabbedPane pGraph = new JTabbedPane();
 			listepGraphs.add(pGraph);
 			pGraph.setName(q.getNumeroQuestion()+"");
+			pGraph.addChangeListener(new TabbedController(ana));
 			Dimension dim1 = new Dimension(510,315);
 			pGraph.setPreferredSize(dim1);
 			pReponse.add(pGraph,"West");
 			
-			//Tableau METTRE MAJ
+			//Tableau INITIALISATION
+			JPanel vide = new JPanel();
+			pGraph.add("Tableau",vide);
 			
-			
-			//Graphique Camembert METTRE MAJ
-			DefaultPieDataset data = new DefaultPieDataset();
-	        data.setValue("Java", new Double(43.2));
-	        data.setValue("Visual Basic", new Double(2.0));
-	        data.setValue("C/C++", new Double(17.5));
-			
+			//Graphique Camembert INITIALISATION
+			JPanel vide2 = new JPanel();
+			pGraph.add("Camembert", vide2);
 			
 
-			//Graphique en bar METTRE MAJ #IL FAUDRAIT FAIRE LES REGROUPEMENT PANEL et REPONSES
-			final DefaultCategoryDataset dataset = 
-				      new DefaultCategoryDataset( );  
-
-				      dataset.addValue( 1.0 , "moi" , "18-25 ans" );        
-				      dataset.addValue( 3.0 , "lui" , "18-25 ans" );        
-				      dataset.addValue( 5.0 , "trump" , "18-25 ans" );           
-
-				      dataset.addValue( 5.0 , "moi" , "25-35 ans" );        
-				      dataset.addValue( 6.0 , "lui" , "25-35 ans" );       
-				      dataset.addValue( 10.0 , "trump" , "25-35 ans" );        
+			//Graphique en bar INITIALISATION
+			JPanel vide3 = new JPanel();
+			pGraph.add("Bar", vide3);
 				      			
 			
 			
@@ -215,9 +226,10 @@ public class AnalysteModification {
 			JComboBox<String> regroupement = new JComboBox<String>(dataRegroupement);
 			regroupement.setName(q.getNumeroQuestion()+"");
 			regroupement.addActionListener(new RegroupementController(ana));
+			listeBoutonsRegroupement.add(regroupement);
 			sousPanelR.add(labelRegroupement);
 			sousPanelR2.add(regroupement);
-			regroupement.setSelectedIndex(0);// A VOIR SI CA FONCTIONNE POUR ACTIVER LE LISTENER A LA CREATION DE LA PAGE
+			regroupement.setSelectedIndex(0);
 			
 		//PANEL COMMENTAIRE
 			JPanel pCommentaire = new JPanel();
@@ -232,6 +244,12 @@ public class AnalysteModification {
 			pCommentaire.add(pFieldCommentaire);
 			JTextArea fieldCommentaire = new JTextArea(5,50);
 			pFieldCommentaire.setViewportView(fieldCommentaire);
+			
+		//SELECTION DE BASE
+			System.out.println("Index Selectioné :"+pGraph.getSelectedIndex());
+			pGraph.setSelectedIndex(1);
+			pGraph.setSelectedIndex(0);
+			System.out.println("Index Selectioné :"+pGraph.getSelectedIndex());
 		
 	}
 	
@@ -243,7 +261,7 @@ public class AnalysteModification {
 		pTab.setViewportView(tab);
 		for (JTabbedPane g : listepGraphs){
 			if (g.getName().equals(numQuest + "")){
-				g.add(pTab,"Tableau");
+				//g.add(pTab,"Tableau");
 				g.setComponentAt(0,pTab);
 				return;
 			}
@@ -258,7 +276,7 @@ public class AnalysteModification {
 		chartPan.setVisible(true);
 		for (JTabbedPane g : listepGraphs){
 			if (g.getName().equals(numQuest + "")){
-				g.add(chartPan,"Camembert");
+				//g.add(chartPan,"Camembert");
 				g.setComponentAt(1,chartPan);
 				return;
 			}

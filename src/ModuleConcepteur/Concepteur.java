@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -16,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import Commun.ModeleCommun;
+import BaseDeDonnees.BDGeneral;
+import BaseDeDonnees.Questionnaire;
 
 
 public class Concepteur extends JPanel {
@@ -24,14 +27,25 @@ public class Concepteur extends JPanel {
 	private JPanel base;
 	private JPanel panelDuBas;
 	private JPanel listeQuestionnaires;
+	private BDGeneral bdgeneral;
 	
 	
-	public Concepteur (ModeleCommun m) {
+	public Concepteur (ModeleCommun modele) {
 		super();
 		this.setLayout(new BorderLayout());
+		this.bdgeneral = modele.getBdGeneral();
 		afficherPanelHaut(); 
 		afficherPanelMilieu();
 		afficherPanelBas();
+	}
+	
+	public ArrayList<QuestionnairePanel> recupQuestionnaires(){
+		ArrayList <Questionnaire> listeQuestionnaires = this.bdgeneral.getListeQuestionnaire('C');
+		ArrayList<QuestionnairePanel> liste = new ArrayList<QuestionnairePanel>();
+		for(Questionnaire q : listeQuestionnaires){
+			liste.add(creerQuestionnaire(q));
+		}
+		return liste;
 	}
 	
 	public void afficherPanelHaut() {
@@ -68,7 +82,7 @@ public class Concepteur extends JPanel {
 		JPanel panelListeQuestionnaire = new JPanel();
 		this.listeQuestionnaires = new JPanel();
 		listeQuestionnaires.setLayout(new BoxLayout(listeQuestionnaires,BoxLayout.Y_AXIS));
-		panelListeQuestionnaire.setLayout(new BoxLayout(panelListeQuestionnaire, BoxLayout.Y_AXIS));
+		panelListeQuestionnaire.setLayout(new BoxLayout(panelListeQuestionnaire, BoxLayout.Y_AXIS)); //Le panel principal
 		panelDuBas.setLayout(new BoxLayout(panelDuBas,BoxLayout.Y_AXIS));
 		panelDuBas.setBorder(BorderFactory.createLineBorder(Color.black));
 		JTextField searchBar = new JTextField(30);
@@ -78,8 +92,9 @@ public class Concepteur extends JPanel {
 		searchBar.addFocusListener(focusSearchBar);
 		panelSearch.setLayout(new FlowLayout(FlowLayout.CENTER,20,20));
 		panelSearch.add(searchBar);
-		for(int i=0;i<20;i++){
-			listeQuestionnaires.add(creerQuestionnaire(7,"Hugo et les 40 voleurs", "Maxime"));
+		ArrayList<QuestionnairePanel> listePanelsQuestionnaires = recupQuestionnaires(); //la liste des panels
+		for(JPanel panel : listePanelsQuestionnaires){
+			listeQuestionnaires.add(panel);
 		}
 		JScrollPane scrollQuestionnaires = new JScrollPane(listeQuestionnaires);
 		scrollQuestionnaires.setPreferredSize(getPreferredSize());
@@ -88,26 +103,26 @@ public class Concepteur extends JPanel {
 		panelDuBas.add(panelListeQuestionnaire);
 		this.add(panelDuBas,"South");
 		}
-	private JPanel creerQuestionnaire(int id, String titre, String client){
+	private QuestionnairePanel creerQuestionnaire(Questionnaire q){
 		Font police = new Font("Calibri",Font.BOLD,26);
-		JPanel panelQuestionnaire = new JPanel();
+		QuestionnairePanel panelQuestionnaire = new QuestionnairePanel(q);
 		panelQuestionnaire.setLayout(new FlowLayout(FlowLayout.CENTER,20,20));
 		panelQuestionnaire.setBorder(BorderFactory.createLineBorder(Color.black));
-		JLabel idQuestionnaire = new JLabel(""+id);
+		JLabel idQuestionnaire = new JLabel(""+q.getNumeroQuestionnaire());
 		idQuestionnaire.setFont(police);
 		idQuestionnaire.setBorder(BorderFactory.createLineBorder(Color.black));
 		panelQuestionnaire.add(idQuestionnaire);
 		JLabel titreQuestionnaire = new JLabel("Titre :");
 		titreQuestionnaire.setFont(police);
 		panelQuestionnaire.add(titreQuestionnaire);
-		JLabel intituleTitre = new JLabel(titre);
+		JLabel intituleTitre = new JLabel(q.getTitreQuestionnaire());
 		intituleTitre.setFont(police);
 		intituleTitre.setBorder(BorderFactory.createLineBorder(Color.black));
 		panelQuestionnaire.add(intituleTitre);
 		JLabel clientQuestionnaire = new JLabel("Client :");
 		clientQuestionnaire.setFont(police);
 		panelQuestionnaire.add(clientQuestionnaire);
-		JLabel intituleClient = new JLabel(client);
+		JLabel intituleClient = new JLabel(""+q.getNumClient());
 		intituleClient.setBorder(BorderFactory.createLineBorder(Color.black));
 		intituleClient.setFont(police);
 		panelQuestionnaire.add(intituleClient);
@@ -124,11 +139,11 @@ public class Concepteur extends JPanel {
 		this.validate();
 		this.repaint();
 	}
-	public void afficherInfoQuestionnaire(String id,String nom, String panel, String societe,String tauxReponse){
+	public void afficherInfoQuestionnaire(Questionnaire q){
 		this.removeAll();
 		this.afficherPanelHaut();
 		this.afficherPanelMilieu();
-		AffichageQuestionnaire affichageQuestionnaire = new AffichageQuestionnaire(this,id,nom,panel,societe,tauxReponse);
+		new AffichageQuestionnaire(this,q);
 		this.validate();
 		this.repaint();
 	}
@@ -140,18 +155,18 @@ public class Concepteur extends JPanel {
 		this.validate();
 		this.repaint();
 	}
-	public void afficherModifQuestionnaire(String id,String nom, String panel, String societe,String tauxReponse){
+	public void afficherModifQuestionnaire(Questionnaire q){
 		this.removeAll();
-		afficherPanelHaut();
-		afficherPanelMilieu();
-		ModificationQuestionnaire modifQuestionnaire = new ModificationQuestionnaire(this,id,nom,panel,societe,tauxReponse);
+		this.afficherPanelHaut();
+		this.afficherPanelMilieu();
+		new ModificationQuestionnaire(this,q);
 		this.validate();
 		this.repaint();
 	}
-	public void afficherAjouterQuestion(AffichageQuestionnaire vue){
+	public void afficherAjouterQuestion(AffichageQuestionnaire vue, Questionnaire q){
 		this.removeAll();
 		afficherPanelHaut();
-		this.add(new VueAjouterQuestion(this,vue),"Center");
+		this.add(new VueAjouterQuestion(this,vue,q),"Center");
 		this.validate();
 		this.repaint();
 	}

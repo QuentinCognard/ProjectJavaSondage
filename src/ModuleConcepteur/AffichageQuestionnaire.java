@@ -14,32 +14,36 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import BaseDeDonnees.Questionnaire;
+
 public class AffichageQuestionnaire extends JPanel{
 	Concepteur c;
+	Questionnaire q;
 	private JPanel panelCentral;
-	private String id;
+	private int id;
 	private String nom;
-	private String panel;
-	private String societe;
-	private String tauxReponse;
+	private int panel;
+	private int client;
+	private int tauxReponse;
 	
-	AffichageQuestionnaire(Concepteur c,String id,String nom, String panel, String societe,String tauxReponse){
+	AffichageQuestionnaire(Concepteur c,Questionnaire q){
 		this.c = c;
+		this.q = q;
 		this.panelCentral = new JPanel();
-		this.id = id;
-		this.nom = nom;
-		this.panel = panel;
-		this.societe = societe;
-		this.tauxReponse = tauxReponse;
+		this.id = q.getNumeroQuestionnaire();
+		this.nom = q.getTitreQuestionnaire();
+		this.panel = q.getIdentifiantPanel();
+		this.client = q.getNumClient();
+		this.tauxReponse = 80;
 		panelCentral();
 		c.add(panelCentral);
 
 	}
-	public void majInfos(String id,String nom, String panel, String societe,String tauxReponse){
+	public void majInfos(int id,String nom, int panel, int client,int tauxReponse){
 		this.id = id;
 		this.nom = nom;
 		this.panel = panel;
-		this.societe = societe;
+		this.client = client;
 		this.tauxReponse = tauxReponse;
 	}
 	private void panelCentral(){
@@ -47,7 +51,7 @@ public class AffichageQuestionnaire extends JPanel{
 		afficherHeader();
 		afficherPanelInfos();
 		afficherListeQuestions();
-		afficherBoutons();	
+		afficherBoutons();
 	}
 	private void afficherHeader(){
 		JPanel panelHeader = new JPanel();
@@ -75,16 +79,16 @@ public class AffichageQuestionnaire extends JPanel{
 		JLabel panel = new JLabel("Panel concerné : "+this.panel);
 		panel.setBorder(new EmptyBorder(20,30,20,10));
 		panel.setFont(police);
-		JLabel societe = new JLabel("Société concernée : "+this.societe);
-		societe.setBorder(new EmptyBorder(20,30,20,10));
-		societe.setFont(police);
+		JLabel client = new JLabel("Société concernée : "+this.client);
+		client.setBorder(new EmptyBorder(20,30,20,10));
+		client.setFont(police);
 		JLabel tauxReponse = new JLabel("Taux de réponses minimum : "+this.tauxReponse);
 		tauxReponse.setBorder(new EmptyBorder(20,30,20,10));
 		tauxReponse.setFont(police);
 		panelInfos.add(id);
 		panelInfos.add(nom);
 		panelInfos.add(panel);
-		panelInfos.add(societe);
+		panelInfos.add(client);
 		panelInfos.add(tauxReponse);
 		panelCentral.add(panelInfos,"West");
 		
@@ -133,7 +137,7 @@ public class AffichageQuestionnaire extends JPanel{
 		JPanel panelBoutons = new JPanel();
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER,60,0));
 		panelBoutons.setBorder(new EmptyBorder(50,10,50,10));
-		ActBoutonAffichageQuestionnaire actBoutons = new ActBoutonAffichageQuestionnaire(this.c,this);
+		ActBoutonAffichageQuestionnaire actBoutons = new ActBoutonAffichageQuestionnaire(this.c,this,this.q);
 		JButton boutonRetour = new JButton("Retour");
 		boutonRetour.addActionListener(actBoutons);
 		boutonRetour.setFont(police);
@@ -153,19 +157,19 @@ public class AffichageQuestionnaire extends JPanel{
 		panelCentral.add(panelBoutons,"South");
 		
 	}
-	public String getId(){
+	public int getId(){
 		return this.id;
 	}
 	public String getNom(){
 		return this.nom;
 	}
-	public String getPanel(){
+	public int getPanel(){
 		return this.panel;
 	}
-	public String getSociete(){
-		return this.societe;
+	public int getClient(){
+		return this.client;
 	}
-	public String getTauxReponse(){
+	public int getTauxReponse(){
 		return tauxReponse;
 	}
 }

@@ -213,16 +213,95 @@ public class AnalysteModele {
 		return modele;
 	}
 	
-	public DefaultPieDataset createPieChartData(String regroupement, String[] listeReponses, String[] listeNbPersParRep ){
-		//TODO: prend une liste de reponse et la liste des personnes ayant répondu cette réponse et renvoie le dataset de piechart
-		return null;
+	public DefaultPieDataset createPieChartData(String regroupement, int numQuest){
+		Question quest = listeQuestions.get(numQuest-1);
+		DefaultPieDataset data = new DefaultPieDataset();
+		ArrayList<String> listeReponses = new ArrayList<String>();
+		if (quest.getIdTypeQuestion() == 'u' || quest.getIdTypeQuestion() == 'm' || quest.getIdTypeQuestion() == 'c')
+		{
+			int nbReponsesPossible  = listeQuestionsValPossible.get(quest).size();
+			for (int i = 1; i<nbReponsesPossible+1; i++)
+				listeReponses.add(listeQuestionsValPossible.get(quest).get(i-1).getValeur());
+		}
+		else if (quest.getIdTypeQuestion() == 'n')
+		{ 
+			int nbReponsesPossible  = quest.getMaxValeur()+1;
+			for (int i = 1; i<nbReponsesPossible+1; i++)
+				listeReponses.add(i-1 +"/" + quest.getMaxValeur());
+		}
+		else //si quest.getIdTypeQuestion() == 'l'
+		{
+			for (Repondre rep : listeQuestionsReponses.get(quest))
+			{
+				if (!listeReponses.contains(rep.getValeur()))
+					listeReponses.add(rep.getValeur());
+			}
+		}
+		for (String rep : listeReponses)
+		{
+			data.setValue(rep, new Double(9.0));//TODO : a changer quand on aura la fct correcte
+		}
+		return data;
 	}
 	
-	public DefaultCategoryDataset createBarChartData(String regroupement, String[] listeReponses, String[] listeNbPersParRep ){
-		/*TODO: prend une liste de reponse et la liste des personnes ayant répondu cette réponse
-		 * et renvoie le dataset de BarChart en fonction du REGROUPEMENT
-		 */
-		return null;
+	public DefaultCategoryDataset createBarChartData(String regroupement, int numQuest){
+		Question quest = listeQuestions.get(numQuest-1);
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset( );  
+		ArrayList<String> listeReponses = new ArrayList<String>();
+		if (quest.getIdTypeQuestion() == 'u' || quest.getIdTypeQuestion() == 'm' || quest.getIdTypeQuestion() == 'c')
+		{
+			int nbReponsesPossible  = listeQuestionsValPossible.get(quest).size();
+			for (int i = 1; i<nbReponsesPossible+1; i++)
+				listeReponses.add(listeQuestionsValPossible.get(quest).get(i-1).getValeur());
+		}
+		else if (quest.getIdTypeQuestion() == 'n')
+		{ 
+			int nbReponsesPossible  = quest.getMaxValeur()+1;
+			for (int i = 1; i<nbReponsesPossible+1; i++)
+				listeReponses.add(i-1 +"/" + quest.getMaxValeur());
+		}
+		else //si quest.getIdTypeQuestion() == 'l'
+		{
+			for (Repondre rep : listeQuestionsReponses.get(quest))
+			{
+				if (!listeReponses.contains(rep.getValeur()))
+					listeReponses.add(rep.getValeur());
+			}
+		}
+		if (regroupement.equals("Categorie socio-professionnel"))
+		{
+			for (Categorie cat : listeCategoriesPresentes)
+			{
+				String nomCat = cat.getIntituleCategorie();
+				for (String rep : listeReponses)
+				{
+					dataset.addValue(3.0,rep, nomCat);//TODO : a changer quand on aura la fct correcte
+				}
+			}
+		}
+		else if (regroupement.equals("Age"))
+		{
+			for (Tranche tr : listeTranchesPresentes)
+			{
+				String nomTr = tr.getValeurDebut() + "-" + tr.getValeurFin() + " ans";
+				for (String rep : listeReponses)
+				{
+					dataset.addValue(2.0,rep, nomTr);//TODO : a changer quand on aura la fct correcte
+				}
+			}
+		}
+		else //SI ON CHOISIT LE TRI PAR REPONSE DONNEES
+		{
+			for (Tranche tr : listeTranchesPresentes)
+			{
+				String nomTr = tr.getValeurDebut() + "-" + tr.getValeurFin() + " ans";
+				for (String rep : listeReponses)
+				{
+					dataset.addValue(2.0,nomTr, rep);//TODO : a changer quand on aura la fct correcte
+				}
+			}
+		}
+		return dataset;
 	}
 	
 }
