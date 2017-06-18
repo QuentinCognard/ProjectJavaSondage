@@ -23,13 +23,17 @@ public class ValiderController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (ana.getTableau().getSelectedRow() == -1)
-			JOptionPane.showMessageDialog(ana,"Aucune ligne selectionner","INFORMATION",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ana,"Aucune ligne selectionnée","INFORMATION",JOptionPane.INFORMATION_MESSAGE);
 		else{
 			/*TODO: charger la page AnalysteModification avec le questionnaire appropri� en allant
 			 * le chercher dans la BD
 			 */
 			int idQuestionnaire = Integer.parseInt((String) ana.getTableau().getValueAt(ana.getTableau().getSelectedRow(), 0));
+			anaModele.createListesQuestions(idQuestionnaire);
+			anaModele.createListesQuestionsValPossible(idQuestionnaire);
 			anaModele.createListesQuestionsReponses(idQuestionnaire);
+			anaModele.createListeTranchesPresentes(idQuestionnaire);
+			anaModele.createListeCategoriesPresentes(idQuestionnaire);
 			ana.afficherAnalysteModification();
 		}
 	}

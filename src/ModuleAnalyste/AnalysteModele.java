@@ -1,5 +1,6 @@
 package ModuleAnalyste;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,15 +10,22 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import BaseDeDonnees.BDGeneral;
 import BaseDeDonnees.BDModuleAnalyste;
+import BaseDeDonnees.Categorie;
 import BaseDeDonnees.Question;
 import BaseDeDonnees.Questionnaire;
 import BaseDeDonnees.Repondre;
+import BaseDeDonnees.Tranche;
+import BaseDeDonnees.ValeurPossible;
 import Commun.ModeleCommun;
 
 public class AnalysteModele {
 	BDGeneral BDGen;
 	BDModuleAnalyste BDAnalyste;
+	private ArrayList<Question> listeQuestions;
 	private HashMap<Question,ArrayList<Repondre>> listeQuestionsReponses;
+	private HashMap<Question,ArrayList<ValeurPossible>> listeQuestionsValPossible;
+	private ArrayList<Tranche> listeTranchesPresentes;
+	private ArrayList<Categorie> listeCategoriesPresentes;
 	
 	public AnalysteModele( ModeleCommun modCommun){
 		/*TODO: recuperer la classe BD générale qui devra etre créer dans Sondio.java (avec BDConnexion)
@@ -26,21 +34,55 @@ public class AnalysteModele {
 		this.BDGen = modCommun.getBdGeneral();
 		this.BDAnalyste = new BDModuleAnalyste(modCommun.getBdConnexion());
 		this.listeQuestionsReponses = new HashMap<Question,ArrayList<Repondre>>();
+		this.listeQuestionsValPossible = new HashMap<Question,ArrayList<ValeurPossible>>();
 	}
 	
 	public HashMap<Question,ArrayList<Repondre>> getListeQuestionsReponses(){
 		return listeQuestionsReponses;
 	}
 	
+	public ArrayList<Question> getListeQuestions(){
+		return listeQuestions;
+	}
+	
+	public HashMap<Question,ArrayList<ValeurPossible>> getListeQuestionsValPossible(){
+		return listeQuestionsValPossible;
+	}
+	
+	public void createListesQuestions(int idQuestionnaireChoisi){
+		listeQuestions = getListeQuestions(idQuestionnaireChoisi);
+	}
+	
+	public void createListesQuestionsValPossible(int idQuestionnaireChoisi){
+		for(int i = 0; i<listeQuestions.size(); i++){
+			listeQuestionsValPossible.put(listeQuestions.get(i), getListeValPossible(idQuestionnaireChoisi, i+1) );
+		}
+	}
+	
 	public void createListesQuestionsReponses(int idQuestionnaireChoisi){
-		ArrayList<Question> listeQuestions = getListeQuestions(idQuestionnaireChoisi);
 		for(int i = 0; i<listeQuestions.size(); i++){
 			listeQuestionsReponses.put(listeQuestions.get(i), getReponsesQuestion(idQuestionnaireChoisi, i+1) );
 		}
 	}
 	
+	public void createListeTranchesPresentes(int idQuestionnaireChoisi){
+		//TODO: Nathan s'en charge, à aller chercher dans AnalysteBD
+		listeTranchesPresentes = new ArrayList<Tranche>(); //à changer quand on aura la fct
+		listeTranchesPresentes.add(new Tranche('1',8,17));
+		listeTranchesPresentes.add(new Tranche('2',18,25));
+		listeTranchesPresentes.add(new Tranche('3',26,35));
+	}
+	
+	public void createListeCategoriesPresentes(int idQuestionnaireChoisi){
+		//TODO: Nathan s'en charge, à aller chercher dans AnalysteBD
+		listeCategoriesPresentes = new ArrayList<Categorie>(); //à changer quand on aura la fct
+		listeCategoriesPresentes.add(new Categorie('1',"PAUVRE"));
+		listeCategoriesPresentes.add(new Categorie('2',"MOYEN"));
+		listeCategoriesPresentes.add(new Categorie('3',"RICHE"));
+	}
+	
 	public ArrayList<Questionnaire> getQuestionnaireFini(){
-		return BDGen.getListeQuestionnaire ('A');
+		return BDGen.getListeQuestionnaire('A');
 	}
 	
 	public ArrayList<Question> getListeQuestions(int idQuestionnaire){
@@ -49,6 +91,10 @@ public class AnalysteModele {
 	
 	public ArrayList <Repondre> getReponsesQuestion(int idQuestionnaire, int numeroQuestion){
 		return BDAnalyste.getReponsesQuestion(idQuestionnaire, numeroQuestion);
+	}
+	
+	public ArrayList<ValeurPossible> getListeValPossible(int idQuestionnaire, int numQuestion){
+		return BDGen.getListeValPossible (idQuestionnaire, numQuestion);
 	}
 	
 	public void deconnexion(){
@@ -96,11 +142,75 @@ public class AnalysteModele {
 		//TODO: crée pdf et le renvoie pour enregistrement
 	}*/
 	
-	public DefaultTableModel createTableModel(String regroupement, String[] listeReponses, String[] listeNbPersParRep ){
-		/*TODO: prend une liste de reponse et la liste des personnes ayant répondu cette réponse et
-		 * renvoie le model de la table en fonction du REGROuPEMENT
-		 */
-		return null;
+	public DefaultTableModel createTableModel(String regroupement, int numQuest){
+		Question quest = listeQuestions.get(numQuest-1);
+		String[] ColumnNames;
+		String[][] values;
+		if (quest.getIdTypeQuestion() == 'u' || quest.getIdTypeQuestion() == 'm' || quest.getIdTypeQuestion() == 'c')
+		{
+			int nbReponsesPossible  = listeQuestionsValPossible.get(quest).size();
+			ColumnNames = new String[nbReponsesPossible + 1];
+			ColumnNames[0] = "Regpmt/Rep";
+			for (int i = 1; i<nbReponsesPossible+1; i++)
+				ColumnNames[i] = listeQuestionsValPossible.get(quest).get(i-1).getValeur();
+		}
+		else if (quest.getIdTypeQuestion() == 'n')
+		{ 
+			int nbReponsesPossible  = quest.getMaxValeur()+1;
+			ColumnNames = new String[nbReponsesPossible + 1];
+			ColumnNames[0] = "Regpmt/Rep";
+			for (int i = 1; i<nbReponsesPossible+1; i++)
+				ColumnNames[i] = i-1 +"";
+		}
+		else //si quest.getIdTypeQuestion() == 'l'
+		{
+			ArrayList<String> ReponsesPossible = new ArrayList<String>();
+			for (Repondre rep : listeQuestionsReponses.get(quest))
+			{
+				if (!ReponsesPossible.contains(rep.getValeur()))
+					ReponsesPossible.add(rep.getValeur());
+			}
+			int nbReponsesPossible  = ReponsesPossible.size();
+			ColumnNames = new String[nbReponsesPossible + 1];
+			ColumnNames[0] = "Regpmt/Rep";
+			for (int i = 1; i<nbReponsesPossible+1; i++)
+				ColumnNames[i] = ReponsesPossible.get(i-1);
+		}
+		if (regroupement.equals("Categorie socio-professionnel")){
+			values = new String[listeCategoriesPresentes.size()][Array.getLength(ColumnNames)];
+			for (int l = 0; l<listeCategoriesPresentes.size(); l++){
+				values[l][0] = listeCategoriesPresentes.get(l).getIntituleCategorie();
+				for (int c = 1; c<Array.getLength(ColumnNames); c++){
+					values[l][c] = "cat";//TODO : a changer quand on aura la fct correcte
+				}
+			}
+		}
+		else if (regroupement.equals("Age")){
+			values = new String[listeTranchesPresentes.size()][Array.getLength(ColumnNames)];
+			for (int l = 0; l<listeTranchesPresentes.size(); l++){
+				values[l][0] = listeTranchesPresentes.get(l).getValeurDebut() + "-" + listeTranchesPresentes.get(l).getValeurFin() + " ans";
+				for (int c = 1; c<Array.getLength(ColumnNames); c++){
+					values[l][c] = "a";//TODO : a changer quand on aura la fct correcte
+				}
+			}
+		}
+		else{ //SI ON CHOISIT LE TRI PAR REPONSE DONNEES
+			//????????????????????????????????????????????????????????????????
+			values = new String[listeTranchesPresentes.size()][Array.getLength(ColumnNames)];
+			for (int l = 0; l<listeTranchesPresentes.size(); l++){
+				for (int c = 0; c<Array.getLength(ColumnNames); c++){
+					values[l][c] = "rd";//TODO : a changer quand on aura la fct correcte
+				}
+			}
+		}
+		DefaultTableModel modele = new DefaultTableModel(values,ColumnNames){
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
+		return modele;
 	}
 	
 	public DefaultPieDataset createPieChartData(String regroupement, String[] listeReponses, String[] listeNbPersParRep ){

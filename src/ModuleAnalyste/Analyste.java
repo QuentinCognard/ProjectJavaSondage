@@ -31,6 +31,7 @@ public class Analyste extends JPanel {
 	private JTable tab;
 	private JTextField champRecherche;
 	private AnalysteModele anaMod;
+	private AnalysteModification anaModif;
 	
 	public Analyste (ModeleCommun modelecommun) {
 		anaMod = new AnalysteModele(modelecommun);
@@ -49,6 +50,10 @@ public class Analyste extends JPanel {
 	
 	public AnalysteModele getModeleAnalyste(){
 		return anaMod;
+	}
+	
+	public AnalysteModification getAnalysteModification(){
+		return anaModif;
 	}
 	
 	public void afficherPanelBase(){
@@ -166,6 +171,7 @@ public class Analyste extends JPanel {
 	
 	public void afficherAnalysteModification(){
 		this.removeAll();
-		new AnalysteModification(this);
+		anaModif  = new AnalysteModification(this);
+		anaModif.afficherPanelCentre(this);
 	}
 }

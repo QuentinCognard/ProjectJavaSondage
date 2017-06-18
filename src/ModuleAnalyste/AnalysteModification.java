@@ -29,6 +29,7 @@ import org.jfree.data.general.DefaultPieDataset;
 import BaseDeDonnees.Question;
 import BaseDeDonnees.Repondre;
 import ModuleAnalyste.AnalysteController.ModifController;
+import ModuleAnalyste.AnalysteController.RegroupementController;
 
 
 
@@ -38,14 +39,16 @@ public class AnalysteModification {
 	
 	private ModifController mc;
 	private Analyste ana;
+	private ArrayList<JTabbedPane> listepGraphs;
+	//private ArrayList<JPanel> listePanelQuestions;
 	
 	
 	public AnalysteModification(Analyste ana){
 		this.ana = ana;
 		mc = new ModifController(ana);//controller des boutons
+		listepGraphs = new ArrayList<JTabbedPane>();
 		ana.afficherPanelDuHaut();
 		MofifierPanelDuHaut(ana);
-		afficherPanelCentre(ana);
 		afficherPanelBas(ana);
 	}
 	
@@ -137,7 +140,7 @@ public class AnalysteModification {
 		pResultats.setLayout(new BoxLayout(pResultats, BoxLayout.Y_AXIS));
 		jsp.setViewportView(pResultats);
 		//ana.getModeleAnalyste().getListeQuestionsReponses();int i = 0; i< ana.getModeleAnalyste().getListeQuestionsReponses().size(); i++
-		for (Question q : ana.getModeleAnalyste().getListeQuestionsReponses().keySet()){
+		for (Question q : ana.getModeleAnalyste().getListeQuestions()){
 				afficherQuestion(pResultats,q);
 				JPanel pvide = new JPanel();
 				pvide.setLayout(new BoxLayout(pvide, BoxLayout.Y_AXIS));
@@ -150,6 +153,8 @@ public class AnalysteModification {
 
 	public void afficherQuestion(JPanel pResultats,Question q){
 		JPanel pReponse = new JPanel(new BorderLayout());
+		//pReponse.setName(q.getNumeroQuestion() + "");
+		//listePanelQuestions.add(pReponse);
 		pResultats.add(pReponse);
 		
 		//PANEL TITRE Question
@@ -163,41 +168,24 @@ public class AnalysteModification {
 		
 		//PANEL GRAPH
 			JTabbedPane pGraph = new JTabbedPane();
+			listepGraphs.add(pGraph);
+			pGraph.setName(q.getNumeroQuestion()+"");
 			Dimension dim1 = new Dimension(510,315);
 			pGraph.setPreferredSize(dim1);
 			pReponse.add(pGraph,"West");
 			
-			//Tableau
-			JScrollPane pTab = new JScrollPane();
-			String[] ColumnNames = new String[]{"Regpmt/Rep","Moi", "Lui", "Trump"};
-			String[][] values = new String[][]{{"18-25 ans","25","12","85"},{"25-35 ans","2","12","952"}};
-			DefaultTableModel modele = new DefaultTableModel(values,ColumnNames){
-				@Override
-			    public boolean isCellEditable(int row, int column) {
-			       //all cells false
-			       return false;
-			    }
-			};
-			JTable tab = new JTable();
-			tab.setModel(modele);
-			tab.setFont(new Font("Arial", Font.PLAIN, 14));
-			pTab.setViewportView(tab);
-			pGraph.add(pTab,"Tableau");
+			//Tableau METTRE MAJ
 			
-			//Graphique Camembert
+			
+			//Graphique Camembert METTRE MAJ
 			DefaultPieDataset data = new DefaultPieDataset();
 	        data.setValue("Java", new Double(43.2));
 	        data.setValue("Visual Basic", new Double(2.0));
 	        data.setValue("C/C++", new Double(17.5));
 			
-			JFreeChart pieChart = ChartFactory.createPieChart("Pie Chart", data);
 			
-			ChartPanel chartPan  = new ChartPanel(pieChart);
-			//Dimension dim = new Dimension(408,252);
-			//chartPan.setPreferredSize(dim);
-			pGraph.add(chartPan,"Camembert");
 
-			//Graphique en bar #IL FAUDRAIT FAIRE LES REGROUPEMENT PANEL et REPONSES
+			//Graphique en bar METTRE MAJ #IL FAUDRAIT FAIRE LES REGROUPEMENT PANEL et REPONSES
 			final DefaultCategoryDataset dataset = 
 				      new DefaultCategoryDataset( );  
 
@@ -209,14 +197,7 @@ public class AnalysteModification {
 				      dataset.addValue( 6.0 , "lui" , "25-35 ans" );       
 				      dataset.addValue( 10.0 , "trump" , "25-35 ans" );        
 				      			
-			JFreeChart barChart = ChartFactory.createBarChart("Line Chart", "Domain", "Range",
-	                dataset);
 			
-			ChartPanel chartPan2  = new ChartPanel(barChart);
-			//Dimension dim = new Dimension(408,252);
-			//chartPan.setPreferredSize(dim);
-			chartPan.setVisible(true);
-			pGraph.add(chartPan2,"Bar");
 			
 			
 		//PANEL REGROUPEMENT
@@ -232,8 +213,11 @@ public class AnalysteModification {
 			JLabel labelRegroupement = new JLabel("Regroupement : ");
 			String[] dataRegroupement = new String[]{"Categorie socio-professionnel","Age","Reponses donnees"};
 			JComboBox<String> regroupement = new JComboBox<String>(dataRegroupement);
+			regroupement.setName(q.getNumeroQuestion()+"");
+			regroupement.addActionListener(new RegroupementController(ana));
 			sousPanelR.add(labelRegroupement);
 			sousPanelR2.add(regroupement);
+			regroupement.setSelectedIndex(0);// A VOIR SI CA FONCTIONNE POUR ACTIVER LE LISTENER A LA CREATION DE LA PAGE
 			
 		//PANEL COMMENTAIRE
 			JPanel pCommentaire = new JPanel();
@@ -251,4 +235,48 @@ public class AnalysteModification {
 		
 	}
 	
+	public void majTab(DefaultTableModel modele, int numQuest){ //a mettre dans le controller après la fct du modèleAnalyste de création du modèle tab
+		JScrollPane pTab = new JScrollPane();
+		JTable tab = new JTable();
+		tab.setModel(modele);
+		tab.setFont(new Font("Arial", Font.PLAIN, 14));
+		pTab.setViewportView(tab);
+		for (JTabbedPane g : listepGraphs){
+			if (g.getName().equals(numQuest + "")){
+				g.add(pTab,"Tableau");
+				g.setComponentAt(0,pTab);
+				return;
+			}
+		}
+	}
+	
+	public void majPieChart(DefaultPieDataset data, int numQuest){ //a mettre dans le controller après la fct du modèleAnalyste du DATA PieChart
+		JFreeChart pieChart = ChartFactory.createPieChart("Pie Chart", data);
+		ChartPanel chartPan  = new ChartPanel(pieChart);
+		//Dimension dim = new Dimension(408,252);
+		//chartPan.setPreferredSize(dim);
+		chartPan.setVisible(true);
+		for (JTabbedPane g : listepGraphs){
+			if (g.getName().equals(numQuest + "")){
+				g.add(chartPan,"Camembert");
+				g.setComponentAt(1,chartPan);
+				return;
+			}
+		}
+	}
+	
+	public void majBarChart(DefaultCategoryDataset dataset, int numQuest){ //a mettre dans le controller après la fct du modèleAnalyste du DATA BarChart
+		JFreeChart barChart = ChartFactory.createBarChart("Line Chart", "Domain", "Range", dataset);
+		ChartPanel chartPan2  = new ChartPanel(barChart);
+		//Dimension dim = new Dimension(408,252);
+		//chartPan.setPreferredSize(dim);
+		chartPan2.setVisible(true);
+		for (JTabbedPane g : listepGraphs){
+			if (g.getName().equals(numQuest + "")){
+				g.add(chartPan2,"Bar");
+				g.setComponentAt(2,chartPan2);
+				return;
+			}
+		}
+	}
 }
