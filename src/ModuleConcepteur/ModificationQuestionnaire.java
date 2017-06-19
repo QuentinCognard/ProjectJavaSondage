@@ -36,7 +36,7 @@ public class ModificationQuestionnaire extends JPanel{
 		this.c = c;
 		this.q = q;
 		this.panelCentral = new JPanel();
-		this.id = q.getNumeroQuestionnaire();
+		this.id = q.getIdQuestionnaire();
 		this.nom = q.getTitreQuestionnaire();
 		this.panel = q.getIdentifiantPanel();
 		this.client = q.getNumClient();

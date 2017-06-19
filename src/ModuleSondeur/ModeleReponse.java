@@ -25,7 +25,7 @@ public class ModeleReponse {
 		this.bdgene=bdgene;
 		this.bdsond=bdsond;
 		this.questionnaire=questionnaire;
-		this.listeQuestion=bdgene.getListeQuestion(questionnaire.getNumeroQuestionnaire());
+		this.listeQuestion=bdgene.getListeQuestion(questionnaire.getIdQuestionnaire());
 		this.listeDeSonde=bdsond.getListeSondesNonInterroges(questionnaire);
 		this.listeDeSondeInterroge=bdsond.getListeSondesInterroges(questionnaire);
 		this.lesonde=listeDeSonde.get(0);

@@ -40,7 +40,7 @@ public class Vue_Echelle extends JPanel {
 		this.quest=quest;
 		this.modrep=modrep;
 		this.questnaire=questnaire;
-		this.lesboutons=new JButton [modrep.bdgene.getListeQuestion(questnaire.getNumeroQuestionnaire()).size()];
+		this.lesboutons=new JButton [modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()).size()];
 
 		afficherEchelle();
 	}
@@ -66,7 +66,7 @@ public class Vue_Echelle extends JPanel {
 			panelHeader.add(panelInfoSond);
 			panelInfoSond.setLayout(new BoxLayout(panelInfoSond, BoxLayout.Y_AXIS));
 			
-			JLabel questionEtat = new JLabel("Question "+quest.getNumeroQuestion()+"/"+modrep.bdgene.getListeQuestion(questnaire.getNumeroQuestionnaire()).size());
+			JLabel questionEtat = new JLabel("Question "+quest.getNumeroQuestion()+"/"+modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()).size());
 			questionEtat.setAlignmentX(Component.CENTER_ALIGNMENT);
 			questionEtat.setBorder(new EmptyBorder(20, 0, 5, 0));
 			panelInfoSond.add(questionEtat);
@@ -132,7 +132,7 @@ public class Vue_Echelle extends JPanel {
 		FlowLayout fl_panelLesQuestions = new FlowLayout(FlowLayout.CENTER, 5, 5);
 		panelLesQuestions.setLayout(fl_panelLesQuestions);
 		
-		for (Question q : modrep.bdgene.getListeQuestion(questnaire.getNumeroQuestionnaire()) ){
+		for (Question q : modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()) ){
 			
 			lesboutons[q.getNumeroQuestion()-1] = new JButton(String.valueOf(q.getNumeroQuestion()));
 		

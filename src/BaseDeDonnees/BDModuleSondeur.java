@@ -44,7 +44,7 @@ public class BDModuleSondeur {
 	public ArrayList <Sonde> getListeSondesInterroges (Questionnaire q) {
 		ArrayList <Sonde> listeSondes = new ArrayList <Sonde> ();
 		try {
-			String requete = "SELECT * FROM SONDE WHERE numSond IN (SELECT numSond FROM INTERROGER WHERE idQ = "+q.getNumeroQuestionnaire()+") ORDER BY numSond;";
+			String requete = "SELECT * FROM SONDE WHERE numSond IN (SELECT numSond FROM INTERROGER WHERE idQ = "+q.getIdQuestionnaire()+") ORDER BY numSond;";
 			ResultSet rs = this.st.executeQuery(requete);
 			while (rs.next()) {
 				Sonde s = new Sonde (rs.getInt("numSond"), rs.getString("nomSond"), rs.getString("prenomSond"), rs.getDate("dateNaisSond"), rs.getString("telephoneSond"), rs.getString("idC"));
@@ -63,7 +63,7 @@ public class BDModuleSondeur {
 	public ArrayList <Sonde> getListeSondesNonInterroges (Questionnaire q) {
 		ArrayList <Sonde> listeSondes = new ArrayList <Sonde> ();
 		try {
-			String requete = "SELECT * FROM SONDE NATURAL JOIN CONSTITUER WHERE idPan = "+q.getIdentifiantPanel()+" AND numSond NOT IN (SELECT numSond FROM INTERROGER WHERE idQ = "+q.getNumeroQuestionnaire()+") ORDER BY numSond;";
+			String requete = "SELECT * FROM SONDE NATURAL JOIN CONSTITUER WHERE idPan = "+q.getIdentifiantPanel()+" AND numSond NOT IN (SELECT numSond FROM INTERROGER WHERE idQ = "+q.getIdQuestionnaire()+") ORDER BY numSond;";
 			ResultSet rs = this.st.executeQuery(requete);
 			while (rs.next()) {
 				Sonde s = new Sonde (rs.getInt("numSond"), rs.getString("nomSond"), rs.getString("prenomSond"), rs.getDate("dateNaisSond"), rs.getString("telephoneSond"), rs.getString("idC"));
@@ -87,7 +87,7 @@ public class BDModuleSondeur {
 			PreparedStatement ps = this.connexion.mysql.prepareStatement(requete);
 			ps.setInt(1, q.getIdentifiantUtilisateur());
 			ps.setInt(2, s.getNumeroSonde());
-			ps.setInt(3, q.getNumeroQuestionnaire());
+			ps.setInt(3, q.getIdQuestionnaire());
 			ps.executeUpdate();
 		}
 		

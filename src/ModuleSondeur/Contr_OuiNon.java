@@ -39,7 +39,7 @@ public class Contr_OuiNon implements ActionListener{
 		
 		this.lesonde=vueOuiNon.lesonde;
 		this.questionnaire=vueOuiNon.questnaire;
-		this.listeQuest=vueOuiNon.modrep.bdgene.getListeQuestion(questionnaire.getNumeroQuestionnaire());
+		this.listeQuest=vueOuiNon.modrep.bdgene.getListeQuestion(questionnaire.getIdQuestionnaire());
 	}
 
 public void actionPerformed(ActionEvent e) {
@@ -52,7 +52,7 @@ public void actionPerformed(ActionEvent e) {
 		
 		else if (((JButton)e.getSource()).getText().equals("Valider sondage")){
 			
-			vueOuiNon.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueOuiNon.quest.getNumeroQuestion(), vueOuiNon.quest.getIdTypeQuestion(), val);
+			vueOuiNon.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueOuiNon.quest.getNumeroQuestion(), vueOuiNon.quest.getIdTypeQuestion(), val);
 			vueOuiNon.modrep.bdsond.setSondeInterroger(questionnaire,lesonde);
 
 			this.s.afficherFenetrePrinc();
@@ -63,7 +63,7 @@ public void actionPerformed(ActionEvent e) {
 			
 			this.laquestionsuiv=vueOuiNon.modrep.listeQuestion.get(Integer.parseInt(((JButton)e.getSource()).getText()));
 			
-			vueOuiNon.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueOuiNon.quest.getNumeroQuestion(), vueOuiNon.quest.getIdTypeQuestion(), val);
+			vueOuiNon.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueOuiNon.quest.getNumeroQuestion(), vueOuiNon.quest.getIdTypeQuestion(), val);
 			
 			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
 				this.s.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueOuiNon.modrep);
@@ -84,7 +84,7 @@ public void actionPerformed(ActionEvent e) {
 		}
 	
 		else if (((JButton)e.getSource()).getText().equals("Suivant")){
-			vueOuiNon.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueOuiNon.quest.getNumeroQuestion(), vueOuiNon.quest.getIdTypeQuestion(), val);
+			vueOuiNon.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueOuiNon.quest.getNumeroQuestion(), vueOuiNon.quest.getIdTypeQuestion(), val);
 			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
 				this.s.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueOuiNon.modrep);
 			}
@@ -104,7 +104,7 @@ public void actionPerformed(ActionEvent e) {
 		}
 		
 		else if (((JButton)e.getSource()).getText().equals("Précédent")){
-			vueOuiNon.modrep.ajouterReponse(questionnaire.getNumeroQuestionnaire(),vueOuiNon.quest.getNumeroQuestion(), vueOuiNon.quest.getIdTypeQuestion(), val);
+			vueOuiNon.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueOuiNon.quest.getNumeroQuestion(), vueOuiNon.quest.getIdTypeQuestion(), val);
 			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
 				this.s.afficherEchelle(laquestionpre,questionnaire,lesonde,vueOuiNon.modrep);
 			}

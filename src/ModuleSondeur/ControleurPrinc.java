@@ -25,7 +25,7 @@ public class ControleurPrinc implements ActionListener {
 		this.laBD=laBD;
 		this.s=vueFenetrePrinc.s;
 		this.questionnaire=questionnaire;
-		this.laquestion=laBD.getListeQuestion(questionnaire.getNumeroQuestionnaire()).get(0);
+		this.laquestion=laBD.getListeQuestion(questionnaire.getIdQuestionnaire()).get(0);
 		
 	}
 	

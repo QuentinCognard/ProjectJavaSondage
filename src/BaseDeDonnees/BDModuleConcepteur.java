@@ -40,7 +40,7 @@ public class BDModuleConcepteur {
 		try {
 			String requete = "INSERT INTO QUESTIONNAIRE (idQ, Titre, Etat, numC, idU, idPan) VALUES (?,?,?,?,?,?);";
 			PreparedStatement ps = this.connexion.mysql.prepareStatement(requete);
-			ps.setInt(1, q.getNumeroQuestionnaire());
+			ps.setInt(1, q.getIdQuestionnaire());
 			ps.setString(2, q.getTitreQuestionnaire());
 			ps.setString(3, String.valueOf(q.getEtatQuestionnaire()));
 			ps.setInt(4, q.getNumClient());
@@ -53,6 +53,20 @@ public class BDModuleConcepteur {
       
 		}
 	}
+	
+	public void modifierQuestionnaire (Questionnaire q) {
+		try {
+	        String requete = "UPDATE QUESTIONNAIRE SET Titre = '"+q.getTitreQuestionnaire()+"', numC = "+q.getNumClient()+", idPan = "+q.getIdentifiantPanel()+" WHERE idQ = "+q.getIdQuestionnaire()+";";
+	        this.st.executeUpdate(requete);
+		}
+		
+		catch (SQLException e) {
+			
+		}
+        
+	}
+	
+	// SUPPRIMER QUESTIONNAIRE DANS BD GENERAL
 	
 	
 	
@@ -121,6 +135,17 @@ public class BDModuleConcepteur {
 		}
 	}
 
+	public void modifierQuestion (Question q) {
+		try {
+	        String requete = "UPDATE QUESTION SET texteQ = '"+q.getTexteQuestion()+"', MaxVal = "+q.getMaxValeur()+", idT = "+q.getIdTypeQuestion()+" WHERE idQ = "+q.getIdQuestionnaire()+" AND numQ = "+q.getNumeroQuestion()+";";
+	        this.st.executeUpdate(requete);
+		}
+		
+		catch (SQLException e) {
+			
+		}
+	}
+	
 	public void supprimerQuestion (int idQuestionnaire, int numeroQuestion) {
 		try {
 	        String requete = "DELETE FROM QUESTION WHERE idQ = "+idQuestionnaire+" AND numQ = "+numeroQuestion+";";
@@ -163,9 +188,9 @@ public class BDModuleConcepteur {
 		}
 	}
 	
-	public void supprimerValeurPossible (int identifiantQuestionnaire, int numeroQuestion, int identifiantValeur) {
+	public void supprimerValeursPossibles (int identifiantQuestionnaire, int numeroQuestion) {
 		try {
-	        String requete = "DELETE FROM VALPOSSIBLE WHERE idQ = "+identifiantQuestionnaire+" AND numQ = "+numeroQuestion+" AND idV = "+identifiantValeur+";";
+	        String requete = "DELETE FROM VALPOSSIBLE WHERE idQ = "+identifiantQuestionnaire+" AND numQ = "+numeroQuestion+";";
 	        this.st.executeUpdate(requete); 
 		}
 		

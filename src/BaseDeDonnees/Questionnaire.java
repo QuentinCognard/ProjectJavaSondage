@@ -21,11 +21,11 @@ public class Questionnaire {
 		this.identifiantPanel = ip;
 	}
 
-	public int getNumeroQuestionnaire() {
+	public int getIdQuestionnaire() {
 		return idQuestionnaire;
 	}
 
-	public void setNumeroQuestionnaire(int numeroQuestionnaire) {
+	public void setIdQuestionnaire(int numeroQuestionnaire) {
 		this.idQuestionnaire = numeroQuestionnaire;
 	}
 

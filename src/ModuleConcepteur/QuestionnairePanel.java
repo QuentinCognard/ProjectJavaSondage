@@ -14,7 +14,7 @@ public class QuestionnairePanel extends JPanel{
 		return this.q;
 	}
 	public int getId(){
-		return this.q.getNumeroQuestionnaire();
+		return this.q.getIdQuestionnaire();
 	}
 	public String getTitreQuestionnaire(){
 		return this.q.getTitreQuestionnaire();

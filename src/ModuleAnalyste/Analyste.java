@@ -141,7 +141,7 @@ public class Analyste extends JPanel {
 		ArrayList<Questionnaire> listeQuestionnaire = anaMod.getQuestionnaireFini();
 		String[][] values = new String[listeQuestionnaire.size()][3];
 		for (int i = 0; i< listeQuestionnaire.size(); i++){
-				values[i][0] = listeQuestionnaire.get(i).getNumeroQuestionnaire() + "";
+				values[i][0] = listeQuestionnaire.get(i).getIdQuestionnaire() + "";
 				values[i][1] = listeQuestionnaire.get(i).getTitreQuestionnaire();
 				values[i][2] = listeQuestionnaire.get(i).getNumClient() + "";
 		}

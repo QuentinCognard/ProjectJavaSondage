@@ -146,7 +146,7 @@ public class Vue_OuiNon extends JPanel{
 		panelLesQuestions.setLayout(fl_panelLesQuestions);
 		
 		JButton []lesboutons={};
-		for (Question q : modrep.bdgene.getListeQuestion(questnaire.getNumeroQuestionnaire()) ){
+		for (Question q : modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()) ){
 			
 			lesboutons[q.getNumeroQuestion()-1]=new JButton(String.valueOf(q.getNumeroQuestion()));
 		

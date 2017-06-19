@@ -108,7 +108,7 @@ public class Concepteur extends JPanel {
 		QuestionnairePanel panelQuestionnaire = new QuestionnairePanel(q);
 		panelQuestionnaire.setLayout(new FlowLayout(FlowLayout.CENTER,20,20));
 		panelQuestionnaire.setBorder(BorderFactory.createLineBorder(Color.black));
-		JLabel idQuestionnaire = new JLabel(""+q.getNumeroQuestionnaire());
+		JLabel idQuestionnaire = new JLabel(""+q.getIdQuestionnaire());
 		idQuestionnaire.setFont(police);
 		idQuestionnaire.setBorder(BorderFactory.createLineBorder(Color.black));
 		panelQuestionnaire.add(idQuestionnaire);
