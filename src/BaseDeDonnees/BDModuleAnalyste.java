@@ -40,5 +40,56 @@ public class BDModuleAnalyste {
 		}
 	}
 
+	// a modifier
+	public ArrayList <String> getChoixQuestionUnique (int idQuestionnaire, int numeroQuestion) {
+		ArrayList <String> listeChoix = new ArrayList <String> ();
+		try {
+			String requete = "SELECT Valeur FROM VALPOSSIBLE WHERE idQ = "+idQuestionnaire+" AND numQ = "+numeroQuestion+";";
+			ResultSet rs = this.st.executeQuery(requete);
+			while (rs.next()) {
+				listeChoix.add(rs.getString("Valeur"));
+			}
+		}
+		
+		catch (SQLException e) {
+			
+		}
+		
+		return listeChoix;
+	}
+
+	public ArrayList <String> getValeursReponseLibre (int idQuestionnaire, int numeroQuestion) {
+		ArrayList <String> listeValeurs = new ArrayList <String> ();
+		try {
+			String requete = "SELECT valeur FROM REPONDRE WHERE idQ = "+idQuestionnaire+" AND numQ = "+numeroQuestion+";";
+			ResultSet rs = this.st.executeQuery(requete);
+			while (rs.next()) {
+				listeValeurs.add(rs.getString("valeur"));
+			}
+		}
+		
+		catch (SQLException e) {
+			
+		}
+		return listeValeurs;
+	}
+
+	public ArrayList <Categorie> getCategoriesQuestionnaire (int idQuestionnaire) {
+		ArrayList <Categorie> listeCat = new ArrayList <Categorie> ();
+		try {
+			String requete = "SELECT * FROM CATEGORIE WHERE idCat in (SELECT idCat FROM CARACTERISTIQUE NATURAL JOIN SONDE NATURAL JOIN INTERROGER WHERE idQ = "+idQuestionnaire+")";
+			ResultSet rs = this.st.executeQuery(requete);
+			while (rs.next()) {
+				Categorie c = new Categorie (rs.getString("idCat").charAt(0),rs.getString("intituleCat"));
+				listeCat.add(c);
+			}
+		}
+		
+		catch (SQLException e) {
+			
+		}
+		return listeCat;
+	}
+
 
 }
