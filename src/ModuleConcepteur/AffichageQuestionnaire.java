@@ -5,30 +5,32 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
-import BaseDeDonnees.Questionnaire;
+import BaseDeDonnees.*;
 
 public class AffichageQuestionnaire extends JPanel{
 	Concepteur c;
 	Questionnaire q;
+	BDGeneral bd;
 	private JPanel panelCentral;
 	private int id;
 	private String nom;
 	private int panel;
 	private int client;
 	private int tauxReponse;
+	private ArrayList<Question> listeQuestions;
 	
-	AffichageQuestionnaire(Concepteur c,Questionnaire q){
+	AffichageQuestionnaire(Concepteur c,Questionnaire q,BDGeneral bd){
 		this.c = c;
 		this.q = q;
+		this.bd = bd;
 		this.panelCentral = new JPanel();
 		this.id = q.getIdQuestionnaire();
 		this.nom = q.getTitreQuestionnaire();
@@ -45,6 +47,14 @@ public class AffichageQuestionnaire extends JPanel{
 		this.panel = panel;
 		this.client = client;
 		this.tauxReponse = tauxReponse;
+	}
+	private ArrayList<QuestionPanel> recupQuestions(){
+		this.listeQuestions = bd.getListeQuestion(q.getIdQuestionnaire());
+		ArrayList<QuestionPanel> liste = new ArrayList<QuestionPanel>();
+		for(Question q : listeQuestions){
+			liste.add(creerQuestion(q));
+		}
+		return liste;
 	}
 	private void panelCentral(){
 		panelCentral.setLayout(new BorderLayout());
@@ -103,14 +113,15 @@ public class AffichageQuestionnaire extends JPanel{
 		titrePanelQuestions.setPreferredSize(new Dimension(320,50));
 		titrePanelQuestions.setFont(new Font("Calibri",Font.BOLD,26));
 		titrePanelQuestions.setBorder(new EmptyBorder(20,20,20,20));
+		JPanel panelPanelsQuestions = new JPanel();
 		JPanel panelListeQuestions = new JPanel();
-		JPanel listeQuestions = new JPanel();
-		listeQuestions.setLayout(new BoxLayout(listeQuestions,BoxLayout.Y_AXIS));
-		for(int i=0;i<20;i++){
-			listeQuestions.add(creerQuestion("Quel âge avez-vous ?"));
+		panelListeQuestions.setLayout(new BoxLayout(panelListeQuestions,BoxLayout.Y_AXIS));
+		ArrayList<QuestionPanel> listePanelsQuestion = recupQuestions();
+		for(JPanel q : listePanelsQuestion){
+			panelListeQuestions.add(q);
 		}
-		panelListeQuestions.add(listeQuestions);
-		JScrollPane scrollQuestions = new JScrollPane(panelListeQuestions);
+		panelPanelsQuestions.add(panelListeQuestions);
+		JScrollPane scrollQuestions = new JScrollPane(panelPanelsQuestions);
 		scrollQuestions.setPreferredSize(getPreferredSize());
 		panelQuestionsBorder.add(titrePanelQuestions);
 		panelQuestionsBorder.add(scrollQuestions);
@@ -120,15 +131,16 @@ public class AffichageQuestionnaire extends JPanel{
 		panelCentral.add(panelQuestions,"East");
 
 	}
-	private JPanel creerQuestion(String intitule){
-		JPanel panelQuestion = new JPanel();
+	private QuestionPanel creerQuestion(Question q){
+		QuestionPanel panelQuestion = new QuestionPanel(q);
+		panelQuestion.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JPanel panelQuestionBis = new JPanel(); 
 		//Permet d'avoir un second panel pour avoir à la fois un contour et un espacement
-		JLabel nomQuestion = new JLabel(intitule);
-		nomQuestion.setBorder(new EmptyBorder(3,60,3,60));
+		JLabel nomQuestion = new JLabel(q.getTexteQuestion());
+		nomQuestion.setBorder(new EmptyBorder(3,30,3,30));
 		panelQuestionBis.setBorder(BorderFactory.createLineBorder(Color.black));
 		panelQuestionBis.add(nomQuestion);
-		panelQuestion.setBorder(new EmptyBorder(3,10,3,10));
+		panelQuestion.setBorder(new EmptyBorder(3,3,3,3));
 		panelQuestion.add(panelQuestionBis);
 		return panelQuestion;
 	}

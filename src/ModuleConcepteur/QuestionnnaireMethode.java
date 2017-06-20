@@ -3,7 +3,7 @@ package ModuleConcepteur;
 import java.util.ArrayList;
 
 public class QuestionnnaireMethode {
-	ArrayList<Question> question;
+	ArrayList<AjouterQuestion> ajouterQuestion;
 	String titre;
 	String panel;
 	int id;
@@ -11,13 +11,13 @@ public class QuestionnnaireMethode {
 	String societe;
 	
 	QuestionnnaireMethode(){
-		this.question = new ArrayList<Question>();
+		this.ajouterQuestion = new ArrayList<AjouterQuestion>();
 		this.id = 1;
 		
 	}
 	
 	public void ajouterQuestion(String in, ArrayList<String> lis){
-		this.question.add(new Question(in,lis));
+		this.ajouterQuestion.add(new AjouterQuestion(in,lis));
 	}
 	
 	public void setTitre(String t){
@@ -52,7 +52,7 @@ public class QuestionnnaireMethode {
 		return this.taux;
 	}
 	
-	public ArrayList<Question> getListe(){
-		return this.question;
+	public ArrayList<AjouterQuestion> getListe(){
+		return this.ajouterQuestion;
 	}
 }

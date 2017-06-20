@@ -17,8 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import Commun.ModeleCommun;
-import BaseDeDonnees.BDGeneral;
-import BaseDeDonnees.Questionnaire;
+import BaseDeDonnees.*;
 
 
 public class Concepteur extends JPanel {
@@ -26,14 +25,16 @@ public class Concepteur extends JPanel {
 	private VueCreerQuestionnaire creerQuestionnaire;
 	private JPanel base;
 	private JPanel panelDuBas;
-	private JPanel listeQuestionnaires;
+	private JPanel panelListeQuestionnaires;
 	private BDGeneral bdgeneral;
+	private BDModuleConcepteur bdConcepteur;
 	
 	
 	public Concepteur (ModeleCommun modele) {
 		super();
 		this.setLayout(new BorderLayout());
 		this.bdgeneral = modele.getBdGeneral();
+		this.bdConcepteur = new BDModuleConcepteur(modele.getBdConnexion());
 		afficherPanelHaut(); 
 		afficherPanelMilieu();
 		afficherPanelBas();
@@ -80,8 +81,8 @@ public class Concepteur extends JPanel {
 		this.panelDuBas = new JPanel();
 		JPanel panelSearch = new JPanel();
 		JPanel panelListeQuestionnaire = new JPanel();
-		this.listeQuestionnaires = new JPanel();
-		listeQuestionnaires.setLayout(new BoxLayout(listeQuestionnaires,BoxLayout.Y_AXIS));
+		this.panelListeQuestionnaires = new JPanel();
+		panelListeQuestionnaires.setLayout(new BoxLayout(panelListeQuestionnaires,BoxLayout.Y_AXIS));
 		panelListeQuestionnaire.setLayout(new BoxLayout(panelListeQuestionnaire, BoxLayout.Y_AXIS)); //Le panel principal
 		panelDuBas.setLayout(new BoxLayout(panelDuBas,BoxLayout.Y_AXIS));
 		panelDuBas.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -94,9 +95,9 @@ public class Concepteur extends JPanel {
 		panelSearch.add(searchBar);
 		ArrayList<QuestionnairePanel> listePanelsQuestionnaires = recupQuestionnaires(); //la liste des panels
 		for(JPanel panel : listePanelsQuestionnaires){
-			listeQuestionnaires.add(panel);
+			panelListeQuestionnaires.add(panel);
 		}
-		JScrollPane scrollQuestionnaires = new JScrollPane(listeQuestionnaires);
+		JScrollPane scrollQuestionnaires = new JScrollPane(panelListeQuestionnaires);
 		scrollQuestionnaires.setPreferredSize(getPreferredSize());
 		panelListeQuestionnaire.add(scrollQuestionnaires);
 		panelDuBas.add(panelSearch);
@@ -143,7 +144,7 @@ public class Concepteur extends JPanel {
 		this.removeAll();
 		this.afficherPanelHaut();
 		this.afficherPanelMilieu();
-		new AffichageQuestionnaire(this,q);
+		new AffichageQuestionnaire(this,q,this.bdgeneral);
 		this.validate();
 		this.repaint();
 	}
@@ -159,7 +160,7 @@ public class Concepteur extends JPanel {
 		this.removeAll();
 		this.afficherPanelHaut();
 		this.afficherPanelMilieu();
-		new ModificationQuestionnaire(this,q);
+		new ModificationQuestionnaire(this,q,this.bdgeneral,this.bdConcepteur);
 		this.validate();
 		this.repaint();
 	}
