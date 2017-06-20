@@ -28,6 +28,7 @@ import ModuleAnalyste.AnalysteController.ValiderController;
 
 public class Analyste extends JPanel {
 	
+	private Sondio sondio;
 	private JTable tab;
 	private JTextField champRecherche;
 	private AnalysteModele anaMod;
@@ -35,9 +36,14 @@ public class Analyste extends JPanel {
 	
 	public Analyste (ModeleCommun modelecommun) {
 		anaMod = new AnalysteModele(modelecommun);
+		sondio = modelecommun.getSondio();
 		this.setLayout(new BorderLayout());
 		afficherPanelBase();
 		//new AnalysteModification(this);
+	}
+	
+	public Sondio getSondio(){
+		return sondio;
 	}
 	
 	public JTable getTableau(){

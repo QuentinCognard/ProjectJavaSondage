@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import ModuleAnalyste.Analyste;
 
@@ -38,11 +39,16 @@ public class ModifController implements ActionListener {
 			//TODO:Revient � l'enregistrement pr�c�dent
 		}
 		else if (((JButton)e.getSource()).getText().equals("Generer un PDF")){
-			System.out.println("PDF");
+			if (ana.getAnalysteModification().isComment())
+				System.out.println("PDF");
+			else{
+				JOptionPane.showMessageDialog(ana,"Commentaire final non rempli","INFORMATION",JOptionPane.INFORMATION_MESSAGE);
+			}
 			//TODO:Genere un pdf et affiche une Jframe pour choisir l'emplacement de la save
 		}
 		else if (((JButton)e.getSource()).getText().equals("Se deconnecter")){
 			System.out.println("DECONNEXION");
+			ana.getModeleAnalyste().deconnexion(ana.getSondio());
 			//TODO:Revient � l'�cran de connexion AVEC un message si le Travail non enregistr�
 		}
 		

@@ -17,6 +17,7 @@ import BaseDeDonnees.Repondre;
 import BaseDeDonnees.Tranche;
 import BaseDeDonnees.ValeurPossible;
 import Commun.ModeleCommun;
+import Commun.Sondio;
 
 public class AnalysteModele {
 	BDGeneral BDGen;
@@ -97,8 +98,8 @@ public class AnalysteModele {
 		return BDGen.getListeValPossible (idQuestionnaire, numQuestion);
 	}
 	
-	public void deconnexion(){
-		//TODO: à voir avec Nathan
+	public void deconnexion(Sondio sondio){
+		sondio.afficherConnexion();
 	}
 	
 	public ArrayList<Questionnaire> trieQuestionnaires(int idQuestionnaire, String NomQuestionnaire){
@@ -185,21 +186,12 @@ public class AnalysteModele {
 				}
 			}
 		}
-		else if (regroupement.equals("Age")){
+		else{ //if (regroupement.equals("Age"))
 			values = new String[listeTranchesPresentes.size()][Array.getLength(ColumnNames)];
 			for (int l = 0; l<listeTranchesPresentes.size(); l++){
 				values[l][0] = listeTranchesPresentes.get(l).getValeurDebut() + "-" + listeTranchesPresentes.get(l).getValeurFin() + " ans";
 				for (int c = 1; c<Array.getLength(ColumnNames); c++){
 					values[l][c] = "a";//TODO : a changer quand on aura la fct correcte
-				}
-			}
-		}
-		else{ //SI ON CHOISIT LE TRI PAR REPONSE DONNEES
-			//????????????????????????????????????????????????????????????????
-			values = new String[listeTranchesPresentes.size()][Array.getLength(ColumnNames)];
-			for (int l = 0; l<listeTranchesPresentes.size(); l++){
-				for (int c = 0; c<Array.getLength(ColumnNames); c++){
-					values[l][c] = "rd";//TODO : a changer quand on aura la fct correcte
 				}
 			}
 		}

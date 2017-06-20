@@ -40,6 +40,7 @@ public class AnalysteModification {
 	
 	private ModifController mc;
 	private Analyste ana;
+	private JTextArea fieldCommentaireFinal;
 	private ArrayList<JTabbedPane> listepGraphs;
 	private ArrayList<JComboBox<String>> listeBoutonsRegroupement;
 	//private ArrayList<JPanel> listePanelQuestions;
@@ -53,6 +54,12 @@ public class AnalysteModification {
 		ana.afficherPanelDuHaut();
 		MofifierPanelDuHaut(ana);
 		afficherPanelBas(ana);
+	}
+	
+	public boolean isComment(){
+		if (!fieldCommentaireFinal.getText().equals(""))
+			return true;
+		return false;
 	}
 	
 	public ArrayList<JComboBox<String>> getListeBoutonsRegroupement(){
@@ -167,8 +174,8 @@ public class AnalysteModification {
 			pFieldCommentaireFinal.setLayout(new ScrollPaneLayout());
 			gpFieldCF.add(pFieldCommentaireFinal);
 			pCommentaireFinal.add(gpFieldCF);
-			JTextArea fieldCommentaire = new JTextArea(10,80);
-			pFieldCommentaireFinal.setViewportView(fieldCommentaire);
+			fieldCommentaireFinal = new JTextArea(10,80);
+			pFieldCommentaireFinal.setViewportView(fieldCommentaireFinal);
 	}
 
 	public void afficherQuestion(JPanel pResultats,Question q){
