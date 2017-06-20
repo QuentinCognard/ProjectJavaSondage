@@ -32,7 +32,7 @@ public class Question {
 	}
 
 	public String getTexteQuestion() {
-		return texteQuestion;
+		return this.texteQuestion;
 	}
 
 	public void setTexteQuestion(String texteQuestion) {

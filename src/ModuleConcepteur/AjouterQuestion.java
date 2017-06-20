@@ -2,11 +2,11 @@ package ModuleConcepteur;
 
 import java.util.ArrayList;
 
-public class Question {
+public class AjouterQuestion {
 	String intitule;
 	ArrayList<String> reponse;
 	
-	Question(String i, ArrayList<String> l){
+	AjouterQuestion(String i, ArrayList<String> l){
 		this.intitule = i;
 		this.reponse = l;
 	}

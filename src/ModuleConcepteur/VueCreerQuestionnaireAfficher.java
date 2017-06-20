@@ -19,7 +19,7 @@ public class VueCreerQuestionnaireAfficher extends JPanel {
 	private String panel;
 	private String societe;
 	private String tauxReponse;
-	ArrayList<Question> question;
+	ArrayList<AjouterQuestion> ajouterQuestion;
 	private JLabel JLid;
 	private JLabel JLnom;
 	private JLabel JLpanel;
@@ -33,7 +33,7 @@ public class VueCreerQuestionnaireAfficher extends JPanel {
 		this.panel = "";
 		this.societe = "";
 		this.tauxReponse = "";
-		this.question = new ArrayList<Question>();
+		this.ajouterQuestion = new ArrayList<AjouterQuestion>();
 		panelCentral();
 	}
 	
@@ -63,8 +63,8 @@ public class VueCreerQuestionnaireAfficher extends JPanel {
 	}
 	
 	public void ajouterQuestion(String in,ArrayList<String> lis){
-		Question q = new Question(in,lis);
-		this.question.add(q);
+		AjouterQuestion q = new AjouterQuestion(in,lis);
+		this.ajouterQuestion.add(q);
 		listeQuestions.add(creerQuestion(q.getIntitule()));
 	}
 	

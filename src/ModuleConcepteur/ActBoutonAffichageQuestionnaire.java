@@ -5,8 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-
-import BaseDeDonnees.Questionnaire;
+import BaseDeDonnees.*;
 
 public class ActBoutonAffichageQuestionnaire implements ActionListener {
 
@@ -14,7 +13,7 @@ public class ActBoutonAffichageQuestionnaire implements ActionListener {
 	AffichageQuestionnaire vue;
 	Questionnaire q;
 	
-	public ActBoutonAffichageQuestionnaire(Concepteur concepteur,AffichageQuestionnaire vue, Questionnaire q) {
+	public ActBoutonAffichageQuestionnaire(Concepteur concepteur,AffichageQuestionnaire vue,Questionnaire q) {
 		super();
 		this.concepteur = concepteur;
 		this.vue = vue;

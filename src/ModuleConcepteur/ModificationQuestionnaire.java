@@ -2,7 +2,6 @@ package ModuleConcepteur;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -13,14 +12,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
-import BaseDeDonnees.Questionnaire;
+import BaseDeDonnees.*;
 
 public class ModificationQuestionnaire extends JPanel{
 	Concepteur c;
 	Questionnaire q;
+	BDGeneral bd;
+	BDModuleConcepteur bdc;
 	private JPanel panelCentral;
 	private JTextField valId;
 	private JTextField valNom;
@@ -32,9 +31,12 @@ public class ModificationQuestionnaire extends JPanel{
 	private int panel;
 	private int client;
 	private int tauxReponse;
-	ModificationQuestionnaire(Concepteur c,Questionnaire q){
+	
+	ModificationQuestionnaire(Concepteur c,Questionnaire q,BDGeneral bd,BDModuleConcepteur bdc){
 		this.c = c;
 		this.q = q;
+		this.bd = bd;
+		this.bdc = bdc;
 		this.panelCentral = new JPanel();
 		this.id = q.getIdQuestionnaire();
 		this.nom = q.getTitreQuestionnaire();
@@ -167,7 +169,7 @@ public class ModificationQuestionnaire extends JPanel{
 		JButton modifier = new JButton("Modifier");
 		panelQuestionBis.add(modifier);
 		JButton supprimer = new JButton("X");
-		ActBoutonModifQuestionnaire actBouton = new ActBoutonModifQuestionnaire(this.c,this,this.q);
+		ActBoutonModifQuestionnaire actBouton = new ActBoutonModifQuestionnaire(this.c,this,this.q,this.bd,this.bdc);
 		supprimer.addActionListener(actBouton);
 		panelQuestionBis.add(supprimer);
 		panelQuestion.setBorder(new EmptyBorder(3,10,3,10));
@@ -179,7 +181,7 @@ public class ModificationQuestionnaire extends JPanel{
 		JPanel panelBoutons = new JPanel();
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER,120,0));
 		panelBoutons.setBorder(new EmptyBorder(50,10,50,10));
-		ActBoutonModifQuestionnaire actBoutons = new ActBoutonModifQuestionnaire(this.c,this,this.q);
+		ActBoutonModifQuestionnaire actBoutons = new ActBoutonModifQuestionnaire(this.c,this,this.q,this.bd,this.bdc);
 		JButton boutonRetour = new JButton("Annuler");
 		boutonRetour.addActionListener(actBoutons);
 		boutonRetour.setFont(police);
