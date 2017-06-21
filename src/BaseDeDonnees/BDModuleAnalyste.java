@@ -1,10 +1,15 @@
 package BaseDeDonnees;
 
-import java.sql.*;
+import java.lang.reflect.Array;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * BDModuleAnalyste est une classe qui va regrouper les fonctions jdbc qui seront utilisées dans le module analyste
- * @author nathan
+ * @author nathan Faure et Julien Revaud
  *
  */
 public class BDModuleAnalyste {
@@ -138,5 +143,35 @@ public class BDModuleAnalyste {
 		}
 		return listeTr;
 	}
+	
+	/**
+	 * Retourne la liste du nombre de personne aillant répondu une telle réponse et appartenant à une telle tranche
+	 * @param idQuestionnaire
+	 * 		id du questionnaire
+	 * @param numQuest
+	 * 		numéro de la question
+	 * @param tr
+	 * 		tranche d'age choisi
+	 * @param listeRep
+	 * 		la liste des réponses
+	 * @return une ArrayList de int
+	 */
+	public ArrayList<Integer> getNbPersParReponseParTranche (int idQuestionnaire,int numQuest, Tranche tr, ArrayList<String> listeRep) {//ATTENTION : la liste des réponses contient à l'incide 0 le nom de la 1ère colonne: "Regrpmt/rep"
+		ArrayList<Integer> listeNbRepParTranche = new ArrayList<Integer>();
+		for (int i =0; i<listeRep.size(); i++)
+		{
+			try{
+				String requete = "SELECT count(valeur) nb FROM REPONDRE natural join CARACTERISTIQUE natural join TRANCHE WHERE idQ = "+idQuestionnaire+" and numQ = "+numQuest+" and valeur = '"+listeRep.get(i)+"' and idTr = "+tr.getIdTranche();
+				System.out.println(requete);
+				ResultSet rs = this.st.executeQuery(requete);  
+				rs.next();
+				listeNbRepParTranche.add(rs.getInt("nb"));
+			}
+			catch (SQLException e){
+				System.out.println("Erreur lors de l'obtention du nombre de personne par tranche d'age par reponse : " + e.getMessage());
+			}
+		}
+			return listeNbRepParTranche;
+		}
 	
 }

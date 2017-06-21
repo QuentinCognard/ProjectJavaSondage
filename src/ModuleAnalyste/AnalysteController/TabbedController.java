@@ -52,12 +52,15 @@ public class TabbedController implements ChangeListener {
 					if (br.getItemCount() == 2)
 						br.addItem("Reponses donnees");
 				}
-				else
+				else //if (tabName.equals("Tableau"))
 				{
 					br.setEnabled(true);
 					if (br.getItemCount() == 3)
 						br.removeItemAt(2); //on sup le 3ème qui a pour indice 2
 				}
+				System.out.println("idTypequestion :" + ana.getModeleAnalyste().getListeQuestions().get(Integer.parseInt(tabGeneral.getName())-1).getIdTypeQuestion());
+				if (ana.getModeleAnalyste().getListeQuestions().get(Integer.parseInt(tabGeneral.getName())-1).getIdTypeQuestion() == 'm' || ana.getModeleAnalyste().getListeQuestions().get(Integer.parseInt(tabGeneral.getName())-1).getIdTypeQuestion() == 'c')
+					br.setEnabled(false);
 				return;
 			}
 		}

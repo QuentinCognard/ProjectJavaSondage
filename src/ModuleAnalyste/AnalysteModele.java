@@ -229,6 +229,7 @@ public class AnalysteModele {
 	   */
 	public DefaultTableModel createTableModel(String regroupement, int numQuest){
 		Question quest = listeQuestions.get(numQuest-1);
+		ArrayList<String> ReponsesPossible = new ArrayList<String>();
 		String[] ColumnNames;
 		String[][] values;
 		if (quest.getIdTypeQuestion() == 'u' || quest.getIdTypeQuestion() == 'm' || quest.getIdTypeQuestion() == 'c')
@@ -237,7 +238,11 @@ public class AnalysteModele {
 			ColumnNames = new String[nbReponsesPossible + 1];
 			ColumnNames[0] = "Regpmt/Rep";
 			for (int i = 1; i<nbReponsesPossible+1; i++)
+			{
 				ColumnNames[i] = listeQuestionsValPossible.get(quest).get(i-1).getValeur();
+				ReponsesPossible.add(listeQuestionsValPossible.get(quest).get(i-1).getIdValeur()+"");
+			}
+			
 		}
 		else if (quest.getIdTypeQuestion() == 'n')
 		{ 
@@ -245,11 +250,14 @@ public class AnalysteModele {
 			ColumnNames = new String[nbReponsesPossible + 1];
 			ColumnNames[0] = "Regpmt/Rep";
 			for (int i = 1; i<nbReponsesPossible+1; i++)
+			{
 				ColumnNames[i] = i-1 +"";
+				ReponsesPossible.add(i-1 +"");
+			}
+			
 		}
 		else //si quest.getIdTypeQuestion() == 'l'
 		{
-			ArrayList<String> ReponsesPossible = new ArrayList<String>();
 			for (Repondre rep : listeQuestionsReponses.get(quest))
 			{
 				if (!ReponsesPossible.contains(rep.getValeur()))
@@ -261,24 +269,44 @@ public class AnalysteModele {
 			for (int i = 1; i<nbReponsesPossible+1; i++)
 				ColumnNames[i] = ReponsesPossible.get(i-1);
 		}
-		if (regroupement.equals("Categorie socio-professionnel")){
-			values = new String[listeCategoriesPresentes.size()][Array.getLength(ColumnNames)];
-			for (int l = 0; l<listeCategoriesPresentes.size(); l++){
-				values[l][0] = listeCategoriesPresentes.get(l).getIntituleCategorie();
-				for (int c = 1; c<Array.getLength(ColumnNames); c++){
-					values[l][c] = "cat";//TODO : a changer quand on aura la fct correcte
+		if (quest.getIdTypeQuestion() == 'm' || quest.getIdTypeQuestion() == 'c')
+		{
+			values = new String[quest.getMaxValeur()][Array.getLength(ColumnNames)];
+			for (int l = 0; l<quest.getMaxValeur(); l++){
+				values[l][0] = l+1 +"";
+				ArrayList<Integer> listeNbRep = BDAnalyste.getNbPersParReponseParTranche(idQuestionnaireChoisi, numQuest, listeTranchesPresentes.get(l), ReponsesPossible);
+				for (int c = 1; c-1<listeNbRep.size(); c++){
+					System.out.println(listeNbRep.get(c-1));
+					values[l][c] = listeNbRep.get(c-1)+"";//TODO : a changer quand on aura la fct correcte
+					//TODO: c'est absolument pas bon, il faudrait recréer une fct qui prenne en paramètre non pas les tranche mais les position des réponses...
 				}
 			}
 		}
-		else{ //if (regroupement.equals("Age"))
-			values = new String[listeTranchesPresentes.size()][Array.getLength(ColumnNames)];
-			for (int l = 0; l<listeTranchesPresentes.size(); l++){
-				values[l][0] = listeTranchesPresentes.get(l).getValeurDebut() + "-" + listeTranchesPresentes.get(l).getValeurFin() + " ans";
-				for (int c = 1; c<Array.getLength(ColumnNames); c++){
-					values[l][c] = "a";//TODO : a changer quand on aura la fct correcte
+		else{
+			if (regroupement.equals("Categorie socio-professionnel")){
+				values = new String[listeCategoriesPresentes.size()][Array.getLength(ColumnNames)];
+				for (int l = 0; l<listeCategoriesPresentes.size(); l++){
+					values[l][0] = listeCategoriesPresentes.get(l).getIntituleCategorie();
+					for (int c = 1; c<Array.getLength(ColumnNames); c++){
+						values[l][c] = "cat";//TODO : a changer quand on aura la fct correcte
+					}
 				}
 			}
+			else{ //if (regroupement.equals("Age"))
+
+				values = new String[listeTranchesPresentes.size()][Array.getLength(ColumnNames)];
+				for (int l = 0; l<listeTranchesPresentes.size(); l++){
+					values[l][0] = listeTranchesPresentes.get(l).getValeurDebut() + "-" + listeTranchesPresentes.get(l).getValeurFin() + " ans";
+					ArrayList<Integer> listeNbRep = BDAnalyste.getNbPersParReponseParTranche(idQuestionnaireChoisi, numQuest, listeTranchesPresentes.get(l), ReponsesPossible);
+					for (int c = 1; c-1<listeNbRep.size(); c++){
+						System.out.println(listeNbRep.get(c-1));
+						values[l][c] = listeNbRep.get(c-1)+"";
+					}
+				}
+				
+			}
 		}
+		
 		DefaultTableModel modele = new DefaultTableModel(values,ColumnNames){
 			@Override
 		    public boolean isCellEditable(int row, int column) {
