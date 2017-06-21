@@ -48,7 +48,7 @@ public class AffichageQuestionnaire extends JPanel{
 		this.client = client;
 		this.tauxReponse = tauxReponse;
 	}
-	private ArrayList<QuestionPanel> recupQuestions(){
+	public ArrayList<QuestionPanel> recupQuestions(){
 		this.listeQuestions = bd.getListeQuestion(q.getIdQuestionnaire());
 		ArrayList<QuestionPanel> liste = new ArrayList<QuestionPanel>();
 		for(Question q : listeQuestions){
