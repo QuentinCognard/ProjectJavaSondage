@@ -29,6 +29,7 @@ public class Sondeur extends JPanel {
 	ModeleReponse modrep;
 	Vue_FenetrPrinc fenetredebut;
 	Vue_ChoixMultiples choixmultiples;
+	Vue_Unique unique;
 	Vue_Libre replibre;
 	Vue_PlusSondes plusonde;
 	Vue_Classement classement;
@@ -129,6 +130,19 @@ public class Sondeur extends JPanel {
 		afficherPanelDuHaut();
 		this.replibre = new Vue_Libre (this,lesonde,quest,questionnaire,modrep);
 		add(this.replibre, "Center");
+		validate();
+		repaint();
+	}
+	
+	public void afficherUnique(Question quest,Questionnaire questionnaire,Sonde lesonde,ModeleReponse modrep){
+		removeAll();
+		this.lesonde=lesonde;
+		this.quest=quest;
+		this.questionnaire=questionnaire;
+		this.modrep=modrep;
+		afficherPanelDuHaut();
+		this.unique = new Vue_Unique (this,lesonde,quest,questionnaire,modrep);
+		add(this.unique, "Center");
 		validate();
 		repaint();
 	}

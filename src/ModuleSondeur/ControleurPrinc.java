@@ -17,6 +17,7 @@ public class ControleurPrinc implements ActionListener {
 	private ModeleReponse modrep;
 	private BDModuleSondeur bdSond;
 	private Sondeur s;
+	private int i;
 	
 	public ControleurPrinc(Vue_FenetrPrinc vueFenetrePrinc,Questionnaire questionnaire,BDGeneral laBD,BDModuleSondeur bdSond){
 		super();
@@ -26,31 +27,32 @@ public class ControleurPrinc implements ActionListener {
 		this.s=vueFenetrePrinc.s;
 		this.questionnaire=questionnaire;
 		this.laquestion=laBD.getListeQuestion(questionnaire.getIdQuestionnaire()).get(0);
+		this.i=questionnaire.getIdQuestionnaire()-1;
 		
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
 		
 		this.modrep= new ModeleReponse(laBD,bdSond,questionnaire);
-		vueFenetrePrinc.progressBarSond.setMaximum(modrep.listeDeSondeInterroge.size()+modrep.listeDeSonde.size());
+		vueFenetrePrinc.progressBarSond[i].setMaximum(modrep.listeDeSondeInterroge.size()+modrep.listeDeSonde.size());
 		if (laquestion.getIdTypeQuestion() =='u' || laquestion.getIdTypeQuestion() =='n'){
-			vueFenetrePrinc.progressBarSond.setValue(modrep.listeDeSondeInterroge.size()+1);
+			vueFenetrePrinc.progressBarSond[i].setValue(modrep.listeDeSondeInterroge.size()+1);
 			this.s.afficherEchelle(laquestion,questionnaire,modrep.lesonde,modrep);
 		}
 		else if (laquestion.getIdTypeQuestion() =='m'){
-			vueFenetrePrinc.progressBarSond.setValue(modrep.listeDeSondeInterroge.size()+1);
+			vueFenetrePrinc.progressBarSond[i].setValue(modrep.listeDeSondeInterroge.size()+1);
 
 			this.s.afficherChoixMultiples(laquestion,questionnaire,modrep.lesonde,modrep);
 
 		}
 		else if (laquestion.getIdTypeQuestion() =='c'){
-			vueFenetrePrinc.progressBarSond.setValue(modrep.listeDeSondeInterroge.size()+1);
+			vueFenetrePrinc.progressBarSond[i].setValue(modrep.listeDeSondeInterroge.size()+1);
 
 			this.s.afficherClassement(laquestion,questionnaire,modrep.lesonde,modrep);
 
 		}
 		else if (laquestion.getIdTypeQuestion() =='l'){
-			vueFenetrePrinc.progressBarSond.setValue(modrep.listeDeSondeInterroge.size()+1);
+			vueFenetrePrinc.progressBarSond[i].setValue(modrep.listeDeSondeInterroge.size()+1);
 
 			this.s.afficherLibre(laquestion,questionnaire,modrep.lesonde,modrep);
 

@@ -1,62 +1,65 @@
 package ModuleSondeur;
 
 import java.awt.BorderLayout;
+import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Image;
+import java.awt.FlowLayout;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JTextField;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import BaseDeDonnees.Question;
 import BaseDeDonnees.Questionnaire;
-import BaseDeDonnees.Repondre;
 import BaseDeDonnees.Sonde;
+import BaseDeDonnees.ValeurPossible;
 
-import javax.swing.JButton;
-import java.awt.FlowLayout;
-import javax.swing.SwingConstants;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
-import java.awt.Insets;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.CompoundBorder;
 
-public class Vue_OuiNon extends JPanel{
-	
-	Sondeur sondeur;
-	JButton boutonoui;
-	JButton boutonnon;
-	ModeleReponse modrep;
-	Question quest;
-	Questionnaire questnaire;
+public class Vue_Unique extends JPanel {
 	Sonde lesonde;
-	JPanel panelPrincipal;
+	Questionnaire questnaire;
+	Question quest;
+	ModeleReponse modrep;
+	JLabel []lesLabelsChoix;
+	ArrayList<ValeurPossible> valeursPossibles;
+	ArrayList<String> lalistedechoix;
 	Sondeur s;
+	JTextField txtSaisirUneValeur;
 
-	public Vue_OuiNon(Sondeur sondeur,Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
+	
+	JButton [] lesboutons;
+
+	
+	
+	public Vue_Unique (Sondeur sondeur,Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
 		super();
 		this.s=sondeur;
-
 		this.lesonde=lesonde;
 		this.quest=quest;
 		this.modrep=modrep;
 		this.questnaire=questnaire;
+		this.lalistedechoix=new ArrayList<String>();
+		this.valeursPossibles=modrep.bdgene.getListeValPossible(questnaire.getIdQuestionnaire(), quest.getNumeroQuestion());
+		this.lesboutons=new JButton [modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()).size()];
+		this.lesLabelsChoix= new JLabel[valeursPossibles.size()];
+
 		
-		afficherOuiNon();
+		afficherChoixMultiples();
 	}
 	
-	
-	public void afficherOuiNon () {
-				
+
+	public void afficherChoixMultiples(){
+		
 		JPanel panelPrincipal = new JPanel();
 		panelPrincipal.setBorder(new LineBorder(new Color(0, 0, 0)));
 		add(panelPrincipal, BorderLayout.CENTER);
@@ -67,13 +70,15 @@ public class Vue_OuiNon extends JPanel{
 		panelHeader.setMaximumSize(new Dimension(10000, 250));
 		panelPrincipal.add(panelHeader);
 		panelHeader.setLayout(new BorderLayout(0, 0));
-		
+			
 			JPanel panelInfoSond = new JPanel();
 			panelInfoSond.setBorder(new EmptyBorder(0, 0, 0, 0));
 			panelHeader.add(panelInfoSond);
 			panelInfoSond.setLayout(new BoxLayout(panelInfoSond, BoxLayout.Y_AXIS));
 			
-			JLabel questionEtat = new JLabel("Question "+quest.getNumeroQuestion()+"/"+quest.getMaxValeur());
+			
+			
+			JLabel questionEtat = new JLabel("Question "+quest.getNumeroQuestion()+"/"+modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()).size());
 			questionEtat.setAlignmentX(Component.CENTER_ALIGNMENT);
 			questionEtat.setBorder(new EmptyBorder(20, 0, 5, 0));
 			panelInfoSond.add(questionEtat);
@@ -87,9 +92,9 @@ public class Vue_OuiNon extends JPanel{
 			panelHeader.add(panelAnnul, BorderLayout.WEST);
 			
 			JButton btnAnnule = new JButton("Annuler sondage");
-			btnAnnule.addActionListener(new Contr_OuiNon(this));
+			btnAnnule.addActionListener(new Contr_Unique(this));
 			panelAnnul.add(btnAnnule);
-			btnAnnule.setPreferredSize(new Dimension(150, 25));
+			btnAnnule.setPreferredSize(new Dimension(200, 25));
 			btnAnnule.setMinimumSize(new Dimension(11, 11));
 			btnAnnule.setMaximumSize(new Dimension(1000, 1000));
 			
@@ -98,7 +103,6 @@ public class Vue_OuiNon extends JPanel{
 			panelHeader.add(panelValid, BorderLayout.EAST);
 
 
-				
 		JPanel panelQuestion = new JPanel();
 		panelQuestion.setMaximumSize(new Dimension(10000, 32767));
 		panelQuestion.setMinimumSize(new Dimension(1000, 10));
@@ -108,35 +112,30 @@ public class Vue_OuiNon extends JPanel{
 		panelQuestion.setLayout(new BoxLayout(panelQuestion, BoxLayout.Y_AXIS));
 		
 			JLabel intituleQuestion = new JLabel(quest.getTexteQuestion());
-			intituleQuestion.setBorder(new EmptyBorder(20, 0, 60, 0));
+			intituleQuestion.setBorder(new EmptyBorder(20, 0, 75, 0));
 			intituleQuestion.setAlignmentX(Component.CENTER_ALIGNMENT);
 			panelQuestion.add(intituleQuestion);
 			
-			JPanel panel_corp = new JPanel();
-			panel_corp.setBorder(new LineBorder(new Color(0, 0, 0)));
-			panelQuestion.add(panel_corp, BorderLayout.CENTER);
-			panel_corp.setLayout(new BorderLayout(0, 0));
+			JLabel lbSaisir = new JLabel("Saisir le numéro du choix :");
+			lbSaisir.setAlignmentX(Component.CENTER_ALIGNMENT);
+			panelQuestion.add(lbSaisir);
 			
-			JPanel panel_vide = new JPanel();
-			panel_vide.setBorder(new EmptyBorder(50,50,50,50));
-			panel_corp.add(panel_vide, BorderLayout.NORTH);
+			txtSaisirUneValeur = new JTextField();
+			txtSaisirUneValeur.setToolTipText("");
+			txtSaisirUneValeur.setMaximumSize(new Dimension(100, 40));
+			panelQuestion.add(txtSaisirUneValeur);
+			txtSaisirUneValeur.setColumns(10);
 			
-			JPanel panel_boutons = new JPanel();
-			panel_corp.add(panel_boutons, BorderLayout.CENTER);
-			panel_boutons.setLayout(new FlowLayout(FlowLayout.CENTER, 150, 15));
+			JPanel panelLesChoix = new JPanel(new FlowLayout());
+			panelQuestion.add(panelLesChoix);
+
 			
-			boutonnon = new JButton("Non");
-			boutonnon.setName("boutonnon");
-			boutonnon.addActionListener(new Contr_OuiNon(this));
-			panel_boutons.add(boutonnon);
-			boutonnon.setBorder(new EmptyBorder(25,50,25,50));
-			
-			boutonoui = new JButton("Oui");
-			boutonoui.setName("boutonoui");
-			boutonoui.addActionListener(new Contr_OuiNon(this));
-			panel_boutons.add(boutonoui);
-			boutonoui.setBorder(new EmptyBorder(25,50,25,50));
-		
+			for (ValeurPossible valpos : valeursPossibles){
+				this.lesLabelsChoix[valpos.getIdValeur()-1]=new JLabel(valpos.getIdValeur()+": "+valpos.getValeur()+"  ");
+				panelLesChoix.add(this.lesLabelsChoix[valpos.getIdValeur()-1]);
+
+			}
+					
 		JPanel panelLesQuestions = new JPanel();
 		panelLesQuestions.setMaximumSize(new Dimension(1000, 1000));
 		panelLesQuestions.setPreferredSize(new Dimension(1000, 70));
@@ -145,14 +144,19 @@ public class Vue_OuiNon extends JPanel{
 		FlowLayout fl_panelLesQuestions = new FlowLayout(FlowLayout.CENTER, 5, 5);
 		panelLesQuestions.setLayout(fl_panelLesQuestions);
 		
-		JButton []lesboutons={};
 		for (Question q : modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()) ){
 			
 			lesboutons[q.getNumeroQuestion()-1]=new JButton(String.valueOf(q.getNumeroQuestion()));
+			if (q.getNumeroQuestion() > quest.getNumeroQuestion()){
+				lesboutons[q.getNumeroQuestion()-1].setEnabled(false);
+			}
+			lesboutons[q.getNumeroQuestion()-1].addActionListener(new Contr_Unique(this));
+
 		
-			panelLesQuestions.add(lesboutons[q.getNumeroQuestion()]);
+			panelLesQuestions.add(lesboutons[q.getNumeroQuestion()-1]);
 
 		}
+		
 		
 		JPanel panelNavi = new JPanel();
 		panelNavi.setMaximumSize(new Dimension(32767, 15));
@@ -161,40 +165,42 @@ public class Vue_OuiNon extends JPanel{
 		panelPrincipal.add(panelNavi);
 		panelNavi.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		
-		if (quest.getNumeroQuestion()==0){
+		if (quest.getNumeroQuestion()==1){
 			
 			JButton btnSuivant = new JButton("Suivant");
 			btnSuivant.setAlignmentX(Component.CENTER_ALIGNMENT);
-			btnSuivant.addActionListener(new Contr_OuiNon(this));
+			btnSuivant.addActionListener(new Contr_Unique(this));
 			panelNavi.add(btnSuivant);
 		}
 		
 		else if (quest.getNumeroQuestion()==modrep.listeQuestion.size()){
 			
 			JButton btnValide = new JButton("Valider sondage");
-			btnValide.addActionListener(new Contr_OuiNon(this));
+			btnValide.addActionListener(new Contr_Unique(this));
 			panelValid.add(btnValide);
 			
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("Precedent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
-			btnPrecedent.addActionListener(new Contr_OuiNon(this));
+			btnPrecedent.addActionListener(new Contr_Unique(this));
 			panelNavi.add(btnPrecedent);
 		}
 		
 		else {
-			JButton btnPrecedent = new JButton("Précédent");
+			JButton btnPrecedent = new JButton("Precedent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
-			btnPrecedent.addActionListener(new Contr_OuiNon(this));
+			btnPrecedent.addActionListener(new Contr_Unique(this));
 			panelNavi.add(btnPrecedent);
 			
 			JButton btnSuivant = new JButton("Suivant");
 			btnSuivant.setAlignmentX(Component.CENTER_ALIGNMENT);
-			btnSuivant.addActionListener(new Contr_OuiNon(this));
+			btnSuivant.addActionListener(new Contr_Unique(this));
 			panelNavi.add(btnSuivant);
-		}
+		}	
+		
 
-	}
+}
 
 
 }
+
+
