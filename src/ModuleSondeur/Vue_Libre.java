@@ -89,7 +89,7 @@ public class Vue_Libre extends JPanel{
 			JButton btnAnnule = new JButton("Annuler sondage");
 			btnAnnule.addActionListener(new Contr_Libre(this));
 			panelAnnul.add(btnAnnule);
-			btnAnnule.setPreferredSize(new Dimension(150, 25));
+			btnAnnule.setPreferredSize(new Dimension(200, 25));
 			btnAnnule.setMinimumSize(new Dimension(11, 11));
 			btnAnnule.setMaximumSize(new Dimension(1000, 1000));
 			

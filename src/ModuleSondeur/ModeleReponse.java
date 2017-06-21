@@ -29,17 +29,16 @@ public class ModeleReponse {
 		this.listeDeSonde=bdsond.getListeSondesNonInterroges(questionnaire);
 		this.listeDeSondeInterroge=bdsond.getListeSondesInterroges(questionnaire);
 		this.lesonde=listeDeSonde.get(0);
-		this.rep=new Repondre(0,0,'a',"");
+		this.rep=new Repondre(0,0,"","");
 		
 	}
 	
 
 	
-	public void ajouterReponse(int idQuestionnaire, int idQuestion, char idCaracteristique, String val){
-		
+	public void ajouterReponse(int idQuestionnaire, int idQuestion, String val){
 		this.rep.setIdQuestionnaire(idQuestionnaire);
 		this.rep.setNumQuestion(idQuestion);
-		this.rep.setIdCaracteristique(idCaracteristique);
+		this.rep.setIdCaracteristique(lesonde.getIdentifiantCaracteristique());
 		this.rep.setValeur(val);
 		this.bdsond.insererReponse(this.rep);
 	}

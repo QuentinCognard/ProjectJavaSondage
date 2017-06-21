@@ -4,10 +4,10 @@ public class Repondre {
 	
 	private int idQuestionnaire;
 	private int numQuestion;
-	private char idCaracteristique;
+	private String idCaracteristique;
 	private String valeur;
 	
-	public Repondre (int idq, int numq, char idc, String v) {
+	public Repondre (int idq, int numq, String idc, String v) {
 		this.idQuestionnaire = idq;
 		this.numQuestion = numq;
 		this.idCaracteristique = idc;
@@ -30,11 +30,11 @@ public class Repondre {
 		this.numQuestion = numQuestion;
 	}
 
-	public char getIdCaracteristique() {
+	public String getIdCaracteristique() {
 		return idCaracteristique;
 	}
 
-	public void setIdCaracteristique(char idCaracteristique) {
+	public void setIdCaracteristique(String idCaracteristique) {
 		this.idCaracteristique = idCaracteristique;
 	}
 

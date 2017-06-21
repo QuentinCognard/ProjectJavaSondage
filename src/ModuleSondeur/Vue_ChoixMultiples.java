@@ -48,6 +48,7 @@ public class Vue_ChoixMultiples extends JPanel {
 		this.lalistedechoix=new ArrayList<String>();
 		this.valeursPossibles=modrep.bdgene.getListeValPossible(questnaire.getIdQuestionnaire(), quest.getNumeroQuestion());
 		this.lesboutons=new JButton [modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()).size()];
+		this.lesCheckbox= new Checkbox[valeursPossibles.size()];
 
 		
 		afficherChoixMultiples();
@@ -90,7 +91,7 @@ public class Vue_ChoixMultiples extends JPanel {
 			JButton btnAnnule = new JButton("Annuler sondage");
 			btnAnnule.addActionListener(new ControleurChoixMultiples(this));
 			panelAnnul.add(btnAnnule);
-			btnAnnule.setPreferredSize(new Dimension(150, 25));
+			btnAnnule.setPreferredSize(new Dimension(200, 25));
 			btnAnnule.setMinimumSize(new Dimension(11, 11));
 			btnAnnule.setMaximumSize(new Dimension(1000, 1000));
 			
@@ -105,7 +106,7 @@ public class Vue_ChoixMultiples extends JPanel {
 		panelQuestion.setPreferredSize(new Dimension(1000, 200));
 		panelQuestion.setBorder(null);
 		panelPrincipal.add(panelQuestion);
-		panelQuestion.setLayout(new BoxLayout(panelQuestion, BoxLayout.Y_AXIS));
+		panelQuestion.setLayout(new BoxLayout(panelQuestion, BoxLayout.X_AXIS));
 		
 			JLabel intituleQuestion = new JLabel(quest.getTexteQuestion());
 			intituleQuestion.setBorder(new EmptyBorder(20, 0, 75, 0));
@@ -114,8 +115,8 @@ public class Vue_ChoixMultiples extends JPanel {
 			
 			
 			for (ValeurPossible valpos : valeursPossibles){
-				this.lesCheckbox[valpos.getIdValeur()]=new Checkbox(valpos.getValeur());
-				panelQuestion.add(this.lesCheckbox[valpos.getIdValeur()]);
+				this.lesCheckbox[valpos.getIdValeur()-1]=new Checkbox(valpos.getValeur());
+				panelQuestion.add(this.lesCheckbox[valpos.getIdValeur()-1]);
 
 			}
 					

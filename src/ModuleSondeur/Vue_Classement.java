@@ -95,7 +95,7 @@ public class Vue_Classement extends JPanel {
 			JButton btnAnnule = new JButton("Annuler sondage");
 			btnAnnule.addActionListener(new ControleurClassement(this));
 			panelAnnul.add(btnAnnule);
-			btnAnnule.setPreferredSize(new Dimension(150, 25));
+			btnAnnule.setPreferredSize(new Dimension(200, 25));
 			btnAnnule.setMinimumSize(new Dimension(11, 11));
 			btnAnnule.setMaximumSize(new Dimension(1000, 1000));
 			
@@ -151,8 +151,8 @@ public class Vue_Classement extends JPanel {
 			}
 		
 		JScrollPane jscroll = new JScrollPane(panelListeChoix);
-		jscroll.setSize(700, 350);
-		jscroll.setLocation(100, 100);
+		jscroll.setSize(700, 150);
+		jscroll.setLocation(100, 50);
 		jscroll.setBorder(new LineBorder(Color.BLACK));
 		jscroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		jscroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);

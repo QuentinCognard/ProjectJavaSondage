@@ -32,7 +32,7 @@ public class ControleurEchelle implements ActionListener {
 		
 		if (vueEchelle.quest.getNumeroQuestion()>1){
 
-			this.laquestionpre=vueEchelle.modrep.listeQuestion.get(vueEchelle.quest.getNumeroQuestion()-1);
+			this.laquestionpre=vueEchelle.modrep.listeQuestion.get(vueEchelle.quest.getNumeroQuestion()-2);
 		}
 		
 		this.lesonde=vueEchelle.lesonde;
@@ -53,7 +53,7 @@ public class ControleurEchelle implements ActionListener {
 		}
 		
 		else if (((JButton)e.getSource()).getText().equals("Valider sondage")){
-			vueEchelle.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueEchelle.quest.getNumeroQuestion(), vueEchelle.quest.getIdTypeQuestion(), val);
+			vueEchelle.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueEchelle.quest.getNumeroQuestion(), val);
 			vueEchelle.modrep.bdsond.setSondeInterroger(questionnaire,lesonde);
 			this.s.afficherFenetrePrinc();
 
@@ -61,9 +61,13 @@ public class ControleurEchelle implements ActionListener {
 		
 	
 		else if (((JButton)e.getSource()).getText().equals("Suivant")){
-			vueEchelle.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueEchelle.quest.getNumeroQuestion(), vueEchelle.quest.getIdTypeQuestion(), val);
-			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
+			vueEchelle.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueEchelle.quest.getNumeroQuestion(), val);
+			if (laquestionsuiv.getIdTypeQuestion() =='n'){
 				this.s.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueEchelle.modrep);
+			}
+			else if(laquestionsuiv.getIdTypeQuestion() =='u'){
+				this.s.afficherUnique(laquestionsuiv,questionnaire,lesonde,vueEchelle.modrep);
+
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='m'){
 				this.s.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueEchelle.modrep);
@@ -81,9 +85,12 @@ public class ControleurEchelle implements ActionListener {
 		}
 		
 		else if (((JButton)e.getSource()).getText().equals("Precedent")){
-			vueEchelle.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueEchelle.quest.getNumeroQuestion(), vueEchelle.quest.getIdTypeQuestion(), val);
-			if (laquestionpre.getIdTypeQuestion() =='u' || laquestionpre.getIdTypeQuestion() =='n'){
+			if (laquestionpre.getIdTypeQuestion() =='n'){
 				this.s.afficherEchelle(laquestionpre,questionnaire,lesonde,vueEchelle.modrep);
+			}
+			else if(laquestionpre.getIdTypeQuestion() =='u'){
+				this.s.afficherUnique(laquestionpre,questionnaire,lesonde,vueEchelle.modrep);
+
 			}
 			else if (laquestionpre.getIdTypeQuestion() =='m'){
 				this.s.afficherChoixMultiples(laquestionpre,questionnaire,lesonde,vueEchelle.modrep);
@@ -105,10 +112,13 @@ public class ControleurEchelle implements ActionListener {
 			
 			this.laquestionsuiv=vueEchelle.modrep.listeQuestion.get(Integer.parseInt(((JButton)e.getSource()).getText())-1);
 			
-			vueEchelle.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueEchelle.quest.getNumeroQuestion(), vueEchelle.quest.getIdTypeQuestion(), val);
-			
-			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
+			vueEchelle.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueEchelle.quest.getNumeroQuestion(),  val);
+			if (laquestionsuiv.getIdTypeQuestion() =='n'){
 				this.s.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueEchelle.modrep);
+			}
+			else if(laquestionsuiv.getIdTypeQuestion() =='u'){
+				this.s.afficherUnique(laquestionsuiv,questionnaire,lesonde,vueEchelle.modrep);
+
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='m'){
 				this.s.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueEchelle.modrep);

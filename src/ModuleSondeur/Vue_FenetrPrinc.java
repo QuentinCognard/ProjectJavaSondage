@@ -55,11 +55,11 @@ public class Vue_FenetrPrinc extends JPanel {
 	public void afficherPanelCentral() {
 		JPanel panelPrincipal = new JPanel(new BorderLayout());
 		panelPrincipal.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelPrincipal.setPreferredSize(new Dimension(500, 300));
+		panelPrincipal.setPreferredSize(new Dimension(800, 300));
 		this.add(panelPrincipal,"Center");
 		panelPrincipal.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblSondagesTerminer = new JLabel("Sondages à terminer :");
+		JLabel lblSondagesTerminer = new JLabel("Sondages Ã  terminer :");
 		lblSondagesTerminer.setPreferredSize(new Dimension(106, 30));
 		panelPrincipal.add(lblSondagesTerminer,"North");
 		
@@ -70,14 +70,13 @@ public class Vue_FenetrPrinc extends JPanel {
 		for ( int i=0;i<lesQuestionnaire.size();i++){
 			this.panelEtatSond[i] = new JPanel();
 			this.panelEtatSond[i].setBorder(new EmptyBorder(5, 5, 5, 5));
-			this.panelEtatSond[i].setMaximumSize(new Dimension(500, 30));
-			this.panelEtatSond[i].setPreferredSize(new Dimension(200, 100));
+			this.panelEtatSond[i].setMaximumSize(new Dimension(800, 30));
 			
 			this.panelEtatSond[i].setLayout(new GridLayout(0, 3, 5, 5));
 	
 			
 			this.lblSondage[i] = new JLabel(lesQuestionnaire.get(i).getTitreQuestionnaire());
-			this.lblSondage[i].setPreferredSize(new Dimension(58, 20));
+			this.lblSondage[i].setPreferredSize(new Dimension(400, 20));
 			this.lblSondage[i].setHorizontalTextPosition(SwingConstants.LEFT);
 			this.panelEtatSond[i].add(this.lblSondage[i]);
 			

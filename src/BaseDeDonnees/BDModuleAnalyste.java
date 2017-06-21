@@ -47,7 +47,7 @@ public class BDModuleAnalyste {
 			String requete = "SELECT * FROM REPONDRE WHERE idQ = "+idQuestionnaire+" AND numQ = "+numeroQuestion+";";
 			ResultSet rs = this.st.executeQuery(requete);
 			while (rs.next()) {
-				Repondre r = new Repondre (rs.getInt("idQ"), rs.getInt("numQ"), rs.getString("idC").charAt(0),rs.getString("valeur"));
+				Repondre r = new Repondre (rs.getInt("idQ"), rs.getInt("numQ"), rs.getString("idC"),rs.getString("valeur"));
 				listeReponses.add(r);
 			}
 			rs.close();
