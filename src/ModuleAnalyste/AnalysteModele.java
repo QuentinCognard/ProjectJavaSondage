@@ -123,11 +123,7 @@ public class AnalysteModele {
 	   * cré la liste des tranches d'ages présente dans le questionnaire choisi
 	   */
 	public void createListeTranchesPresentes(){
-		//TODO: Nathan s'en charge, à aller chercher dans AnalysteBD
-		listeTranchesPresentes = new ArrayList<Tranche>(); //à changer quand on aura la fct
-		listeTranchesPresentes.add(new Tranche('1',8,17));
-		listeTranchesPresentes.add(new Tranche('2',18,25));
-		listeTranchesPresentes.add(new Tranche('3',26,35));
+		listeTranchesPresentes = BDAnalyste.getTranchesQuestionnaire(idQuestionnaireChoisi);
 	}
 	
 	/**
