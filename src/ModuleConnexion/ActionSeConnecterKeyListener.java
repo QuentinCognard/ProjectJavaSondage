@@ -5,16 +5,31 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import BaseDeDonnees.Utilisateur;
-
+/**
+ * ActionSeConnecterKeyListener est une classe qui va gerer le bouton "Se connecter" dans la VueConnexion
+ * Meme classe que ActionSeConnecter
+ * @author nathan
+ *
+ */
 public class ActionSeConnecterKeyListener implements KeyListener{
-	
+	/**
+	 * La classe principale de ce module
+	 * @see Connexion
+	 */
 	Connexion connexion;
-	
+	/**
+	 * Constructeur
+	 * @param c
+	 */
 	public ActionSeConnecterKeyListener (Connexion c) {
 		this.connexion = c;
 	}
 	
-	@Override
+	/**
+	 * Va recuperer le login et le mot de passe rentre par l'utilisateur 
+	 * et les verifier. Si ces champs sont corrects, la vue va changer 
+	 * selon le role de l'utilisateur, sinon un message d'erreur est affiche
+	 */
 	public void keyPressed(KeyEvent arg0) {
 		if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 			this.connexion.vueco.getMessage().setText(" ");	
@@ -41,13 +56,11 @@ public class ActionSeConnecterKeyListener implements KeyListener{
 		}
 	}
 
-	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		

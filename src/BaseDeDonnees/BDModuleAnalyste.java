@@ -2,12 +2,25 @@ package BaseDeDonnees;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+/**
+ * BDModuleAnalyste est une classe qui va regrouper les fonctions jdbc qui seront utilisées dans le module analyste
+ * @author nathan
+ *
+ */
 public class BDModuleAnalyste {
-	
+	/**
+	   * La connexion mysql
+	   * @see BDConnexionMySQL
+	   */
 	BDConnexionMySQL connexion;
+	/**
+	 * Ordres mysql
+	 */
 	Statement st;
-	
+	/**
+	 * La connexion mysql
+	 * @param c
+	 */
 	public BDModuleAnalyste (BDConnexionMySQL c) {
 		this.connexion = c;
 		
@@ -21,7 +34,13 @@ public class BDModuleAnalyste {
 	}
 	
 	
-	
+	/**
+	 * Retourne la liste des reponses selon l'id du questionnaire et le numero de la question
+	 * @param idQuestionnaire
+	 * @param numeroQuestion
+	 * @see Repondre
+	 * @return une ArrayList de Repondre
+	 */
 	public ArrayList <Repondre> getReponsesQuestion (int idQuestionnaire, int numeroQuestion) {
 		ArrayList <Repondre> listeReponses = new ArrayList <Repondre> ();
 		try {

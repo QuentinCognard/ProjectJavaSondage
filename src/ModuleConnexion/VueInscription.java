@@ -12,26 +12,66 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
+/**
+ * VueInscription est la classe qui gere la vue quand un utilisateur veut s'inscrire
+ * @author nathan
+ *
+ */
 public class VueInscription extends JPanel {
-	
+	/**
+	 * La classe principale de ce module
+	 */
 	Connexion connexion;
 	
+	/**
+	 * JLabel affichant des messages d'erreurs
+	 */
 	private JLabel message;
 	
+	/**
+	 * Zone de saisie du prenom
+	 */
 	private JTextField zonedesaisieprenom;
+	/**
+	 * Zone de saisie du nom
+	 */
 	private JTextField zonedesaisienom;
+	/**
+	 * Zone de saisie du login voulu
+	 */
 	private JTextField zonedesaisieid;
 	
+	/**
+	 * Zone de saisie du mot de passe
+	 */
 	private JPasswordField zonedesaisiemdp1;
+	/**
+	 * Zone de saisie de confirmation du mot de passe
+	 */
 	private JPasswordField zonedesaisiemdp2;
 	
+	/**
+	 * Choix Concepteur
+	 */
 	private JRadioButton choixconcepteur;
+	/**
+	 * Choix Sondeur
+	 */
 	private JRadioButton choixsondeur;
+	/**
+	 * Choix Analyste
+	 */
 	private JRadioButton choixanalyste;
 	
+	/**
+	 * Bouton "S'inscrire"
+	 */
 	private JButton boutoninscription;
 	
+	/**
+	 * Constructeur
+	 * @param c
+	 */
 	public VueInscription (Connexion c) {
 		super();
 		this.connexion = c;
@@ -83,7 +123,9 @@ public class VueInscription extends JPanel {
 	}
 
 	
-	
+	/**
+	 * Affiche le titre
+	 */
 	public void afficherTitre () {
 		JPanel boiteTitre = new JPanel();
 		add(boiteTitre);
@@ -92,7 +134,10 @@ public class VueInscription extends JPanel {
 			boiteTitre.add(titre);
 			titre.setFont(titre.getFont().deriveFont(50f));
 	}
-	
+
+	/**
+	 * Affiche les zones de saisie, les radios boutons et les JLabel
+	 */
 	public void afficherChamps () {
 		
 		String [] listeNomsChamps = {"Prénom ", "Nom ", "Identifiant ", "Mot de passe ", "Mot de passe à nouveau "};
@@ -194,7 +239,9 @@ public class VueInscription extends JPanel {
 				groupeboutons.add(choixsondeur);
 				groupeboutons.add(choixanalyste);	
 	}
-	
+	/**
+	 * Affiche le bouton d'inscription
+	 */
 	public void afficherBoutonInscription () {
 		JPanel boiteBouton = new JPanel ();
 		add(boiteBouton);

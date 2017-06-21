@@ -1,12 +1,25 @@
 package BaseDeDonnees;
 
 import java.sql.*;
-
+/**
+ * BDModuleConnexion est une classe qui va regrouper les fonctions jdbc qui seront utilisées dans le module connexion
+ * @author nathan
+ *
+ */
 public class BDModuleConnexion {
-	
+	/**
+	 * La connexion mysql
+	 * @see BDConnexionMySQL
+	 */
 	BDConnexionMySQL connexion;
+	/**
+	 * Ordres mysql
+	 */
 	Statement st;
-	
+	/**
+	 * La connexion mysql
+	 * @param c
+	 */
 	public BDModuleConnexion (BDConnexionMySQL c) {
 		this.connexion = c;
 		
@@ -20,7 +33,10 @@ public class BDModuleConnexion {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @return L'identifiant max d'un utilisateur dans la base de donnees
+	 */
 	public int maxIdentifiantUtilisateur () {
 		try {
 	        String requete = "SELECT MAX(idU) idMax FROM UTILISATEUR;";
@@ -33,7 +49,11 @@ public class BDModuleConnexion {
 	         return -1;
 	      }
 	}
-	
+	/**
+	 * Insere un utilisateur u dans la base de donnees
+	 * @param u
+	 * @see Utilisateur
+	 */
 	public void insererUtilisateur (Utilisateur u) {
 		try {
 			String requete = "INSERT INTO UTILISATEUR (idU, nomU, prenomU, login, motDePasse, idR) values (?,?,?,?,?,?);";
@@ -56,7 +76,13 @@ public class BDModuleConnexion {
 	
 	
 	
-	
+	/**
+	 * 
+	 * @param log
+	 * @param mdp
+	 * @see Utilisateur
+	 * @return L'utilisateur identifié par son log et son mdp. Si il n'existe pas, renvoie null
+	 */
 	public Utilisateur connectionUtilisateur (String log, String mdp) {
 		try {
 			String requete = "SELECT * FROM UTILISATEUR WHERE login = '"+log+"' AND motDePasse = '"+mdp+"';";
@@ -69,7 +95,11 @@ public class BDModuleConnexion {
 			return null;
 		}
 	}
-	
+	/**
+	 * Sert pour l'inscription
+	 * @param log
+	 * @return un boolean renvoyant si le log est deja dans la base de donnees
+	 */
 	public boolean loginDejaExistant (String log) {
 		try {
 			String requete = "SELECT login FROM UTILISATEUR;";

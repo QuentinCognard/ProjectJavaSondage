@@ -13,17 +13,35 @@ import Commun.ModeleCommun;
 
 /**
  * Connexion est la classe principale du ModuleConnexion. 
- * Elle va nous servir de lien entre les vues de ce module
+ * Elle va nous servir de lien entre les vues, le modele et les controleurs de ce module
  * @author nathan
  */
 public class Connexion extends JPanel {
-	
+	/**
+	 * Modele commun de l'application
+	 * @see ModeleCommun
+	 */
 	ModeleCommun modelecommun;
+	/**
+	 * Modele de ce module
+	 * @see ModeleConnexion
+	 */
 	ModeleConnexion modeleconnexion;
+	/**
+	 * Vue connexion
+	 * @see VueConnexion
+	 */
 	VueConnexion vueco;
+	/**
+	 * Vue inscription
+	 * @see VueInscription
+	 */
 	VueInscription vuein;
 	
-	
+	/**
+	 * Constructeur (fenetre initie avec la vue Connexion)
+	 * @param mc
+	 */
 	public Connexion (ModeleCommun mc) {
 		super();
 		this.setLayout(new BorderLayout());
@@ -33,7 +51,10 @@ public class Connexion extends JPanel {
 	}
 	
 	
-	
+	/**
+	 * Affiche la VueConnexion
+	 * @see VueConnexion
+	 */
 	public void afficherVueConnexion() {
 		removeAll();
 		afficherPanelDuHaut();
@@ -43,6 +64,10 @@ public class Connexion extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Affiche la VueInscription
+	 * @see VueInscription
+	 */
 	public void afficherVueInscription () {
 		removeAll();
 		afficherPanelDuHaut();
@@ -52,6 +77,9 @@ public class Connexion extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Affiche le logo de l'application
+	 */
 	public void afficherPanelDuHaut () {
 		JPanel panelduhaut = new JPanel();
 		this.add(panelduhaut, "North");

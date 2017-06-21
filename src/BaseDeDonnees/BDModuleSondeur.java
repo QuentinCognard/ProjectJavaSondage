@@ -2,12 +2,25 @@ package BaseDeDonnees;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+/**
+ * BDModuleSondeur est une classe qui va regrouper les fonctions jdbc qui seront utilisées dans le module sondeur
+ * @author nathan
+ *
+ */
 public class BDModuleSondeur {
-	
+	/**
+	 * La connexion mysql
+	 * @see BDConnexionMySQL
+	 */
 	BDConnexionMySQL connexion;
+	/**
+	 * Ordres mysql
+	 */
 	Statement st;
-	
+	/**
+	 * La connexion mysql
+	 * @param c
+	 */
 	public BDModuleSondeur (BDConnexionMySQL c) {
 		this.connexion = c;
 		
@@ -22,7 +35,11 @@ public class BDModuleSondeur {
 
 	
 	
-	
+	/**
+	 * Insere une Repondre r dans la base de donnees
+	 * @param r
+	 * @see Repondre
+	 */
 	public void insererReponse (Repondre r) {
 		try {
 			String requete = "INSERT INTO REPONDRE (idQ, numQ, idC, valeur) VALUES (?,?,?,?);";
@@ -40,7 +57,12 @@ public class BDModuleSondeur {
 	}
 	
 	
-	
+	/**
+	 * Recupere la liste des sondes deja interroges
+	 * @param q
+	 * @return une ArrayList de Sonde
+	 * @see Sonde
+	 */
 	public ArrayList <Sonde> getListeSondesInterroges (Questionnaire q) {
 		ArrayList <Sonde> listeSondes = new ArrayList <Sonde> ();
 		try {
@@ -59,7 +81,12 @@ public class BDModuleSondeur {
 		}
 		
 	}
-	
+	/**
+	 * Recupere la liste des sondes qui n'ont pas ete interroges
+	 * @param q
+	 * @return une ArrayList de Sonde
+	 * @see Sonde
+	 */
 	public ArrayList <Sonde> getListeSondesNonInterroges (Questionnaire q) {
 		ArrayList <Sonde> listeSondes = new ArrayList <Sonde> ();
 		try {
@@ -80,7 +107,11 @@ public class BDModuleSondeur {
 	}
 
 	
-	
+	/**
+	 * Insere dans la classe INTERROGER le fait qu'un sonde a ete interroge
+	 * @param q
+	 * @param s
+	 */
 	public void setSondeInterroger(Questionnaire q, Sonde s) {
 		try {
 			String requete = "INSERT INTO INTERROGER (idU, numSond, idQ) VALUES (?,?,?);";
@@ -97,7 +128,10 @@ public class BDModuleSondeur {
 	}
 
 	
-	
+	/**
+	 * Modifie l'etat du questionnaire ('S' en 'A') quand celui-ci est en fin de sondage
+	 * @param idQuestionnaire
+	 */
 	public void questionnairePretPourAnalyste (int idQuestionnaire) {
 		try {
 			String requete = "UPDATE QUESTIONNAIRE SET Etat = 'A' WHERE idQ = "+idQuestionnaire+";";
