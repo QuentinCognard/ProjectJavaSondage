@@ -135,7 +135,10 @@ public class Vue_Echelle extends JPanel {
 		for (Question q : modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()) ){
 			
 			lesboutons[q.getNumeroQuestion()-1] = new JButton(String.valueOf(q.getNumeroQuestion()));
-		
+			if (q.getNumeroQuestion() > quest.getNumeroQuestion()){
+				lesboutons[q.getNumeroQuestion()-1].setEnabled(false);
+			}
+			lesboutons[q.getNumeroQuestion()-1].addActionListener(new ControleurEchelle(this));
 			panelLesQuestions.add(lesboutons[q.getNumeroQuestion()-1]);
 
 		}

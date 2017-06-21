@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import BaseDeDonnees.Question;
 import BaseDeDonnees.Questionnaire;
 import BaseDeDonnees.Sonde;
+import BaseDeDonnees.ValeurPossible;
 
 public class ControleurChoixMultiples implements ActionListener {
 
@@ -40,6 +41,7 @@ public class ControleurChoixMultiples implements ActionListener {
 		
 		this.lesonde=vueChoixmultiples.lesonde;
 		this.questionnaire=vueChoixmultiples.questnaire;
+		this.listechoix=vueChoixmultiples.lalistedechoix;
 		this.listeQuest=vueChoixmultiples.modrep.bdgene.getListeQuestion(questionnaire.getIdQuestionnaire());
 
 		
@@ -52,14 +54,22 @@ public class ControleurChoixMultiples implements ActionListener {
 		for (Checkbox choix : vueChoixmultiples.lesCheckbox ){
 			if (choix.getState()==true){
 				if (listechoix.size()<vueChoixmultiples.quest.getMaxValeur()){
-					listechoix.add(choix.getLabel());
+					for (ValeurPossible valpos : vueChoixmultiples.valeursPossibles){
+						if (valpos.getValeur()==choix.getLabel()){
+							listechoix.add(String.valueOf(valpos.getIdValeur()));
+						}
+					}
 				}
 			}
 			
 		}
 		
-		val=listechoix.toString();
-		
+		if (listechoix!=null){
+			this.val=listechoix.toString();
+			this.val=this.val.replace(',',';');
+			
+		}
+				
 		if (((JButton)e.getSource()).getText().equals("Annuler sondage")){
 			this.s.afficherFenetrePrinc();
 		}
@@ -112,9 +122,9 @@ public class ControleurChoixMultiples implements ActionListener {
 
 		}
 		
-		else if (Integer.parseInt(((JButton)e.getSource()).getText())<listeQuest.size()){
+		else if (Integer.parseInt(((JButton)e.getSource()).getText())<listeQuest.size()-1){
 			
-			this.laquestionsuiv=vueChoixmultiples.modrep.listeQuestion.get(Integer.parseInt(((JButton)e.getSource()).getText()));
+			this.laquestionsuiv=vueChoixmultiples.modrep.listeQuestion.get(Integer.parseInt(((JButton)e.getSource()).getText())+1);
 			
 			vueChoixmultiples.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueChoixmultiples.quest.getNumeroQuestion(), vueChoixmultiples.quest.getIdTypeQuestion(), val);
 			

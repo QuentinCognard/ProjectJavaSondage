@@ -37,11 +37,11 @@ public class ModeleReponse {
 	
 	public void ajouterReponse(int idQuestionnaire, int idQuestion, char idCaracteristique, String val){
 		
-		rep.setIdQuestionnaire(idQuestionnaire);
-		rep.setNumQuestion(idQuestion);
-		rep.setIdCaracteristique(idCaracteristique);
-		rep.setValeur(val);
-		bdsond.insererReponse(rep);
+		this.rep.setIdQuestionnaire(idQuestionnaire);
+		this.rep.setNumQuestion(idQuestion);
+		this.rep.setIdCaracteristique(idCaracteristique);
+		this.rep.setValeur(val);
+		this.bdsond.insererReponse(this.rep);
 	}
 	
 }

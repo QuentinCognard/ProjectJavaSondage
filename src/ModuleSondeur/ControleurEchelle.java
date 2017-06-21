@@ -101,9 +101,9 @@ public class ControleurEchelle implements ActionListener {
 		}
 		
 		
-		else if (Integer.parseInt(((JButton)e.getSource()).getText())<listeQuest.size()){
+		else if (Integer.parseInt(((JButton)e.getSource()).getText())<listeQuest.size()+1){
 			
-			this.laquestionsuiv=vueEchelle.modrep.listeQuestion.get(Integer.parseInt(((JButton)e.getSource()).getText()));
+			this.laquestionsuiv=vueEchelle.modrep.listeQuestion.get(Integer.parseInt(((JButton)e.getSource()).getText())-1);
 			
 			vueEchelle.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueEchelle.quest.getNumeroQuestion(), vueEchelle.quest.getIdTypeQuestion(), val);
 			

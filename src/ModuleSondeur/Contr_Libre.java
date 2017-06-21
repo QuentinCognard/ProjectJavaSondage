@@ -102,9 +102,9 @@ public void actionPerformed(ActionEvent e) {
 
 		}
 		
-		else if (Integer.parseInt(((JButton)e.getSource()).getText())<listeQuest.size()){
+		else if (Integer.parseInt(((JButton)e.getSource()).getText())<listeQuest.size()+1){
 			
-			this.laquestionsuiv=vueLibre.modrep.listeQuestion.get(Integer.parseInt(((JButton)e.getSource()).getText()));
+			this.laquestionsuiv=vueLibre.modrep.listeQuestion.get(Integer.parseInt(((JButton)e.getSource()).getText())-1);
 			
 			vueLibre.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueLibre.quest.getNumeroQuestion(), vueLibre.quest.getIdTypeQuestion(), val);
 			

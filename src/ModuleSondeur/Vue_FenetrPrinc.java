@@ -30,8 +30,11 @@ public class Vue_FenetrPrinc extends JPanel {
 	ArrayList<Questionnaire> lesQuestionnaire;
 	BDGeneral laBD;
 	BDModuleSondeur bdSond;
-	JProgressBar progressBarSond;
 	Sondeur s;
+	JPanel [] panelEtatSond;
+	JProgressBar [] progressBarSond;
+	JButton [] poursuivreButton;
+	JLabel [] lblSondage;
 
 	public Vue_FenetrPrinc (Sondeur sondeur,BDGeneral laBD,Sonde s,BDModuleSondeur bdSond) {
 		super();
@@ -40,6 +43,10 @@ public class Vue_FenetrPrinc extends JPanel {
 		this.bdSond=bdSond;
 		this.laBD=laBD;
 		this.lesQuestionnaire=laBD.getListeQuestionnaire('S');
+		this.panelEtatSond= new JPanel [lesQuestionnaire.size()];
+		this.progressBarSond= new JProgressBar [lesQuestionnaire.size()];
+		this.poursuivreButton= new JButton [lesQuestionnaire.size()];
+		this.lblSondage = new JLabel [lesQuestionnaire.size()];
 		afficherPanelCentral();
 	}
 	
@@ -61,36 +68,37 @@ public class Vue_FenetrPrinc extends JPanel {
 		panelListeSond.setLayout(new BoxLayout(panelListeSond, BoxLayout.Y_AXIS));
 		
 		for ( int i=0;i<lesQuestionnaire.size();i++){
-			JPanel panelEtatSond = new JPanel();
-			panelEtatSond.setBorder(new EmptyBorder(5, 5, 5, 5));
-			panelEtatSond.setMaximumSize(new Dimension(500, 30));
-			panelEtatSond.setPreferredSize(new Dimension(200, 100));
-			panelListeSond.add(panelEtatSond);
+			this.panelEtatSond[i] = new JPanel();
+			this.panelEtatSond[i].setBorder(new EmptyBorder(5, 5, 5, 5));
+			this.panelEtatSond[i].setMaximumSize(new Dimension(500, 30));
+			this.panelEtatSond[i].setPreferredSize(new Dimension(200, 100));
 			
-			JScrollPane jscroll = new JScrollPane(panelListeSond);
-			jscroll.setBorder(new LineBorder(Color.BLACK));
-			jscroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			jscroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-			jscroll.setPreferredSize(new Dimension(100, 100));
-			panelPrincipal.add(jscroll, BorderLayout.CENTER);
-			panelEtatSond.setLayout(new GridLayout(0, 3, 5, 5));
+			this.panelEtatSond[i].setLayout(new GridLayout(0, 3, 5, 5));
 	
 			
-			JLabel lblSondage = new JLabel(lesQuestionnaire.get(i).getTitreQuestionnaire());
-			lblSondage.setPreferredSize(new Dimension(58, 20));
-			lblSondage.setHorizontalTextPosition(SwingConstants.LEFT);
-			panelEtatSond.add(lblSondage);
+			this.lblSondage[i] = new JLabel(lesQuestionnaire.get(i).getTitreQuestionnaire());
+			this.lblSondage[i].setPreferredSize(new Dimension(58, 20));
+			this.lblSondage[i].setHorizontalTextPosition(SwingConstants.LEFT);
+			this.panelEtatSond[i].add(this.lblSondage[i]);
 			
-			this.progressBarSond = new JProgressBar();
-			progressBarSond.setPreferredSize(new Dimension(100, 14));
-			panelEtatSond.add(progressBarSond);
+			this.progressBarSond[i] = new JProgressBar();
+			this.progressBarSond[i].setPreferredSize(new Dimension(100, 14));
+			this.panelEtatSond[i].add(this.progressBarSond[i]);
 			
-			JButton poursuivreButton = new JButton("Poursuivre");
-			poursuivreButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-			poursuivreButton.addActionListener(new ControleurPrinc(this,lesQuestionnaire.get(i),laBD,bdSond));
+			this.poursuivreButton[i] = new JButton("Poursuivre");
+			this.poursuivreButton[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+			this.poursuivreButton[i].addActionListener(new ControleurPrinc(this,lesQuestionnaire.get(i),laBD,bdSond));
 	
-			panelEtatSond.add(poursuivreButton);
+			this.panelEtatSond[i].add(this.poursuivreButton[i]);
+			panelListeSond.add(this.panelEtatSond[i]); //avant cetait plus en haut
 		}
+		
+		JScrollPane jscroll = new JScrollPane(panelListeSond);
+		jscroll.setBorder(new LineBorder(Color.BLACK));
+		jscroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		jscroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		jscroll.setPreferredSize(new Dimension(100, 100));
+		panelPrincipal.add(jscroll, BorderLayout.CENTER);
 		
 		JPanel panelVideG = new JPanel();
 		panelPrincipal.add(panelVideG, BorderLayout.WEST);

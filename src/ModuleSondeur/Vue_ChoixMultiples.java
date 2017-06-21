@@ -31,6 +31,7 @@ public class Vue_ChoixMultiples extends JPanel {
 	ModeleReponse modrep;
 	Checkbox []lesCheckbox;
 	ArrayList<ValeurPossible> valeursPossibles;
+	ArrayList<String> lalistedechoix;
 	Sondeur s;
 	
 	JButton [] lesboutons;
@@ -44,6 +45,7 @@ public class Vue_ChoixMultiples extends JPanel {
 		this.quest=quest;
 		this.modrep=modrep;
 		this.questnaire=questnaire;
+		this.lalistedechoix=new ArrayList<String>();
 		this.valeursPossibles=modrep.bdgene.getListeValPossible(questnaire.getIdQuestionnaire(), quest.getNumeroQuestion());
 		this.lesboutons=new JButton [modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()).size()];
 
@@ -128,6 +130,11 @@ public class Vue_ChoixMultiples extends JPanel {
 		for (Question q : modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()) ){
 			
 			lesboutons[q.getNumeroQuestion()-1]=new JButton(String.valueOf(q.getNumeroQuestion()));
+			if (q.getNumeroQuestion() > quest.getNumeroQuestion()){
+				lesboutons[q.getNumeroQuestion()-1].setEnabled(false);
+			}
+			lesboutons[q.getNumeroQuestion()-1].addActionListener(new ControleurChoixMultiples(this));
+
 		
 			panelLesQuestions.add(lesboutons[q.getNumeroQuestion()-1]);
 

@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import BaseDeDonnees.Question;
 import BaseDeDonnees.Questionnaire;
 import BaseDeDonnees.Sonde;
+import BaseDeDonnees.ValeurPossible;
 
 public class ControleurClassement implements ActionListener {
 	private Vue_Classement vueClassement;
@@ -18,7 +19,6 @@ public class ControleurClassement implements ActionListener {
 	private Sonde lesonde;
 	private Questionnaire questionnaire;
 	private String val;
-	private int classement;
 	private int idvalpos;
 	private Sondeur s;
 
@@ -43,7 +43,7 @@ public class ControleurClassement implements ActionListener {
 		this.lesonde=vueClassement.lesonde;
 		this.questionnaire=vueClassement.questnaire;
 		this.listeQuest=vueClassement.modrep.bdgene.getListeQuestion(questionnaire.getIdQuestionnaire());
-		this.listeclassee=new ArrayList<String>();
+		this.listeclassee=vueClassement.listeclasse;
 		
 	}
 		
@@ -52,8 +52,10 @@ public class ControleurClassement implements ActionListener {
 		
 		if (listeclassee!=null){
 			this.val=listeclassee.toString();
+			this.val=this.val.replace(',',';');
+			
 		}
-		this.val="";
+
 		if (((JButton)e.getSource()).getText().equals("Annuler sondage")){
 			this.s.afficherFenetrePrinc();
 		}
@@ -113,12 +115,17 @@ public class ControleurClassement implements ActionListener {
 				label.setText(": 0");
 				
 			}
+			this.listeclassee= new ArrayList<String>();
 			vueClassement.classement=0;
 			this.val="";
 		}
 		
 		else if (((JButton)e.getSource()).getText().length()>1){
-			listeclassee.add(((JButton)e.getSource()).getText());
+			for (ValeurPossible valpos : vueClassement.valeursPossibles){
+				if (valpos.getValeur()==((JButton)e.getSource()).getText()){
+					listeclassee.add(String.valueOf(valpos.getIdValeur()));
+				}
+			}
 			vueClassement.classement+=1;
 			for (int i = 0; i<vueClassement.lesboutonschoix.length;i++){
 				if (vueClassement.lesboutonschoix[i].getText()==((JButton)e.getSource()).getText()){
@@ -128,9 +135,9 @@ public class ControleurClassement implements ActionListener {
 			vueClassement.leslabelschoix[idvalpos].setText(": "+String.valueOf(vueClassement.classement));
 		}
 		
-		else if (Integer.parseInt(((JButton)e.getSource()).getText())<listeQuest.size()){
+		else if (Integer.parseInt(((JButton)e.getSource()).getText())<listeQuest.size()+1){
 			
-			this.laquestionsuiv=vueClassement.modrep.listeQuestion.get(Integer.parseInt(((JButton)e.getSource()).getText()));
+			this.laquestionsuiv=vueClassement.modrep.listeQuestion.get(Integer.parseInt(((JButton)e.getSource()).getText())-1);
 			
 			vueClassement.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueClassement.quest.getNumeroQuestion(), vueClassement.quest.getIdTypeQuestion(), val);
 			

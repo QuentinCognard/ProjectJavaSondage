@@ -10,7 +10,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -28,6 +29,7 @@ public class Vue_Classement extends JPanel {
 	Question quest;
 	ModeleReponse modrep;
 	ArrayList<ValeurPossible> valeursPossibles;
+	ArrayList<String> listeclasse;
 	Sondeur s;
 	int classement;
 
@@ -46,6 +48,7 @@ public class Vue_Classement extends JPanel {
 		this.quest=quest;
 		this.modrep=modrep;
 		this.questnaire=questnaire;
+		this.listeclasse= new ArrayList<String>();
 		this.valeursPossibles=modrep.bdgene.getListeValPossible(questnaire.getIdQuestionnaire(), quest.getNumeroQuestion());
 		this.lesboutons=new JButton [modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()).size()];
 		this.lespanelschoix=new JPanel [valeursPossibles.size()];
@@ -122,9 +125,6 @@ public class Vue_Classement extends JPanel {
 			
 			
 			JPanel panelListeChoix = new JPanel();
-			panelListeChoix.setBorder(new LineBorder(new Color(0, 0, 0)));
-			panelListeChoix.setBounds(150, 49, 681, 200);
-			panelQuestion.add(panelListeChoix);
 			panelListeChoix.setLayout(new BoxLayout(panelListeChoix, BoxLayout.Y_AXIS));
 			
 			
@@ -135,8 +135,8 @@ public class Vue_Classement extends JPanel {
 				lespanelschoix[valpos.getIdValeur()-1]=new JPanel();
 				lespanelschoix[valpos.getIdValeur()-1].setMaximumSize(new Dimension(1000, 40));
 				lespanelschoix[valpos.getIdValeur()-1].setBorder(null);
-				panelListeChoix.add(lespanelschoix[valpos.getIdValeur()-1]);
 				lespanelschoix[valpos.getIdValeur()-1].setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
 				
 					lesboutonschoix[valpos.getIdValeur()-1] = new JButton(valpos.getValeur());
 					lesboutonschoix[valpos.getIdValeur()-1].addActionListener(new ControleurClassement(this));
@@ -145,11 +145,19 @@ public class Vue_Classement extends JPanel {
 					leslabelschoix[valpos.getIdValeur()-1] = new JLabel(": 0");
 					leslabelschoix[valpos.getIdValeur()-1].setBorder(new EmptyBorder(0, 100, 0, 0));
 					lespanelschoix[valpos.getIdValeur()-1].add(leslabelschoix[valpos.getIdValeur()-1]);
+				
+				panelListeChoix.add(lespanelschoix[valpos.getIdValeur()-1]); //avant cetait plus en haut
+
 			}
 		
-		System.out.println(lespanelschoix);
-		System.out.println(lesboutonschoix);
-		System.out.println(leslabelschoix);
+		JScrollPane jscroll = new JScrollPane(panelListeChoix);
+		jscroll.setSize(700, 350);
+		jscroll.setLocation(100, 100);
+		jscroll.setBorder(new LineBorder(Color.BLACK));
+		jscroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		jscroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		jscroll.setPreferredSize(new Dimension(700, 700));
+		panelQuestion.add(jscroll, BorderLayout.CENTER);
 		
 		JPanel panelLesQuestions = new JPanel();
 		panelLesQuestions.setMaximumSize(new Dimension(1000, 1000));
@@ -162,7 +170,11 @@ public class Vue_Classement extends JPanel {
 		for (Question q : modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()) ){
 			
 			lesboutons[q.getNumeroQuestion()-1]=new JButton(String.valueOf(q.getNumeroQuestion()));
-		
+			if (q.getNumeroQuestion() > quest.getNumeroQuestion()){
+				lesboutons[q.getNumeroQuestion()-1].setEnabled(false);
+			}
+			lesboutons[q.getNumeroQuestion()-1].addActionListener(new ControleurClassement(this));
+
 			panelLesQuestions.add(lesboutons[q.getNumeroQuestion()-1]);
 
 		}
