@@ -53,11 +53,12 @@ public class ValiderController implements ActionListener {
 			 * le chercher dans la BD
 			 */
 			int idQuestionnaire = Integer.parseInt((String) ana.getTableau().getValueAt(ana.getTableau().getSelectedRow(), 0));
-			anaModele.createListesQuestions(idQuestionnaire);
-			anaModele.createListesQuestionsValPossible(idQuestionnaire);
-			anaModele.createListesQuestionsReponses(idQuestionnaire);
-			anaModele.createListeTranchesPresentes(idQuestionnaire);
-			anaModele.createListeCategoriesPresentes(idQuestionnaire);
+			anaModele.setIdQuestionnaire(idQuestionnaire);
+			anaModele.createListesQuestions();
+			anaModele.createListesQuestionsValPossible();
+			anaModele.createListesQuestionsReponses();
+			anaModele.createListeTranchesPresentes();
+			anaModele.createListeCategoriesPresentes();
 			ana.afficherAnalysteModification();
 		}
 	}

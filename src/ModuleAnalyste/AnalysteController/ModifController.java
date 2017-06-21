@@ -46,8 +46,13 @@ public class ModifController implements ActionListener {
 			ana.afficherPanelBase();
 		}
 		else if (((JButton)e.getSource()).getText().equals("Supprimer")){
-			System.out.println("SUPPRIMER");
-			//TODO:Supprime les resultats de la BD
+			
+			int choix = JOptionPane.showConfirmDialog(ana,"Etes-vous sûr de vouloir supprimer ce questionnaire ? \nAucune récupération ne pourra etre faite","ATTENTION",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
+			if (choix == JOptionPane.YES_OPTION)
+			{
+				ana.getModeleAnalyste().supprimerQuestionnaire();
+				ana.afficherPanelBase();
+			}
 		}
 		else if (((JButton)e.getSource()).getText().equals("Enregistrer")){
 			System.out.println("ENREGISTRER");

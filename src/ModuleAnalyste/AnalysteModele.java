@@ -27,6 +27,7 @@ import Commun.Sondio;
 
 public class AnalysteModele {
 	
+	private int idQuestionnaireChoisi;
 	/**
 	 * La classe generale qui fait le lien avec la Base de données
 	 */
@@ -74,6 +75,14 @@ public class AnalysteModele {
 		this.listeQuestionsValPossible = new HashMap<Question,ArrayList<ValeurPossible>>();
 	}
 	
+	public void setIdQuestionnaire(int idQ){
+		this.idQuestionnaireChoisi = idQ;
+	}
+	
+	public int getIdQuestionnaire(){
+		return this.idQuestionnaireChoisi;
+	}
+	
 	public HashMap<Question,ArrayList<Repondre>> getListeQuestionsReponses(){
 		return listeQuestionsReponses;
 	}
@@ -88,40 +97,32 @@ public class AnalysteModele {
 	
 	/**
 	   * cré la liste des questions en fonction du questionnaire choisi
-	   * @param idQuestionnaireChoisi
-	   * 	 l'id du questionnaire choisi
 	   */
-	public void createListesQuestions(int idQuestionnaireChoisi){
-		listeQuestions = getListeQuestions(idQuestionnaireChoisi);
+	public void createListesQuestions(){
+		listeQuestions = getListeQuestionsBD();
 	}
 	
 	/**
 	   * cré la liste des questions associé aux valeurs possibles en fonction du questionnaire choisi
-	   * @param idQuestionnaireChoisi
-	   * 	 l'id du questionnaire choisi
 	   */
-	public void createListesQuestionsValPossible(int idQuestionnaireChoisi){
+	public void createListesQuestionsValPossible(){
 		for(int i = 0; i<listeQuestions.size(); i++){
-			listeQuestionsValPossible.put(listeQuestions.get(i), getListeValPossible(idQuestionnaireChoisi, i+1) );
+			listeQuestionsValPossible.put(listeQuestions.get(i), getListeValPossible(i+1) );
 		}
 	}
 	
 	/**
 	   * cré la liste des questions associé aux réponses données en fonction du questionnaire choisi
-	   * @param idQuestionnaireChoisi
-	   * 	 l'id du questionnaire choisi
 	   */
-	public void createListesQuestionsReponses(int idQuestionnaireChoisi){
+	public void createListesQuestionsReponses(){
 		for(int i = 0; i<listeQuestions.size(); i++){
-			listeQuestionsReponses.put(listeQuestions.get(i), getReponsesQuestion(idQuestionnaireChoisi, i+1) );
+			listeQuestionsReponses.put(listeQuestions.get(i), getReponsesQuestion(i+1) );
 		}
 	}
 	/**
 	   * cré la liste des tranches d'ages présente dans le questionnaire choisi
-	   * @param idQuestionnaireChoisi
-	   * 	 l'id du questionnaire choisi
 	   */
-	public void createListeTranchesPresentes(int idQuestionnaireChoisi){
+	public void createListeTranchesPresentes(){
 		//TODO: Nathan s'en charge, à aller chercher dans AnalysteBD
 		listeTranchesPresentes = new ArrayList<Tranche>(); //à changer quand on aura la fct
 		listeTranchesPresentes.add(new Tranche('1',8,17));
@@ -131,10 +132,8 @@ public class AnalysteModele {
 	
 	/**
 	   * cré la liste des catégories présente dans le questionnaire choisi
-	   * @param idQuestionnaireChoisi
-	   * 	 l'id du questionnaire choisi
 	   */
-	public void createListeCategoriesPresentes(int idQuestionnaireChoisi){
+	public void createListeCategoriesPresentes(){
 		listeCategoriesPresentes = BDAnalyste.getCategoriesQuestionnaire(idQuestionnaireChoisi);
 	}
 	
@@ -147,35 +146,29 @@ public class AnalysteModele {
 	}
 	/**
 	   * Retourne la liste des questions associé à un questionnaire
-	   * @param idQuestionnaire
-	   * 	 l'id du questionnaire choisi
 	   * @return une ArrayList de question
 	   */
-	public ArrayList<Question> getListeQuestions(int idQuestionnaire){
-		return BDGen.getListeQuestion (idQuestionnaire);
+	public ArrayList<Question> getListeQuestionsBD(){
+		return BDGen.getListeQuestion (idQuestionnaireChoisi);
 	}
 	/**
 	   * Retourne la liste des reponses selon une question d'un questionnaire
-	   * @param idQuestionnaire
-	   * 	 l'id du questionnaire choisi
 	   * @param numeroQuestion
 	   * 	 numero de la question
 	   * @return une ArrayList de Repondre
 	   */
-	public ArrayList<Repondre> getReponsesQuestion(int idQuestionnaire, int numeroQuestion){
-		return BDAnalyste.getReponsesQuestion(idQuestionnaire, numeroQuestion);
+	public ArrayList<Repondre> getReponsesQuestion(int numeroQuestion){
+		return BDAnalyste.getReponsesQuestion(idQuestionnaireChoisi, numeroQuestion);
 	}
 	
 	/**
 	   * Retourne la liste des valeurs possible selon une question d'un questionnaire
-	   * @param idQuestionnaire
-	   * 	 l'id du questionnaire choisi
 	   * @param numeroQuestion
 	   * 	 numero de la question
 	   * @return une ArrayList de ValeurPossible
 	   */
-	public ArrayList<ValeurPossible> getListeValPossible(int idQuestionnaire, int numQuestion){
-		return BDGen.getListeValPossible (idQuestionnaire, numQuestion);
+	public ArrayList<ValeurPossible> getListeValPossible(int numQuestion){
+		return BDGen.getListeValPossible (idQuestionnaireChoisi, numQuestion);
 	}
 	
 	/**
@@ -191,9 +184,11 @@ public class AnalysteModele {
 		//TODO: utiliser le getQuestionnaireFini précédent et appliquer des conditions
 		return null;
 	}
-	
+	/**
+	   * Supprime le questionnaire en cours
+	   */
 	public void supprimerQuestionnaire(){
-		//TODO: utiliser une futurs méthode de la classe BDModuleAnalyste (ou BDGeneral ?)
+		BDGen.supprimerQuestionnaire(idQuestionnaireChoisi);
 	}
 	
 	public void enregistrerModifQuestion(Question q, String RepresentationChoisi, String regroupement, String commentaire){
