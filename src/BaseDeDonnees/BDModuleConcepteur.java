@@ -1,12 +1,25 @@
 package BaseDeDonnees;
 
 import java.sql.*;
-
+/**
+ * BDModuleConcepteur est une classe qui va regrouper les fonctions jdbc qui seront utilisées dans le module concepteur
+ * @author nathan
+ *
+ */
 public class BDModuleConcepteur {
-	
+	/**
+	 * La connexion mysql
+	 * @see BDConnexionMySQL
+	 */
 	BDConnexionMySQL connexion;
+	/**
+	 * Ordres mysql
+	 */
 	Statement st;
-	
+	/**
+	 * La connexion mysql
+	 * @param c
+	 */
 	public BDModuleConcepteur (BDConnexionMySQL c) {
 		this.connexion = c;
 		
@@ -22,7 +35,10 @@ public class BDModuleConcepteur {
 	
 	
 	
-	
+	/**
+	 * 
+	 * @return L'identifiant le plus grand parmi les identifiants questionnaires
+	 */
 	public int maxIdentifiantQuestionnaire () {
 		try {
 	        String requete = "SELECT IFNULL(MAX(idQ),0) idMax FROM QUESTIONNAIRE;";
@@ -35,7 +51,11 @@ public class BDModuleConcepteur {
 	         return -1;
 	      }
 	}
-	
+	/**
+	 * Insere un questionnaire q dans la base de données
+	 * @param q
+	 * @see Questionnaire
+	 */
 	public void insererQuestionnaire (Questionnaire q) {
 		try {
 			String requete = "INSERT INTO QUESTIONNAIRE (idQ, Titre, Etat, numC, idU, idPan) VALUES (?,?,?,?,?,?);";
@@ -53,7 +73,11 @@ public class BDModuleConcepteur {
       
 		}
 	}
-	
+	/**
+	 * Met a jour un questionnaire q dans la base de données
+	 * @param q
+	 * @see Questionnaire
+	 */
 	public void modifierQuestionnaire (Questionnaire q) {
 		try {
 	        String requete = "UPDATE QUESTIONNAIRE SET Titre = '"+q.getTitreQuestionnaire()+"', numC = "+q.getNumClient()+", idPan = "+q.getIdentifiantPanel()+" WHERE idQ = "+q.getIdQuestionnaire()+";";
@@ -69,7 +93,10 @@ public class BDModuleConcepteur {
 	// SUPPRIMER QUESTIONNAIRE DANS BD GENERAL
 	
 	
-	
+	/**
+	 * 
+	 * @return L'identifiant le plus grand parmi les identifiants client
+	 */
 	public int maxIdentifiantClient () {
 		try {
 	        String requete = "SELECT IFNULL(MAX(numC),15008) idMax FROM CLIENT;";
@@ -82,7 +109,11 @@ public class BDModuleConcepteur {
 	         return 15008;
 	      }
 	}
-	
+	/**
+	 * Insere un client c dans la base de données
+	 * @param c
+	 * @see Client
+	 */
 	public void insererClient (Client c) {
 		try {
 			String requete = "INSERT INTO CLIENT (numC, raisonSoc, adresse1, adresse2, CodePostal, Ville, Telephone, email) VALUES (?,?,?,?,?,?,?,?);";
@@ -104,7 +135,11 @@ public class BDModuleConcepteur {
 	}
 
 	
-	
+	/**
+	 * 
+	 * @param identifiantQuestionnaire
+	 * @return L'identifiant le plus grand parmi les identifiants question
+	 */
 	public int maxIdentifiantQuestion (int identifiantQuestionnaire) {
 		try {
 	        String requete = "SELECT IFNULL(MAX(numQ),0) idMax FROM QUESTION WHERE idQ = "+identifiantQuestionnaire+";";
@@ -117,7 +152,11 @@ public class BDModuleConcepteur {
 	         return 0;
 	      }
 	}
-	
+	/**
+	 * Insere une question dans la base de données
+	 * @param q
+	 * @see Question
+	 */
 	public void insererQuestion (Question q) {
 		try {
 			String requete = "INSERT INTO QUESTION (idQ, numQ, texteQ, MaxVal, idT) VALUES (?,?,?,?,?);";
@@ -134,7 +173,12 @@ public class BDModuleConcepteur {
 
 		}
 	}
-
+	
+	/**
+	 * Met a jour une question dans la base de données
+	 * @param q
+	 * @see Question
+	 */
 	public void modifierQuestion (Question q) {
 		try {
 	        String requete = "UPDATE QUESTION SET texteQ = '"+q.getTexteQuestion()+"', MaxVal = "+q.getMaxValeur()+", idT = "+q.getIdTypeQuestion()+" WHERE idQ = "+q.getIdQuestionnaire()+" AND numQ = "+q.getNumeroQuestion()+";";
@@ -145,7 +189,12 @@ public class BDModuleConcepteur {
 			
 		}
 	}
-	
+	/**
+	 * Supprime une question de la base de données
+	 * @param idQuestionnaire
+	 * @param numeroQuestion
+	 * @see Question
+	 */
 	public void supprimerQuestion (int idQuestionnaire, int numeroQuestion) {
 		try {
 	        String requete = "DELETE FROM QUESTION WHERE idQ = "+idQuestionnaire+" AND numQ = "+numeroQuestion+";";
@@ -158,7 +207,12 @@ public class BDModuleConcepteur {
 	}
 
 	
-	
+	/**
+	 * 
+	 * @param identifiantQuestionnaire
+	 * @param numeroQuestion
+	 * @return L'identifiant le plus grand parmi les identifiants valpossible
+	 */
 	public int maxValeurPossible (int identifiantQuestionnaire, int numeroQuestion) {
 		try {
 	        String requete = "SELECT IFNULL(MAX(idV),0) idMax FROM VALPOSSIBLE WHERE idQ = "+identifiantQuestionnaire+" AND numQ = "+numeroQuestion+";";
@@ -171,7 +225,11 @@ public class BDModuleConcepteur {
 	         return 0;
 	      }
 	}
-
+	/**
+	 * Insere une valeur possible vp dans la base de données
+	 * @param vp
+	 * @see ValeurPossible
+	 */
 	public void insererValeurPossible (ValeurPossible vp) {
 		try {
 			String requete = "INSERT INTO VALPOSSIBLE (idQ, numQ, idV, Valeur) VALUES (?,?,?,?);";
@@ -187,7 +245,11 @@ public class BDModuleConcepteur {
 			
 		}
 	}
-	
+	/**
+	 * Supprime toutes les valeurs possibles d'une question d'un questionnaire
+	 * @param identifiantQuestionnaire
+	 * @param numeroQuestion
+	 */
 	public void supprimerValeursPossibles (int identifiantQuestionnaire, int numeroQuestion) {
 		try {
 	        String requete = "DELETE FROM VALPOSSIBLE WHERE idQ = "+identifiantQuestionnaire+" AND numQ = "+numeroQuestion+";";
@@ -199,7 +261,10 @@ public class BDModuleConcepteur {
 	    }
 	}
 	
-	
+	/**
+	 * Modifie l'etat du questionnaire ('C' en 'S') quand celui-ci est en fin de création
+	 * @param idQuestionnaire
+	 */
 	public void questionnairePretPourSondage (int idQuestionnaire) {
 		try {
 			String requete = "UPDATE QUESTIONNAIRE SET Etat = 'S' WHERE idQ = "+idQuestionnaire+";";

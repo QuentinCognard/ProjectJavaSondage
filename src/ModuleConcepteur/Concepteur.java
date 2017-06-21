@@ -156,11 +156,11 @@ public class Concepteur extends JPanel {
 		this.validate();
 		this.repaint();
 	}
-	public void afficherModifQuestionnaire(Questionnaire q){
+	public void afficherModifQuestionnaire(AffichageQuestionnaire vue,Questionnaire q){
 		this.removeAll();
 		this.afficherPanelHaut();
 		this.afficherPanelMilieu();
-		new ModificationQuestionnaire(this,q,this.bdgeneral,this.bdConcepteur);
+		new ModificationQuestionnaire(this,q,this.bdgeneral,this.bdConcepteur,vue);
 		this.validate();
 		this.repaint();
 	}

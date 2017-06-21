@@ -7,15 +7,28 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 
 import BaseDeDonnees.Utilisateur;
-
+/**
+ * ActionSinscrire est une classe qui va gerer le bouton "S'inscrire" dans la VueInscription
+ * @author nathan
+ *
+ */
 public class ActionSinscrire implements ActionListener {
-	
+	/**
+	 * La classe principale de ce module
+	 * @see Connexion
+	 */
 	Connexion connexion;
-	
+	/**
+	 * Constructeur
+	 * @param c
+	 */
 	public ActionSinscrire (Connexion c) {
 		this.connexion = c;
 	}
 	
+	/**
+	 * Va inscrire un nouvel utilisateur si toutes les conditions sont remplies, sinon message d'erreur
+	 */
 	public void actionPerformed(ActionEvent arg0) {
 		this.connexion.vuein.getMessage().setText(" ");
 		
@@ -49,7 +62,12 @@ public class ActionSinscrire implements ActionListener {
 			this.connexion.modeleconnexion.connexion(user.getIdentifiantRole());
 		}
 	}
-	
+
+	/**
+	 * 
+	 * @param champs
+	 * @return true si un ou plusieurs champs sont vides, false sinon
+	 */
 	public boolean fieldsVides (String [] champs) {
 		for (String saisie : champs) {
 			if (saisie.equals("")) {
@@ -59,6 +77,11 @@ public class ActionSinscrire implements ActionListener {
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @return un Char selon le choix de l'utilisateur 
+	 * ('1' si c'est un concepteur, '2' s c'est un sondeur et '3' si c'est un analyste)
+	 */
 	public char getCharactereChoixRole () {
 		if (this.connexion.vuein.getChoixConcepteur().isSelected()) {
 			return '1';

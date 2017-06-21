@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.util.ArrayList;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,6 +22,7 @@ public class ModificationQuestionnaire extends JPanel{
 	Questionnaire q;
 	BDGeneral bd;
 	BDModuleConcepteur bdc;
+	AffichageQuestionnaire vue;
 	private JPanel panelCentral;
 	private JTextField valId;
 	private JTextField valNom;
@@ -31,12 +34,15 @@ public class ModificationQuestionnaire extends JPanel{
 	private int panel;
 	private int client;
 	private int tauxReponse;
+	private ArrayList<Question> listeQ;
 	
-	ModificationQuestionnaire(Concepteur c,Questionnaire q,BDGeneral bd,BDModuleConcepteur bdc){
+	ModificationQuestionnaire(Concepteur c,Questionnaire q,BDGeneral bd,BDModuleConcepteur bdc,
+			AffichageQuestionnaire vue){
 		this.c = c;
 		this.q = q;
 		this.bd = bd;
 		this.bdc = bdc;
+		this.vue = vue;
 		this.panelCentral = new JPanel();
 		this.id = q.getIdQuestionnaire();
 		this.nom = q.getTitreQuestionnaire();
@@ -46,6 +52,15 @@ public class ModificationQuestionnaire extends JPanel{
 		panelCentral();
 		c.add(this.panelCentral);
 
+	}
+	private ArrayList<QuestionPanel> recupQuestions(){
+		this.listeQ = bd.getListeQuestion(q.getIdQuestionnaire());
+		ArrayList<QuestionPanel> liste = new ArrayList<QuestionPanel>();
+		for(Question q : listeQ){
+			liste.add(creerQuestion(q));
+		}
+		return liste;
+		
 	}
 	private void panelCentral(){
 		panelCentral.setLayout(new BorderLayout());
@@ -111,6 +126,7 @@ public class ModificationQuestionnaire extends JPanel{
 		labClient.setFont(police);
 		this.valClient = new JTextField(""+this.client);
 		valClient.setFont(police);
+		valClient.setEnabled(false);
 		panelSociete.add(labClient);
 		panelSociete.add(valClient);
 		JPanel panelTauxReponse = new JPanel();
@@ -144,8 +160,9 @@ public class ModificationQuestionnaire extends JPanel{
 		JPanel panelListeQuestions = new JPanel();
 		JPanel listeQuestions = new JPanel();
 		listeQuestions.setLayout(new BoxLayout(listeQuestions,BoxLayout.Y_AXIS));
-		for(int i=0;i<20;i++){
-			listeQuestions.add(creerQuestion("Quel âge avez-vous ?"));
+		ArrayList<QuestionPanel> listeQuestionsPanel = recupQuestions();
+		for(JPanel p : listeQuestionsPanel){
+			listeQuestions.add(p);
 		}
 		panelListeQuestions.add(listeQuestions);
 		JScrollPane scrollQuestions = new JScrollPane(panelListeQuestions);
@@ -158,11 +175,12 @@ public class ModificationQuestionnaire extends JPanel{
 		panelCentral.add(panelQuestions,"East");
 
 	}
-	private JPanel creerQuestion(String intitule){
-		JPanel panelQuestion = new JPanel();
-		JPanel panelQuestionBis = new JPanel(); 
+	private QuestionPanel creerQuestion(Question q){
+		QuestionPanel panelQuestion = new QuestionPanel(q);
+		panelQuestion.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JPanel panelQuestionBis = new JPanel();
 		//Permet d'avoir un second panel pour avoir à la fois un contour et un espacement
-		JLabel nomQuestion = new JLabel(intitule);
+		JLabel nomQuestion = new JLabel(q.getTexteQuestion());
 		nomQuestion.setBorder(new EmptyBorder(3,0,3,0));
 		panelQuestionBis.setBorder(BorderFactory.createLineBorder(Color.black));
 		panelQuestionBis.add(nomQuestion);

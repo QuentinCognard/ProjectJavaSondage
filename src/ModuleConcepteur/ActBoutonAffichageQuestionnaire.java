@@ -27,7 +27,7 @@ public class ActBoutonAffichageQuestionnaire implements ActionListener {
 			this.concepteur.afficherConcepteur();
 		}
 		if (((JButton)arg0.getSource()).getText().equals("Modifier informations")){
-			this.concepteur.afficherModifQuestionnaire(q);
+			this.concepteur.afficherModifQuestionnaire(vue,q);
 		}
 		if (((JButton)arg0.getSource()).getText().equals("Ajouter question")){
 			this.concepteur.afficherAjouterQuestion(vue,q);

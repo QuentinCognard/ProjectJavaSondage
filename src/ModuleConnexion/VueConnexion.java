@@ -12,18 +12,47 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-
+/**
+ * VueConnexion est la classe qui gere la vue quand un utilisateur veut se connecter
+ * @author nathan
+ *
+ */
 public class VueConnexion extends JPanel {
-	
+	/**
+	 * La classe principale de ce module
+	 * @see Connexion
+	 */
 	Connexion connexion;
 	
+	/**
+	 * JLabel affichant des messages d'erreurs
+	 */
 	private JLabel message;
+	/**
+	 * Zone de saisie du login
+	 */
 	private JTextField zonedesaisielogin;
+	/**
+	 * Zone de saisie du mot de passe
+	 */
 	private JPasswordField zonedesaisiemotdepasse;
+	/**
+	 * Bouton de connexion
+	 */
 	private JButton boutonconnexion;
+	/**
+	 * JLabel "Mot de passe oublie ?"
+	 */
 	private JLabel motdepasseoublie;
+	/**
+	 * JLabel "Vous n'avez pas de compte ? Creez en un"
+	 */
 	private JLabel inscription;
 	
+	/**
+	 * Constructeur
+	 * @param c
+	 */
 	public VueConnexion (Connexion c) {
 		super();
 		this.connexion = c;
@@ -60,7 +89,9 @@ public class VueConnexion extends JPanel {
 	
 	
 	
-	
+	/**
+	 * Affiche le titre
+	 */
 	public void afficherTitre () {
 		JPanel boiteTitre = new JPanel();
 		add(boiteTitre);
@@ -71,6 +102,9 @@ public class VueConnexion extends JPanel {
 			titre.setFont(titre.getFont().deriveFont(50f));
 	}
 	
+	/**
+	 * Affiche les zones de saisies et les JLabel
+	 */
 	public void afficherChamps() {
 		// partie message (mot de passe oublie ...)
 		JPanel boiteMessage = new JPanel ();
@@ -129,6 +163,9 @@ public class VueConnexion extends JPanel {
 			this.inscription.addMouseListener(new ActionPasDeCompte(this.connexion));
 	}
 	
+	/**
+	 * Affiche le bouton connexion
+	 */
 	public void afficherBoutonConnexion () {
 		JPanel boiteBouton = new JPanel ();
 		add(boiteBouton);

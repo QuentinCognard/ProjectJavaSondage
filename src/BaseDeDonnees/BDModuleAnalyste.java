@@ -2,12 +2,25 @@ package BaseDeDonnees;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+/**
+ * BDModuleAnalyste est une classe qui va regrouper les fonctions jdbc qui seront utilisées dans le module analyste
+ * @author nathan
+ *
+ */
 public class BDModuleAnalyste {
-	
+	/**
+	   * La connexion mysql
+	   * @see BDConnexionMySQL
+	   */
 	BDConnexionMySQL connexion;
+	/**
+	 * Ordres mysql
+	 */
 	Statement st;
-	
+	/**
+	 * La connexion mysql
+	 * @param c
+	 */
 	public BDModuleAnalyste (BDConnexionMySQL c) {
 		this.connexion = c;
 		
@@ -21,7 +34,13 @@ public class BDModuleAnalyste {
 	}
 	
 	
-	
+	/**
+	 * Retourne la liste des reponses selon l'id du questionnaire et le numero de la question
+	 * @param idQuestionnaire
+	 * @param numeroQuestion
+	 * @see Repondre
+	 * @return une ArrayList de Repondre
+	 */
 	public ArrayList <Repondre> getReponsesQuestion (int idQuestionnaire, int numeroQuestion) {
 		ArrayList <Repondre> listeReponses = new ArrayList <Repondre> ();
 		try {
@@ -73,7 +92,13 @@ public class BDModuleAnalyste {
 		}
 		return listeValeurs;
 	}
-
+	
+	/**
+	 * Retourne la liste des categories presentes selon l'id d'un questionnaire
+	 * @param idQuestionnaire
+	 * @see Categorie
+	 * @return une ArrayList de Categorie
+	 */
 	public ArrayList <Categorie> getCategoriesQuestionnaire (int idQuestionnaire) {
 		ArrayList <Categorie> listeCat = new ArrayList <Categorie> ();
 		try {
@@ -91,5 +116,27 @@ public class BDModuleAnalyste {
 		return listeCat;
 	}
 
-
+	/**
+	 * Retourne la liste des tranches d'ages presentes selon l'id d'un questionnaire
+	 * @param idQuestionnaire
+	 * @see Tranche
+	 * @return une ArrayList de Tranche
+	 */
+	public ArrayList <Tranche> getTranchesQuestionnaire (int idQuestionnaire) {
+		ArrayList <Tranche> listeTr = new ArrayList <Tranche> ();
+		try {
+			String requete = "SELECT * FROM TRANCHE WHERE idTr in (SELECT idTr FROM TRANCHE NATURAL JOIN SONDE NATURAL JOIN INTERROGER WHERE idQ = "+idQuestionnaire+")";
+			ResultSet rs = this.st.executeQuery(requete);
+			while (rs.next()) {
+				Tranche t = new Tranche (rs.getString("idTr").charAt(0),rs.getInt("valDebut"), rs.getInt("valFin"));
+				listeTr.add(t);
+			}
+		}
+		
+		catch (SQLException e) {
+			
+		}
+		return listeTr;
+	}
+	
 }
