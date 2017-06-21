@@ -35,7 +35,7 @@ public class Contr_Libre implements ActionListener{
 		
 		if (vueLibre.quest.getNumeroQuestion()>0){
 
-			this.laquestionpre=vueLibre.modrep.listeQuestion.get(vueLibre.quest.getNumeroQuestion()-1);
+			this.laquestionpre=vueLibre.modrep.listeQuestion.get(vueLibre.quest.getNumeroQuestion()-2);
 		}
 		
 		this.lesonde=vueLibre.lesonde;
@@ -54,7 +54,7 @@ public void actionPerformed(ActionEvent e) {
 		
 		else if (((JButton)e.getSource()).getText().equals("Valider sondage")){
 			
-			vueLibre.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueLibre.quest.getNumeroQuestion(), vueLibre.quest.getIdTypeQuestion(), val);
+			vueLibre.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueLibre.quest.getNumeroQuestion(),  val);
 			vueLibre.modrep.bdsond.setSondeInterroger(questionnaire,lesonde);
 			this.s.afficherFenetrePrinc();
 
@@ -63,9 +63,13 @@ public void actionPerformed(ActionEvent e) {
 
 	
 		else if (((JButton)e.getSource()).getText().equals("Suivant")){
-			vueLibre.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueLibre.quest.getNumeroQuestion(), vueLibre.quest.getIdTypeQuestion(), val);
-			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
+			vueLibre.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueLibre.quest.getNumeroQuestion(), val);
+			if (laquestionsuiv.getIdTypeQuestion() =='n'){
 				this.s.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueLibre.modrep);
+			}
+			else if(laquestionsuiv.getIdTypeQuestion() =='u'){
+				this.s.afficherUnique(laquestionsuiv,questionnaire,lesonde,vueLibre.modrep);
+
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='m'){
 				this.s.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueLibre.modrep);
@@ -83,9 +87,12 @@ public void actionPerformed(ActionEvent e) {
 		}
 		
 		else if (((JButton)e.getSource()).getText().equals("Precedent")){
-			vueLibre.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueLibre.quest.getNumeroQuestion(), vueLibre.quest.getIdTypeQuestion(), val);
-			if (laquestionpre.getIdTypeQuestion() =='u' || laquestionpre.getIdTypeQuestion() =='n'){
+			if (laquestionpre.getIdTypeQuestion() =='n'){
 				this.s.afficherEchelle(laquestionpre,questionnaire,lesonde,vueLibre.modrep);
+			}
+			else if(laquestionpre.getIdTypeQuestion() =='u'){
+				this.s.afficherUnique(laquestionpre,questionnaire,lesonde,vueLibre.modrep);
+
 			}
 			else if (laquestionpre.getIdTypeQuestion() =='m'){
 				this.s.afficherChoixMultiples(laquestionpre,questionnaire,lesonde,vueLibre.modrep);
@@ -106,10 +113,13 @@ public void actionPerformed(ActionEvent e) {
 			
 			this.laquestionsuiv=vueLibre.modrep.listeQuestion.get(Integer.parseInt(((JButton)e.getSource()).getText())-1);
 			
-			vueLibre.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueLibre.quest.getNumeroQuestion(), vueLibre.quest.getIdTypeQuestion(), val);
-			
-			if (laquestionsuiv.getIdTypeQuestion() =='u' || laquestionsuiv.getIdTypeQuestion() =='n'){
+			vueLibre.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueLibre.quest.getNumeroQuestion(), val);
+			if (laquestionsuiv.getIdTypeQuestion() =='n'){
 				this.s.afficherEchelle(laquestionsuiv,questionnaire,lesonde,vueLibre.modrep);
+			}
+			else if(laquestionsuiv.getIdTypeQuestion() =='u'){
+				this.s.afficherUnique(laquestionsuiv,questionnaire,lesonde,vueLibre.modrep);
+
 			}
 			else if (laquestionsuiv.getIdTypeQuestion() =='m'){
 				this.s.afficherChoixMultiples(laquestionsuiv,questionnaire,lesonde,vueLibre.modrep);

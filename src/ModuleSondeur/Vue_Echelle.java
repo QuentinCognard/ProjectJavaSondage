@@ -22,7 +22,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.CompoundBorder;
 
 public class Vue_Echelle extends JPanel {
-	private JTextField txtSaisirUneValeur;
+	JTextField txtSaisirUneValeur;
 	Sonde lesonde;
 	Questionnaire questnaire;
 	Question quest;
@@ -82,7 +82,7 @@ public class Vue_Echelle extends JPanel {
 			JButton btnAnnule = new JButton("Annuler sondage");
 			btnAnnule.addActionListener(new ControleurEchelle(this));
 			panelAnnul.add(btnAnnule);
-			btnAnnule.setPreferredSize(new Dimension(150, 25));
+			btnAnnule.setPreferredSize(new Dimension(200, 25));
 			btnAnnule.setMinimumSize(new Dimension(11, 11));
 			btnAnnule.setMaximumSize(new Dimension(1000, 1000));
 			
