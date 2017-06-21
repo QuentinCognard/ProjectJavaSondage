@@ -19,19 +19,55 @@ import BaseDeDonnees.ValeurPossible;
 import Commun.ModeleCommun;
 import Commun.Sondio;
 
+/**
+ * AnalysteModele est une classe (modele) qui fait tout les calculs necessaire au module analyste
+ * @author Julien Revaud
+ *
+ */
+
 public class AnalysteModele {
-	BDGeneral BDGen;
-	BDModuleAnalyste BDAnalyste;
+	
+	/**
+	 * La classe generale qui fait le lien avec la Base de données
+	 */
+	private BDGeneral BDGen;
+	
+	/**
+	 * La classe spéciale analyste qui fait le lien avec la Base de données
+	 */
+	private BDModuleAnalyste BDAnalyste;
+	
+	/**
+	 * La liste des questions du questionnaire choisit
+	 */
 	private ArrayList<Question> listeQuestions;
+	
+	/**
+	 * Le dico reliant pour chaque question la liste des réponses données
+	 */
 	private HashMap<Question,ArrayList<Repondre>> listeQuestionsReponses;
+	
+	/**
+	 * Le dico reliant pour chaque question la liste des valeurs possible
+	 */
 	private HashMap<Question,ArrayList<ValeurPossible>> listeQuestionsValPossible;
+	
+	/**
+	 * La liste des tranches d'ages présentes dans le questionnaire
+	 */
 	private ArrayList<Tranche> listeTranchesPresentes;
+	
+	/**
+	 * La liste des catégories présentes dans le questionnaire
+	 */
 	private ArrayList<Categorie> listeCategoriesPresentes;
 	
+	/**
+	   * Cré le modèle pour le module analyste
+	   * @param modelecommun
+	   * 	 permet d'obtenir les classes principales
+	   */
 	public AnalysteModele( ModeleCommun modCommun){
-		/*TODO: recuperer la classe BD générale qui devra etre créer dans Sondio.java (avec BDConnexion)
-		 * et crer BDModuleAnalyste
-		 */
 		this.BDGen = modCommun.getBdGeneral();
 		this.BDAnalyste = new BDModuleAnalyste(modCommun.getBdConnexion());
 		this.listeQuestionsReponses = new HashMap<Question,ArrayList<Repondre>>();
@@ -50,22 +86,41 @@ public class AnalysteModele {
 		return listeQuestionsValPossible;
 	}
 	
+	/**
+	   * cré la liste des questions en fonction du questionnaire choisi
+	   * @param idQuestionnaireChoisi
+	   * 	 l'id du questionnaire choisi
+	   */
 	public void createListesQuestions(int idQuestionnaireChoisi){
 		listeQuestions = getListeQuestions(idQuestionnaireChoisi);
 	}
 	
+	/**
+	   * cré la liste des questions associé aux valeurs possibles en fonction du questionnaire choisi
+	   * @param idQuestionnaireChoisi
+	   * 	 l'id du questionnaire choisi
+	   */
 	public void createListesQuestionsValPossible(int idQuestionnaireChoisi){
 		for(int i = 0; i<listeQuestions.size(); i++){
 			listeQuestionsValPossible.put(listeQuestions.get(i), getListeValPossible(idQuestionnaireChoisi, i+1) );
 		}
 	}
 	
+	/**
+	   * cré la liste des questions associé aux réponses données en fonction du questionnaire choisi
+	   * @param idQuestionnaireChoisi
+	   * 	 l'id du questionnaire choisi
+	   */
 	public void createListesQuestionsReponses(int idQuestionnaireChoisi){
 		for(int i = 0; i<listeQuestions.size(); i++){
 			listeQuestionsReponses.put(listeQuestions.get(i), getReponsesQuestion(idQuestionnaireChoisi, i+1) );
 		}
 	}
-	
+	/**
+	   * cré la liste des tranches d'ages présente dans le questionnaire choisi
+	   * @param idQuestionnaireChoisi
+	   * 	 l'id du questionnaire choisi
+	   */
 	public void createListeTranchesPresentes(int idQuestionnaireChoisi){
 		//TODO: Nathan s'en charge, à aller chercher dans AnalysteBD
 		listeTranchesPresentes = new ArrayList<Tranche>(); //à changer quand on aura la fct
@@ -74,30 +129,60 @@ public class AnalysteModele {
 		listeTranchesPresentes.add(new Tranche('3',26,35));
 	}
 	
+	/**
+	   * cré la liste des catégories présente dans le questionnaire choisi
+	   * @param idQuestionnaireChoisi
+	   * 	 l'id du questionnaire choisi
+	   */
 	public void createListeCategoriesPresentes(int idQuestionnaireChoisi){
-		//TODO: Nathan s'en charge, à aller chercher dans AnalysteBD
-		listeCategoriesPresentes = new ArrayList<Categorie>(); //à changer quand on aura la fct
-		listeCategoriesPresentes.add(new Categorie('1',"PAUVRE"));
-		listeCategoriesPresentes.add(new Categorie('2',"MOYEN"));
-		listeCategoriesPresentes.add(new Categorie('3',"RICHE"));
+		listeCategoriesPresentes = BDAnalyste.getCategoriesQuestionnaire(idQuestionnaireChoisi);
 	}
 	
+	/**
+	   * Retourne la liste de questionnaires pret à etre analysé
+	   * @return une ArrayList de questionnaire
+	   */
 	public ArrayList<Questionnaire> getQuestionnaireFini(){
 		return BDGen.getListeQuestionnaire('A');
 	}
-	
+	/**
+	   * Retourne la liste des questions associé à un questionnaire
+	   * @param idQuestionnaire
+	   * 	 l'id du questionnaire choisi
+	   * @return une ArrayList de question
+	   */
 	public ArrayList<Question> getListeQuestions(int idQuestionnaire){
 		return BDGen.getListeQuestion (idQuestionnaire);
 	}
-	
-	public ArrayList <Repondre> getReponsesQuestion(int idQuestionnaire, int numeroQuestion){
+	/**
+	   * Retourne la liste des reponses selon une question d'un questionnaire
+	   * @param idQuestionnaire
+	   * 	 l'id du questionnaire choisi
+	   * @param numeroQuestion
+	   * 	 numero de la question
+	   * @return une ArrayList de Repondre
+	   */
+	public ArrayList<Repondre> getReponsesQuestion(int idQuestionnaire, int numeroQuestion){
 		return BDAnalyste.getReponsesQuestion(idQuestionnaire, numeroQuestion);
 	}
 	
+	/**
+	   * Retourne la liste des valeurs possible selon une question d'un questionnaire
+	   * @param idQuestionnaire
+	   * 	 l'id du questionnaire choisi
+	   * @param numeroQuestion
+	   * 	 numero de la question
+	   * @return une ArrayList de ValeurPossible
+	   */
 	public ArrayList<ValeurPossible> getListeValPossible(int idQuestionnaire, int numQuestion){
 		return BDGen.getListeValPossible (idQuestionnaire, numQuestion);
 	}
 	
+	/**
+	   * Permet de revenir à l'écran de connexion de l'application
+	   * @param sondio
+	   * 	 La classe principale de l'application
+	   */
 	public void deconnexion(Sondio sondio){
 		sondio.afficherConnexion();
 	}
@@ -139,10 +224,18 @@ public class AnalysteModele {
 		return null;
 	}
 	
-	/*public pdf ExportPDF(???){
+	public void createPDF(String dest){
 		//TODO: crée pdf et le renvoie pour enregistrement
-	}*/
+	}
 	
+	/**
+	   * Retourne le modele d'un tableau en fonction du regroupement choisi et le la question (et donc de ses données)
+	   * @param regroupement
+	   * 	 nom du regroupement choisi
+	   * @param numQuest
+	   * 	 numero de la question
+	   * @return un modele pour la creation d'un tableau
+	   */
 	public DefaultTableModel createTableModel(String regroupement, int numQuest){
 		Question quest = listeQuestions.get(numQuest-1);
 		String[] ColumnNames;
@@ -205,6 +298,14 @@ public class AnalysteModele {
 		return modele;
 	}
 	
+	/**
+	   * Retourne les données d'un diagramme circulaire en fonction du regroupement choisi et le la question (et donc de ses données)
+	   * @param regroupement
+	   * 	 nom du regroupement choisi
+	   * @param numQuest
+	   * 	 numero de la question
+	   * @return un groupement de données pour la creation d'un diagramme circulaire
+	   */
 	public DefaultPieDataset createPieChartData(String regroupement, int numQuest){
 		Question quest = listeQuestions.get(numQuest-1);
 		DefaultPieDataset data = new DefaultPieDataset();
@@ -236,6 +337,14 @@ public class AnalysteModele {
 		return data;
 	}
 	
+	/**
+	   * Retourne les données d'un diagramme en bar en fonction du regroupement choisi et le la question (et donc de ses données)
+	   * @param regroupement
+	   * 	 nom du regroupement choisi
+	   * @param numQuest
+	   * 	 numero de la question
+	   * @return un groupement de données pour la creation d'un diagramme en bar
+	   */
 	public DefaultCategoryDataset createBarChartData(String regroupement, int numQuest){
 		Question quest = listeQuestions.get(numQuest-1);
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset( );  

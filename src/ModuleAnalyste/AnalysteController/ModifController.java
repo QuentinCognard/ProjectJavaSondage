@@ -5,25 +5,44 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import ModuleAnalyste.Analyste;
 
+/**
+ * ModifController est une classe (controller) qui gère tous les BOUTON de la vue AnalysteModification
+ * @author Julien Revaud
+ *
+ */
+
 public class ModifController implements ActionListener {
 	
+	/**
+	 * La classe (vue) de base du module analyste
+	 */
 	private Analyste ana;
 	
+	/**
+	   * cré la classe controller
+	   * @param ana
+	   * 	 la classe analyste
+	   */
 	public ModifController(Analyste ana){
 		super();
 		this.ana = ana;
 	}
-
+	
+	/**
+	   * execute une instruction lorsqu'un bouton est enclenché
+	   * @param e
+	   * 	 l'ActioEvent qui permet de retrouver quel bouton a été cliqué
+	   */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//AnalysteModidfication ana = ((Component) e.getSource()).getParent()
 		if (((JButton)e.getSource()).getText().equals("<== Retour")){
-			//TODO: retour au panel pr�c�dent AVEC un message si le Travail non enregistr�
-			System.out.println("RETOUR");
 			ana.afficherPanelBase();
 		}
 		else if (((JButton)e.getSource()).getText().equals("Supprimer")){
@@ -40,7 +59,17 @@ public class ModifController implements ActionListener {
 		}
 		else if (((JButton)e.getSource()).getText().equals("Generer un PDF")){
 			if (ana.getAnalysteModification().isComment())
-				System.out.println("PDF");
+			{
+				JFileChooser chooseSave = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("pdf","PDF");
+				chooseSave.setFileFilter(filter);
+				int confirmation = chooseSave.showSaveDialog(ana);
+				if (confirmation == JFileChooser.APPROVE_OPTION)
+				{
+					System.out.println(chooseSave.getSelectedFile().getAbsolutePath());
+					ana.getModeleAnalyste().createPDF(chooseSave.getSelectedFile().getAbsolutePath()+".pdf");
+				}
+			}
 			else{
 				JOptionPane.showMessageDialog(ana,"Commentaire final non rempli","INFORMATION",JOptionPane.INFORMATION_MESSAGE);
 			}

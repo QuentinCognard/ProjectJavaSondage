@@ -26,14 +26,44 @@ import Commun.Sondio;
 import ModuleAnalyste.AnalysteController.RechercherController;
 import ModuleAnalyste.AnalysteController.ValiderController;
 
+/**
+ * Analyste est une classe (vue) qui étend JPanel qui sert de support pour afficher le module analyste
+ * @author Julien Revaud
+ *
+ */
+
 public class Analyste extends JPanel {
 	
+	/**
+	 * La classe principale
+	 */
 	private Sondio sondio;
+	
+	/**
+	 * Le tableau regroupant les infos des questionnaires
+	 */
 	private JTable tab;
+	
+	/**
+	 * Le champs de recherche
+	 */
 	private JTextField champRecherche;
+	
+	/**
+	 * La classe modele du module analyste
+	 */
 	private AnalysteModele anaMod;
+	
+	/**
+	 * L'autre vue du module analyste
+	 */
 	private AnalysteModification anaModif;
 	
+	/**
+	   * Constructeur de l'Affichage de base du module analyste
+	   * @param modelecommun
+	   * 	 permet d'obtenir les classes principales
+	   */
 	public Analyste (ModeleCommun modelecommun) {
 		anaMod = new AnalysteModele(modelecommun);
 		sondio = modelecommun.getSondio();
@@ -62,6 +92,9 @@ public class Analyste extends JPanel {
 		return anaModif;
 	}
 	
+	/**
+	   * Affiche le panel de base du module analyste
+	   */
 	public void afficherPanelBase(){
 		this.removeAll();
 		afficherPanelDuHaut ();
@@ -70,16 +103,25 @@ public class Analyste extends JPanel {
 		afficherPanelDroit();
 	}
 	
-	public void afficherPanelDroit(){
+	/**
+	   * Affiche le panel droit du panel de base du module analyste
+	   */
+	private void afficherPanelDroit(){
 		JLabel l1 = new JLabel("                              ");
 		this.add(l1, "East");
 	}
 	
-	public void afficherPanelGauche(){
+	/**
+	   * Affiche le panel gauche du panel de base du module analyste
+	   */
+	private void afficherPanelGauche(){
 		JLabel l2 = new JLabel("                              ");
 		this.add(l2, "West");
 	}
 	
+	/**
+	   * Affiche le panel du haut du module analyste
+	   */
 	public void afficherPanelDuHaut () {
 		JPanel panelduhaut = new JPanel(new BorderLayout());
 		this.add(panelduhaut, "North");
@@ -91,12 +133,13 @@ public class Analyste extends JPanel {
 			boiteImage.add(labelImage);
 			Icon source = new ImageIcon("analyste.png");
 			ImageIcon imageconnexion = new ImageIcon(((ImageIcon) source).getImage().getScaledInstance(250, 200, Image.SCALE_DEFAULT));
-			labelImage.setIcon(imageconnexion);	
-			
-			
+			labelImage.setIcon(imageconnexion);		
 	}
 	
-	public void afficherPanelCentre(){
+	/**
+	   * Affiche le panel du centre du panel de base du module analyste
+	   */
+	private void afficherPanelCentre(){
 		JPanel panelDuCentre = new JPanel();
 		panelDuCentre.setLayout(new BoxLayout(panelDuCentre,BoxLayout.Y_AXIS));
 		this.add(panelDuCentre, "Center");
@@ -143,7 +186,11 @@ public class Analyste extends JPanel {
 		
 	}
 	
-	public String[][] creationListeQuestionnaires(){
+	/**
+	   * créer la liste de l'id, du nom et du numéro client des questionnaires pret à être analysé
+	   * @return une Array d'Array (liste de liste) contenant l'id le nom et le numéro client de chaque questionnaire pret à etre analysé
+	   */
+	private String[][] creationListeQuestionnaires(){
 		ArrayList<Questionnaire> listeQuestionnaire = anaMod.getQuestionnaireFini();
 		String[][] values = new String[listeQuestionnaire.size()][3];
 		for (int i = 0; i< listeQuestionnaire.size(); i++){
@@ -155,6 +202,11 @@ public class Analyste extends JPanel {
 		return values;
 	}
 	
+	/**
+	   * créer un tableau de questionnaire pret à être analysé
+	   * @throws TableauVideExeption
+	   * @return un tableau de type JTable
+	   */
 	public JTable creationTableau() throws TableauVideExeption{
 		String[] ColumnNames = new String[]{"ID", "NOM QUESTIONNAIRE", "NUM CLIENT"};
 		String[][] values = creationListeQuestionnaires();
@@ -175,6 +227,9 @@ public class Analyste extends JPanel {
 		return tab;
 	}
 	
+	/**
+	   * affiche la deuxième vue qui permet d'analyser un questionnaire
+	   */
 	public void afficherAnalysteModification(){
 		this.removeAll();
 		anaModif  = new AnalysteModification(this);

@@ -12,15 +12,34 @@ import org.jfree.data.general.DefaultPieDataset;
 import BaseDeDonnees.Question;
 import ModuleAnalyste.Analyste;
 
+/**
+ * RegroupementController est une classe (controller) qui gère les boutons déroulant Regroupement
+ * @author Julien Revaud
+ *
+ */
+
 public class RegroupementController implements ActionListener {
 	
+	/**
+	 * La classe (vue) de base du module analyste
+	 */
 	private Analyste ana;
 	
+	/**
+	   * cré la classe controller
+	   * @param ana
+	   * 	 la classe analyste
+	   */
 	public RegroupementController(Analyste ana){
 		super();
 		this.ana = ana;
 	}
-
+	
+	/**
+	   * execute une instruction lorsqu'un des boutons Regroupement est activé
+	   * @param e
+	   * 	 l'ActioEvent qui permet de retrouver quel bouton a été activé
+	   */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		System.out.println(((JComboBox)arg0.getSource()).getSelectedItem());

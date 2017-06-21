@@ -7,15 +7,33 @@ import javax.swing.event.ChangeListener;
 
 import ModuleAnalyste.Analyste;
 
+/**
+ * TabbedController est une classe (controller) qui gère les Panels d'affichage des tableaux/Graphs
+ * @author Julien Revaud
+ *
+ */
+
 public class TabbedController implements ChangeListener {
 	
+	/**
+	 * La classe (vue) de base du module analyste
+	 */
 	private Analyste ana;
 	
+	/**
+	   * cré la classe controller
+	   * @param ana
+	   * 	 la classe analyste
+	   */
 	public TabbedController(Analyste ana) {
 		super();
 		this.ana = ana;
 	}
-
+	/**
+	   * execute une instruction sur le bouton Regroupement associé au panel lors du changement de graph
+	   * @param e
+	   * 	 l'ActioEvent qui permet de retrouver quel panel a été changé
+	   */
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
 		JTabbedPane tabGeneral = ((JTabbedPane)arg0.getSource());
