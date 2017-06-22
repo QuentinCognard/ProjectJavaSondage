@@ -2,6 +2,7 @@ package ModuleConcepteur;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -31,7 +32,7 @@ public class VueConcepteurReponseMultiple extends JPanel implements TypeReponse{
 		this.valider = new JButton("Valider");
 		this.valider.addActionListener(act);
 		this.haut.add(this.valider);
-		this.setPreferredSize(new Dimension(600,300));
+		this.setPreferredSize(new Dimension(600,235));
 		this.listeRep = new JPanel();
 		this.listeRep.setLayout(new BoxLayout(this.listeRep,BoxLayout.Y_AXIS));
 		this.reponse = new JScrollPane(this.listeRep);
@@ -47,6 +48,7 @@ public class VueConcepteurReponseMultiple extends JPanel implements TypeReponse{
 		this.haut.add(this.nbCocher);
 		this.haut.add(this.valider);
 		try{
+			Integer.parseInt(this.nbCocher.getJTextField().getText());
 			if (this.listeRep.getComponentCount()<Integer.parseInt(this.nb.getJTextField().getText())){
 				int a = this.listeRep.getComponentCount();
 				for (int i = 0;i<Integer.parseInt(this.nb.getJTextField().getText())-a; i++){
@@ -68,5 +70,17 @@ public class VueConcepteurReponseMultiple extends JPanel implements TypeReponse{
 	
 	public JButton getJButton(){
 		return this.valider;
+	}
+	
+	public int getNbMax(){
+		return Integer.parseInt(this.nbCocher.getJTextField().getText());
+	}
+	
+	public ArrayList<String> getReponse(){
+		ArrayList<String> res = new ArrayList<String>();
+		for (int i=0;i<this.listeRep.getComponents().length;i++){
+			res.add(((VuePanelTextAvecField) this.listeRep.getComponents()[i]).getJTextField().getText());
+		}
+		return res;
 	}
 }

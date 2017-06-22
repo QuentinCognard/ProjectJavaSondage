@@ -28,11 +28,13 @@ public class Concepteur extends JPanel {
 	private JPanel panelListeQuestionnaires;
 	private BDGeneral bdgeneral;
 	private BDModuleConcepteur bdConcepteur;
+	private ModeleCommun modeleC;
 	
 	
 	public Concepteur (ModeleCommun modele) {
 		super();
 		this.setLayout(new BorderLayout());
+		this.modeleC = modele;
 		this.bdgeneral = modele.getBdGeneral();
 		this.bdConcepteur = new BDModuleConcepteur(modele.getBdConnexion());
 		afficherPanelHaut(); 
@@ -135,7 +137,7 @@ public class Concepteur extends JPanel {
 	public void afficherCreerQuestionnaire(){
 		this.removeAll();
 		this.afficherPanelHaut();
-		this.creerQuestionnaire = new VueCreerQuestionnaire(this);
+		this.creerQuestionnaire = new VueCreerQuestionnaire(this,this.modeleC,this.bdConcepteur);
 		this.add(this.creerQuestionnaire,"Center");
 		this.validate();
 		this.repaint();

@@ -1,6 +1,7 @@
 package BaseDeDonnees;
 
 import java.sql.*;
+import java.util.ArrayList;
 /**
  * BDModuleConcepteur est une classe qui va regrouper les fonctions jdbc qui seront utilisées dans le module concepteur
  * @author nathan
@@ -273,6 +274,48 @@ public class BDModuleConcepteur {
 		
 		catch (SQLException e) {
 			
+		}
+	}
+	
+	/**
+	 * récupere la liste des Panel
+	 * @return la liste des Panel
+	 */
+	public ArrayList <Panel> getListePanel () {
+		ArrayList <Panel> listePanel = new ArrayList <Panel> ();
+		try {
+			String requete = "SELECT * FROM PANEL;";
+			ResultSet rs = this.st.executeQuery(requete);
+			while (rs.next()) {
+				Panel p = new Panel (rs.getInt("idPan"), rs.getString("nomPan"));
+				listePanel.add(p);
+			}
+			rs.close();
+			return listePanel;
+		}	  
+		catch (SQLException e) {
+			return listePanel;
+		}
+	}
+	/**
+	 * récupere la liste des Societes
+	 * @return la liste des societes
+	 */
+	public ArrayList <Client> getListeSociete () {
+		ArrayList <Client> listeSociete = new ArrayList <Client> ();
+		try {
+			String requete = "SELECT * FROM CLIENT;";
+			ResultSet rs = this.st.executeQuery(requete);
+			while (rs.next()) {
+				Client c = new Client (rs.getInt("numC"), rs.getString("raisonSoc"), rs.getString("adresse1"), rs.getString("adresse2"), rs.getInt("CodePostal"), rs.getString("Ville"), rs.getString("Telephone"), rs.getString("email"));
+				listeSociete.add(c);
+			}
+			rs.close();
+			return listeSociete;
+		}
+		catch (SQLException e) {
+			System.out.println("error");
+			return listeSociete;
 		}
 	}
 }
