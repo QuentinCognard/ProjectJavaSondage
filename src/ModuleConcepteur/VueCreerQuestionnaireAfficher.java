@@ -18,22 +18,21 @@ public class VueCreerQuestionnaireAfficher extends JPanel {
 	private String nom;
 	private String panel;
 	private String societe;
-	private String tauxReponse;
-	ArrayList<AjouterQuestion> ajouterQuestion;
+	ArrayList<CreationQuestion> ajouterQuestion;
 	private JLabel JLid;
 	private JLabel JLnom;
 	private JLabel JLpanel;
 	private JLabel JLsociete;
-	private JLabel JLtaux;
 	private JPanel listeQuestions;
+	private VueCreerQuestionnaire vue;
 	
-	VueCreerQuestionnaireAfficher(){
+	VueCreerQuestionnaireAfficher(VueCreerQuestionnaire vue){
+		this.vue = vue;
 		this.id = 0;
 		this.nom = "";
 		this.panel = "";
 		this.societe = "";
-		this.tauxReponse = "";
-		this.ajouterQuestion = new ArrayList<AjouterQuestion>();
+		this.ajouterQuestion = new ArrayList<CreationQuestion>();
 		panelCentral();
 	}
 	
@@ -57,13 +56,8 @@ public class VueCreerQuestionnaireAfficher extends JPanel {
 		JLsociete.setText("Société concernée : "+this.societe);
 	}
 
-	public void setTaux(String taux){
-		this.tauxReponse = taux;
-		JLtaux.setText("Taux de réponses minimum : "+this.tauxReponse);
-	}
 	
-	public void ajouterQuestion(String in,ArrayList<String> lis){
-		AjouterQuestion q = new AjouterQuestion(in,lis);
+	public void ajouterQuestion(CreationQuestion q){
 		this.ajouterQuestion.add(q);
 		listeQuestions.add(creerQuestion(q.getIntitule()));
 	}
@@ -90,14 +84,10 @@ public class VueCreerQuestionnaireAfficher extends JPanel {
 		JLsociete = new JLabel("Société concernée : "+this.societe);
 		JLsociete.setBorder(new EmptyBorder(20,30,20,10));
 		JLsociete.setFont(police);
-		JLtaux = new JLabel("Taux de réponses minimum : "+this.tauxReponse);
-		JLtaux.setBorder(new EmptyBorder(20,30,20,10));
-		JLtaux.setFont(police);
 		panelInfos.add(JLid);
 		panelInfos.add(JLnom);
 		panelInfos.add(JLpanel);
 		panelInfos.add(JLsociete);
-		panelInfos.add(JLtaux);
 		this.add(panelInfos,"West");
 		
 		
@@ -118,7 +108,7 @@ public class VueCreerQuestionnaireAfficher extends JPanel {
 		listeQuestions.setLayout(new BoxLayout(listeQuestions,BoxLayout.Y_AXIS));
 		panelListeQuestions.add(listeQuestions);
 		JScrollPane scrollQuestions = new JScrollPane(panelListeQuestions);
-		scrollQuestions.setPreferredSize(getPreferredSize());
+		scrollQuestions.setPreferredSize(new Dimension(320,250));
 		panelQuestionsBorder.add(titrePanelQuestions);
 		panelQuestionsBorder.add(scrollQuestions);
 		panelQuestionsBorder.setBorder(BorderFactory.createLineBorder(Color.black));

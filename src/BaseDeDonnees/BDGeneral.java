@@ -110,7 +110,7 @@ public class BDGeneral {
    */
   public Panel getPanelDuQuestionnaireX (int idQuestionnaire) {
 	  try {
-		  String requete = "SELECT * FROM PANEL WHERE idPan IN (SELECT idPan FROM QUESTIONNAIRE WHERE idQ = "+idQuestionnaire+";";
+		  String requete = "SELECT * FROM PANEL WHERE idPan IN (SELECT idPan FROM QUESTIONNAIRE WHERE idQ = "+idQuestionnaire+");";
 		  ResultSet rs = this.st.executeQuery(requete);
 		  rs.next();
 		  return new Panel (rs.getInt("idPan"), rs.getString("nomPan"));

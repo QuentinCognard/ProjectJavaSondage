@@ -145,6 +145,27 @@ public class BDModuleAnalyste {
 	}
 	
 	/**
+	 * Retourne la liste des tranches d'ages presentes selon l'id d'un questionnaire
+	 * @param idQuestionnaire
+	 * @see Tranche
+	 * @return une ArrayList de Tranche
+	 */
+	public int getNbPersPanel (Panel panel) {
+		int nbPers = 0;
+		try {
+			String requete = "SELECT count(numSond) nb FROM SONDE natural join CONSTITUER WHERE idPan = "+panel.getIdentifiantPanel();
+			ResultSet rs = this.st.executeQuery(requete);
+			rs.next();
+			nbPers = rs.getInt("nb");
+		}
+		
+		catch (SQLException e) {
+			
+		}
+		return nbPers;
+	}
+	
+	/**
 	 * Retourne la liste du nombre de personne aillant répondu une telle réponse et appartenant à une telle tranche
 	 * @param idQuestionnaire
 	 * 		id du questionnaire
@@ -156,7 +177,7 @@ public class BDModuleAnalyste {
 	 * 		la liste des réponses
 	 * @return une ArrayList de int
 	 */
-	public ArrayList<Integer> getNbPersParReponseParTranche (int idQuestionnaire,int numQuest, Tranche tr, ArrayList<String> listeRep) {//ATTENTION : la liste des réponses contient à l'incide 0 le nom de la 1ère colonne: "Regrpmt/rep"
+	public ArrayList<Integer> getNbPersParReponseParTranche (int idQuestionnaire,int numQuest, Tranche tr, ArrayList<String> listeRep) {
 		ArrayList<Integer> listeNbRepParTranche = new ArrayList<Integer>();
 		for (int i =0; i<listeRep.size(); i++)
 		{
@@ -172,6 +193,66 @@ public class BDModuleAnalyste {
 			}
 		}
 			return listeNbRepParTranche;
+		}
+	
+	/**
+	 * Retourne la liste du nombre de personne aillant répondu une telle réponse et appartenant à une telle catégorie
+	 * @param idQuestionnaire
+	 * 		id du questionnaire
+	 * @param numQuest
+	 * 		numéro de la question
+	 * @param cat
+	 * 		catégorie sociale choisi
+	 * @param listeRep
+	 * 		la liste des réponses
+	 * @return une ArrayList de int
+	 */
+	public ArrayList<Integer> getNbPersParReponseParCategorie (int idQuestionnaire,int numQuest, Categorie cat, ArrayList<String> listeRep) {
+		ArrayList<Integer> listeNbRepParCategorie = new ArrayList<Integer>();
+		for (int i =0; i<listeRep.size(); i++)
+		{
+			try{
+				String requete = "SELECT count(valeur) nb FROM REPONDRE natural join CARACTERISTIQUE natural join CATEGORIE WHERE idQ = "+idQuestionnaire+" and numQ = "+numQuest+" and valeur = '"+listeRep.get(i)+"' and idCat = "+cat.getIdCategorie();
+				System.out.println(requete);
+				ResultSet rs = this.st.executeQuery(requete);  
+				rs.next();
+				listeNbRepParCategorie.add(rs.getInt("nb"));
+			}
+			catch (SQLException e){
+				System.out.println("Erreur lors de l'obtention du nombre de personne par tranche d'age par reponse : " + e.getMessage());
+			}
+		}
+			return listeNbRepParCategorie;
+		}
+	
+	/**
+	 * Retourne la liste du nombre de personne aillant répondu une telle réponse (utile pour les pieChart)
+	 * @param idQuestionnaire
+	 * 		id du questionnaire
+	 * @param numQuest
+	 * 		numéro de la question
+	 * @param cat
+	 * 		catégorie sociale choisi
+	 * @param listeRep
+	 * 		la liste des réponses
+	 * @return une ArrayList de int
+	 */
+	public ArrayList<Integer> getNbPersParReponse (int idQuestionnaire,int numQuest, ArrayList<String> listeRep) {
+		ArrayList<Integer> listeNbRepParCategorie = new ArrayList<Integer>();
+		for (int i =0; i<listeRep.size(); i++)
+		{
+			try{
+				String requete = "SELECT count(valeur) nb FROM REPONDRE WHERE idQ = "+idQuestionnaire+" and numQ = "+numQuest+" and valeur = '"+listeRep.get(i) +"'";
+				System.out.println(requete);
+				ResultSet rs = this.st.executeQuery(requete);  
+				rs.next();
+				listeNbRepParCategorie.add(rs.getInt("nb"));
+			}
+			catch (SQLException e){
+				System.out.println("Erreur lors de l'obtention du nombre de personne par tranche d'age par reponse : " + e.getMessage());
+			}
+		}
+			return listeNbRepParCategorie;
 		}
 	
 }

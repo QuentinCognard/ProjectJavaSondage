@@ -2,6 +2,7 @@ package ModuleConcepteur;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -20,23 +21,33 @@ public class VuePanelCreerQuestion extends JPanel {
 	VueConcepteurReponseNote note;
 	VueConcepteurReponseLibre libre;
 	VueCreerQuestionnaire vue;
+	CreationQuestion question;
 	
 	VuePanelCreerQuestion(VueCreerQuestionnaire vue){
 		super();
-		this.setPreferredSize(new Dimension(600,450));
+		this.setPreferredSize(new Dimension(600,400));
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+		
+		this.vue = vue;
+		this.question = new CreationQuestion(this.vue.getQuestionnaire().getIdQuestionnaire());
+		
 		this.panelTitre = new JPanel();
 		this.reponse = new JPanel();
 		this.reponse.add(new VueConcepteurReponseLibre());
-		this.reponse.setPreferredSize(new Dimension(600,300));
-		this.vue = vue;
+		this.reponse.setPreferredSize(new Dimension(600,250));
+		
+		
 		init();
 		initVueReponse();
 	}
 	
 	private void init(){
-		this.add(new JLabel("Ajouter question"));
+		
+		JLabel label = new JLabel("Ajouter question");
+		label.setFont(new Font("Calibri", Font.BOLD, 25));
+		this.add(label);
+		
 		this.panelTitre.add(new VuePanelTextAvecField("Intitulé question",30));
 		ActionRadioBouton act = new ActionRadioBouton(this);
 		JRadioButton r1 = new JRadioButton("Choix simple");
@@ -82,6 +93,7 @@ public class VuePanelCreerQuestion extends JPanel {
 	
 	
 	public void afficherSimple(){
+		this.question.setTypeQuestion('u');
 		this.reponse.removeAll();
 		this.reponse.add(this.simple);
 		this.validate();
@@ -89,6 +101,7 @@ public class VuePanelCreerQuestion extends JPanel {
 	}
 	
 	public void afficherMultiple(){
+		this.question.setTypeQuestion('m');
 		this.reponse.removeAll();
 		this.reponse.add(this.multiple);
 		this.validate();
@@ -96,6 +109,7 @@ public class VuePanelCreerQuestion extends JPanel {
 	}
 
 	public void afficherClassement(){
+		this.question.setTypeQuestion('c');
 		this.reponse.removeAll();
 		this.reponse.add(this.classement);
 		this.validate();
@@ -103,6 +117,7 @@ public class VuePanelCreerQuestion extends JPanel {
 	}
 	
 	public void afficherNote(){
+		this.question.setTypeQuestion('n');
 		this.reponse.removeAll();
 		this.reponse.add(this.note);
 		this.validate();
@@ -110,9 +125,42 @@ public class VuePanelCreerQuestion extends JPanel {
 	}
 	
 	public void afficherLibre(){
+		this.question.setTypeQuestion('l');
 		this.reponse.removeAll();
 		this.reponse.add(this.libre);
 		this.validate();
 		this.repaint();
+	}
+	
+	public void majQuestion(){
+		this.question.setIntitule(((VuePanelTextAvecField) this.panelTitre.getComponents()[0]).getJTextField().getText());
+		switch (this.question.getTypeQuestion()){
+		case 'l': 
+			break;
+		case 'u': 
+			for (String s:((TypeReponse) this.reponse.getComponents()[0]).getReponse()){
+				this.question.addReponse(s);
+			}
+			break;
+		case 'm': 
+			for (String s:((TypeReponse) this.reponse.getComponents()[0]).getReponse()){
+				this.question.addReponse(s);
+			}
+			this.question.setMaxValeur(((TypeReponse) this.reponse.getComponents()[0]).getNbMax());
+			break;
+		case 'c': 
+			for (String s:((TypeReponse) this.reponse.getComponents()[0]).getReponse()){
+				this.question.addReponse(s);
+			}
+			this.question.setMaxValeur(((TypeReponse) this.reponse.getComponents()[0]).getNbMax());
+			break;
+		case 'n': 
+			this.question.setMaxValeur(((TypeReponse) this.reponse.getComponents()[0]).getNbMax());
+			break;
+		}
+	}
+	
+	public CreationQuestion getQuestion(){
+		return this.question;
 	}
 }

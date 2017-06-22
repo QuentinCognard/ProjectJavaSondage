@@ -5,6 +5,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -22,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -93,6 +96,14 @@ public class AnalysteModification {
 		return false;
 	}
 	
+	public ArrayList<JTabbedPane> getListePGraphs(){
+		return listepGraphs;
+	}
+	
+	public JTextArea getFieldCommentaireFinal(){
+		return fieldCommentaireFinal;
+	}
+	
 	public ArrayList<JComboBox<String>> getListeBoutonsRegroupement(){
 		return listeBoutonsRegroupement;
 	}
@@ -131,13 +142,13 @@ public class AnalysteModification {
 		JPanel pBouttonAnnuleSave = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		pGeneDroit.add(pBouttonAnnuleSave,"South");
 		
-		JButton annule = new JButton("Annuler");
+		/*JButton annule = new JButton("Annuler");
 		annule.addActionListener(mc);
 		pBouttonAnnuleSave.add(annule);
 		
 		JButton save = new JButton("Enregistrer");
 		save.addActionListener(mc);
-		pBouttonAnnuleSave.add(save);
+		pBouttonAnnuleSave.add(save);*/
 		
 		afficherPanelDeconnexion(pGeneDroit);
 	}

@@ -3,6 +3,8 @@ package ModuleAnalyste.AnalysteController;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -72,7 +74,15 @@ public class ModifController implements ActionListener {
 				if (confirmation == JFileChooser.APPROVE_OPTION)
 				{
 					System.out.println(chooseSave.getSelectedFile().getAbsolutePath());
-					ana.getModeleAnalyste().createPDF(chooseSave.getSelectedFile().getAbsolutePath()+".pdf");
+					try {
+						ana.getModeleAnalyste().createPDF(chooseSave.getSelectedFile().getAbsolutePath()+".pdf", ana.getAnalysteModification().getListePGraphs(),ana.getAnalysteModification().getFieldCommentaireFinal().getText());
+					} catch (MalformedURLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 			else{
@@ -82,7 +92,7 @@ public class ModifController implements ActionListener {
 		}
 		else if (((JButton)e.getSource()).getText().equals("Se deconnecter")){
 			System.out.println("DECONNEXION");
-			ana.getModeleAnalyste().deconnexion(ana.getSondio());
+			ana.getModeleAnalyste().deconnexion();
 			//TODO:Revient � l'�cran de connexion AVEC un message si le Travail non enregistr�
 		}
 		

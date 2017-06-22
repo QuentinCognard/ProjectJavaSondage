@@ -1,7 +1,10 @@
 package ModuleConcepteur;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
+import BaseDeDonnees.*;
+import Commun.ModeleCommun;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -21,15 +24,29 @@ public class VueCreerQuestionnaire extends JPanel{
 	JButton terminer;
 	JButton ajouter;
 	int page;
-	QuestionnnaireMethode questionnaire;
+	ArrayList<CreationQuestion> listeQuestion;
+	Questionnaire questionnaire;
+	ModeleCommun modeleC;
+	BDModuleConcepteur bdC;
 	
-	public VueCreerQuestionnaire(Concepteur concepteur){
+	public VueCreerQuestionnaire(Concepteur concepteur,ModeleCommun modele,BDModuleConcepteur bdC){
 		super();
 		this.page = 1;
-		this.questionnaire = new QuestionnnaireMethode();
+		this.bdC = bdC;
+		this.modeleC = modele;
+		
+		int id = this.bdC.maxIdentifiantQuestionnaire()+1;
+		int idUtil = this.modeleC.getUser().getIdentifiantUtilisateur();
+		this.questionnaire = new Questionnaire(id,"",'C',0,idUtil,0);
+		
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-		this.add(new JLabel("Création du questionnaire"));
+
+		JLabel label = new JLabel("Création du questionnaire");
+		label.setFont(new Font("Calibri", Font.BOLD, 40));
+		this.add(label);
+		
 		this.concepteur = concepteur;
+		
 		this.suivant = new JButton("Suivant");
 		this.annuler = new JButton("Annuler");
 		this.afficher = new JButton("Afficher les questions");
@@ -48,11 +65,13 @@ public class VueCreerQuestionnaire extends JPanel{
 		panelAjouterQuestion();
 		
 		panelAfficherQuestionnaire();
+		
+		this.listeQuestion = new ArrayList<CreationQuestion>();
 	}
 	
 	
 	private void panelInfoQuestionnaire(){
-		this.panelInfo.add(new VuePanelCreerInfoQuestionnaire());
+		this.panelInfo.add(new VuePanelCreerInfoQuestionnaire(this.bdC));
 		this.add(this.panelInfo);
 		
 	}
@@ -69,9 +88,6 @@ public class VueCreerQuestionnaire extends JPanel{
 		this.add(this.bouton);
 	}
 	
-	public void ajouterQuestion(){
-		
-	}
 	
 	private void panelAjouterQuestion(){
 		VuePanelCreerQuestion vue = new VuePanelCreerQuestion(this);
@@ -79,16 +95,19 @@ public class VueCreerQuestionnaire extends JPanel{
 	}
 	
 	private void panelAfficherQuestionnaire(){
-		this.panelAfficherQuestion.add(new VueCreerQuestionnaireAfficher());
+		VueCreerQuestionnaireAfficher vue = new VueCreerQuestionnaireAfficher(this);
+		this.panelAfficherQuestion.add(vue);
 	}
 	
+	
 	public void afficherAjouterQuestion(){
-		this.questionnaire.setTitre(((VuePanelCreerInfoQuestionnaire) this.panelInfo.getComponents()[0]).getInfo().get(0));
-		this.questionnaire.setPanel(((VuePanelCreerInfoQuestionnaire) this.panelInfo.getComponents()[0]).getInfo().get(2));
-		this.questionnaire.setSociete(((VuePanelCreerInfoQuestionnaire) this.panelInfo.getComponents()[0]).getInfo().get(1));
-		this.questionnaire.setTaux(((VuePanelCreerInfoQuestionnaire) this.panelInfo.getComponents()[0]).getInfo().get(3));
+		this.questionnaire.setTitreQuestionnaire(((VuePanelCreerInfoQuestionnaire) this.panelInfo.getComponents()[0]).getTitre());
+		this.questionnaire.setIdentifiantPanel(((VuePanelCreerInfoQuestionnaire) this.panelInfo.getComponents()[0]).getPanel().getIdentifiantPanel());
+		this.questionnaire.setNumClient(((VuePanelCreerInfoQuestionnaire) this.panelInfo.getComponents()[0]).getClient().getNumeroClient());
 		this.removeAll();
-		this.add(new JLabel("Création du questionnaire"));
+		JLabel label = new JLabel("Création du questionnaire");
+		label.setFont(new Font("Calibri", Font.BOLD, 40));
+		this.add(label);
 		this.add(this.panelAddQuestion);
 		majBoutonCreerQuestion();
 		this.validate();
@@ -101,7 +120,9 @@ public class VueCreerQuestionnaire extends JPanel{
 			this.concepteur.afficherConcepteur();
 		}else if (this.page==2){
 			this.removeAll();
-			this.add(new JLabel("Création du questionnaire"));
+			JLabel label = new JLabel("Création du questionnaire");
+			label.setFont(new Font("Calibri", Font.BOLD, 40));
+			this.add(label);
 			this.add(this.panelInfo);
 			majBoutonInfo();
 			this.page = 1;
@@ -111,14 +132,17 @@ public class VueCreerQuestionnaire extends JPanel{
 	}
 	
 	public void afficherQuestionnaire(){
-		((VueCreerQuestionnaireAfficher) this.panelAfficherQuestion.getComponents()[0]).setId(0);
-		((VueCreerQuestionnaireAfficher) this.panelAfficherQuestion.getComponents()[0]).setNom(this.questionnaire.getTitre());
-		((VueCreerQuestionnaireAfficher) this.panelAfficherQuestion.getComponents()[0]).setSociete(this.questionnaire.getSociete());
-		((VueCreerQuestionnaireAfficher) this.panelAfficherQuestion.getComponents()[0]).setPanel(this.questionnaire.getPanel());
-		((VueCreerQuestionnaireAfficher) this.panelAfficherQuestion.getComponents()[0]).setTaux(this.questionnaire.getTaux());
+		((VueCreerQuestionnaireAfficher) this.panelAfficherQuestion.getComponents()[0]).setId(this.questionnaire.getIdQuestionnaire());
+		((VueCreerQuestionnaireAfficher) this.panelAfficherQuestion.getComponents()[0]).setNom(this.questionnaire.getTitreQuestionnaire());
+		((VueCreerQuestionnaireAfficher) this.panelAfficherQuestion.getComponents()[0]).setSociete(((VuePanelCreerInfoQuestionnaire) this.panelInfo.getComponents()[0]).getClient().getRaisonSociale());
+		((VueCreerQuestionnaireAfficher) this.panelAfficherQuestion.getComponents()[0]).setPanel(((VuePanelCreerInfoQuestionnaire) this.panelInfo.getComponents()[0]).getPanel().getNomPanel());
 		this.removeAll();
-		this.add(new JLabel("Création du questionnaire"));
-		this.add(new JLabel("Afficher les questions"));
+		JLabel label = new JLabel("Création du questionnaire");
+		label.setFont(new Font("Calibri", Font.BOLD, 40));
+		this.add(label);
+		JLabel label2 = new JLabel("Afficher les questions");
+		label2.setFont(new Font("Calibri", Font.BOLD, 25));
+		this.add(label2);
 		this.add(this.panelAfficherQuestion);
 		majBoutonAfficher();
 		this.validate();
@@ -127,13 +151,34 @@ public class VueCreerQuestionnaire extends JPanel{
 	}
 	
 	public void ajouterQuestionQuestionnaire(){
-		ArrayList<String> liste = new ArrayList<String>();
-		liste.add("reponse");
-		this.questionnaire.ajouterQuestion("coucou",liste);
-		((VueCreerQuestionnaireAfficher) this.panelAfficherQuestion.getComponents()[0]).ajouterQuestion("coucou",liste);
+		((VuePanelCreerQuestion) this.panelAddQuestion.getComponents()[0]).majQuestion();
+		((VueCreerQuestionnaireAfficher) this.panelAfficherQuestion.getComponents()[0]).ajouterQuestion(((VuePanelCreerQuestion) this.panelAddQuestion.getComponents()[0]).getQuestion());
+		this.listeQuestion.add(((VuePanelCreerQuestion) this.panelAddQuestion.getComponents()[0]).getQuestion());
 		this.panelAddQuestion.removeAll();
 		panelAjouterQuestion();
 		afficherAjouterQuestion();
+	}
+	
+	public void enregistrerQuestionnaire(){
+		int i = 1;
+		this.bdC.insererQuestionnaire(this.questionnaire);
+		for (CreationQuestion q:this.listeQuestion){
+			q.setNumQuestion(i);
+			i+=1;
+			this.bdC.insererQuestion(q.getQuestion());
+			for (ValeurPossible r:q.getReponse()){
+				this.bdC.insererValeurPossible(r);
+			}
+		}
+		this.concepteur.afficherConcepteur();
+	}
+	
+	public Questionnaire getQuestionnaire(){
+		return this.questionnaire;
+	}
+	
+	public ArrayList<CreationQuestion> getListeQuestion(){
+		return this.listeQuestion;
 	}
 	
 	public void majBoutonCreerQuestion(){
