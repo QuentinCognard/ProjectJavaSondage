@@ -1,15 +1,34 @@
 package ModuleAnalyste;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
+
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.ChartPanel;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.property.TextAlignment;
+
 import BaseDeDonnees.BDGeneral;
 import BaseDeDonnees.BDModuleAnalyste;
 import BaseDeDonnees.Categorie;
@@ -218,8 +237,46 @@ public class AnalysteModele {
 		return null;
 	}
 	
-	public void createPDF(String dest){
+	public void createPDF(String dest, ArrayList<JTabbedPane> listepGraphs, String commentaireFinal) throws MalformedURLException, FileNotFoundException{
 		//TODO: crée pdf et le renvoie pour enregistrement
+		//Initialize PDF writer
+        PdfWriter writer = new PdfWriter(dest);
+ 
+        //Initialize PDF document
+        PdfDocument pdf = new PdfDocument(writer);
+ 
+        // Initialize document
+        Document document = new Document(pdf);
+        
+        //Add paragraph HEADER to the document
+        document.add(new Paragraph("ref 15789\nNom de la société\n1 rue de la merde\n4800 St Jean de Braye\ntel : 02 38 56 98 78\nemail : truc@gmail.com\n\n\n"));
+        
+        // Add a Paragraph TITLE
+        document.add(new Paragraph("Questionnaire n°1547 : Des gouts et des couleurs").setFontSize(18).setTextAlignment(TextAlignment.CENTER));
+		for (int i=0; i < listeQuestions.size(); i++)
+		{
+			// Add a Paragraph NAME QUESTION
+	        document.add(new Paragraph("Question n°"+listeQuestions.get(i).getNumeroQuestion()+": "+listeQuestions.get(i).getTexteQuestion()).setFontSize(14).setTextAlignment(TextAlignment.LEFT));
+	        
+	        //Add the CHART
+	        String destChart = "./temp/temp.png";
+	        File f = new File(destChart);
+	        try {
+	        	JFreeChart chart = ((ChartPanel)listepGraphs.get(i).getSelectedComponent()).getChart();
+				ChartUtilities.saveChartAsPNG(f,chart,250,250);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	        document.add(new Image(ImageDataFactory.create(destChart)));
+	        
+	        // Add a Paragraph COMMENT
+	        document.add(new Paragraph("Commentaire :\nTRUC a changer").setFontSize(12).setTextAlignment(TextAlignment.LEFT));//TODO: rajouter une liste dans analysteModification qui garde en memoir le commentaire de chaque question 
+		}
+		// Add a Paragraph COMMENT
+        document.add(new Paragraph("Commentaire Global :\n"+commentaireFinal).setFontSize(12).setTextAlignment(TextAlignment.LEFT));
+        
+      //Close document
+        document.close();
 	}
 	
 	/**

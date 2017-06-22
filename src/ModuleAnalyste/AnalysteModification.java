@@ -5,6 +5,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -22,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -91,6 +94,14 @@ public class AnalysteModification {
 		if (!fieldCommentaireFinal.getText().equals(""))
 			return true;
 		return false;
+	}
+	
+	public ArrayList<JTabbedPane> getListePGraphs(){
+		return listepGraphs;
+	}
+	
+	public JTextArea getFieldCommentaireFinal(){
+		return fieldCommentaireFinal;
 	}
 	
 	public ArrayList<JComboBox<String>> getListeBoutonsRegroupement(){
