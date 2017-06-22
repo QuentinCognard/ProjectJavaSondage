@@ -25,7 +25,11 @@ public class ControleurClassement implements ActionListener {
 	private ArrayList<Question> listeQuest;
 	
 	private ArrayList<String> listeclassee;
-	
+	/**
+ 	*Controlleur pour la vue Classement
+	*@param vueClassement
+		*La vue que l'on va utiliser pour ce controleur
+	*/	
 	public ControleurClassement(Vue_Classement vueClassement){
 		this.vueClassement=vueClassement;
 		this.s=vueClassement.s;
@@ -62,6 +66,7 @@ public class ControleurClassement implements ActionListener {
 		
 		else if (((JButton)e.getSource()).getText().equals("Valider sondage")){
 			vueClassement.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueClassement.quest.getNumeroQuestion(), val);
+			vueClassement.modrep.validerQuestionnaire();
 			vueClassement.modrep.bdsond.setSondeInterroger(questionnaire,lesonde);
 			this.s.afficherFenetrePrinc();
 

@@ -18,6 +18,18 @@ public class ControleurPrinc implements ActionListener {
 	private BDModuleSondeur bdSond;
 	private Sondeur s;
 	private int i;
+
+	/**
+ 	*Controlleur général pour les vues
+	*@param vueFenetrePrinc
+		*La fenetre principale sur laquelle on va greffer toutes les vues
+	*@param questionnaire
+		*Le questionnaire selectionner pour ce sondage
+	*@param laBD
+		*Base de données utilisée
+	*@param bdSond
+		*La base de données des sondeurs
+	*/
 	
 	public ControleurPrinc(Vue_FenetrPrinc vueFenetrePrinc,Questionnaire questionnaire,BDGeneral laBD,BDModuleSondeur bdSond){
 		super();

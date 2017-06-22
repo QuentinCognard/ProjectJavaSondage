@@ -20,7 +20,11 @@ public class ControleurEchelle implements ActionListener {
 	private Sondeur s;
 
 	private ArrayList<Question> listeQuest;
-
+	/**
+ 	*Controlleur pour la vue Echelle
+	*@param vueEchelle
+		*La vue que l'on va utiliser pour ce controleur
+	*/
 	
 	public ControleurEchelle(Vue_Echelle vueEchelle){
 		this.vueEchelle=vueEchelle;
@@ -54,6 +58,8 @@ public class ControleurEchelle implements ActionListener {
 		
 		else if (((JButton)e.getSource()).getText().equals("Valider sondage")){
 			vueEchelle.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueEchelle.quest.getNumeroQuestion(), val);
+			vueEchelle.modrep.validerQuestionnaire();
+
 			vueEchelle.modrep.bdsond.setSondeInterroger(questionnaire,lesonde);
 			this.s.afficherFenetrePrinc();
 

@@ -25,6 +25,11 @@ public class Contr_Unique implements ActionListener {
 
 	private ArrayList<Question> listeQuest;
 
+	/**
+ 	*Controlleur pour la vue Choix Unique
+	*@param vueUnique
+		*La vue que l'on va utiliser pour ce controleur
+	*/
 	
 	public Contr_Unique(Vue_Unique vueUnique){
 		this.vueUnique=vueUnique;
@@ -59,6 +64,8 @@ public class Contr_Unique implements ActionListener {
 		
 		else if (((JButton)e.getSource()).getText().equals("Valider sondage")){
 			vueUnique.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueUnique.quest.getNumeroQuestion(), val);
+
+			vueUnique.modrep.validerQuestionnaire();
 			vueUnique.modrep.bdsond.setSondeInterroger(questionnaire,lesonde);
 			this.s.afficherFenetrePrinc();
 
