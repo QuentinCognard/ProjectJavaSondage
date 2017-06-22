@@ -169,7 +169,7 @@ public class Concepteur extends JPanel {
 	public void afficherAjouterQuestion(AffichageQuestionnaire vue, Questionnaire q){
 		this.removeAll();
 		afficherPanelHaut();
-		this.add(new VueAjouterQuestion(this,vue,q),"Center");
+		this.add(new VueAjouterQuestion(this,vue,q,this.bdConcepteur),"Center");
 		this.validate();
 		this.repaint();
 	}
