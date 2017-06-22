@@ -40,6 +40,19 @@ public class Vue_Libre extends JPanel{
 	Sondeur s;
 	JButton [] lesboutons;
 
+	/**
+	 * 
+	 * @param sondeur
+	 	* Le sondeur actuel
+	 * @param lesonde
+	 	* Le sonde actuel
+	 * @param quest
+	 	* La question actuel
+	 * @param questnaire
+	 	* Le questionnaire actuel
+	 * @param modrep
+	 	* Le modele de reponse
+	 */
 
 	public Vue_Libre(Sondeur sondeur,Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
 		super();
@@ -54,7 +67,9 @@ public class Vue_Libre extends JPanel{
 		afficherLibre();
 	}
 	
-
+	/**
+	 * affiche la question
+	 */
 	public void afficherLibre () {
 				
 		JPanel panelPrincipal = new JPanel();
@@ -141,7 +156,7 @@ public class Vue_Libre extends JPanel{
 		for (Question q : modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()) ){
 			
 			lesboutons[q.getNumeroQuestion()-1]=new JButton(String.valueOf(q.getNumeroQuestion()));
-			if (q.getNumeroQuestion() > quest.getNumeroQuestion()){
+			if (q.getNumeroQuestion() > modrep.listerep.size()+1 ){
 				lesboutons[q.getNumeroQuestion()-1].setEnabled(false);
 			}
 			lesboutons[q.getNumeroQuestion()-1].addActionListener(new Contr_Libre(this));
@@ -179,6 +194,13 @@ public class Vue_Libre extends JPanel{
 		}
 		
 		else {
+			
+			if (modrep.listerep.size()>=modrep.listeQuestion.size()){
+				JButton btnValide = new JButton("Valider sondage");
+				btnValide.addActionListener(new Contr_Libre(this));
+				panelValid.add(btnValide);
+			}
+			
 			JButton btnPrecedent = new JButton("Precedent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new Contr_Libre(this));
@@ -189,6 +211,7 @@ public class Vue_Libre extends JPanel{
 			btnSuivant.addActionListener(new Contr_Libre(this));
 			panelNavi.add(btnSuivant);
 		}
+		System.out.println(modrep.listerep.size());
 
 	}
 

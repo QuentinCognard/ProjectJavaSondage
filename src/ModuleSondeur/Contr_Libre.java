@@ -22,7 +22,11 @@ public class Contr_Libre implements ActionListener{
 
 	
 	private ArrayList<Question> listeQuest;
-
+	/**
+ 	*Controlleur pour la vue Libre
+	*@param vueLibre
+		*La vue que l'on va utiliser pour ce controleur
+	*/
 	
 	Contr_Libre(Vue_Libre vueLibre){
 		this.vueLibre=vueLibre;
@@ -53,8 +57,9 @@ public void actionPerformed(ActionEvent e) {
 		}
 		
 		else if (((JButton)e.getSource()).getText().equals("Valider sondage")){
-			
-			vueLibre.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueLibre.quest.getNumeroQuestion(),  val);
+			vueLibre.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueLibre.quest.getNumeroQuestion(), val);
+
+			vueLibre.modrep.validerQuestionnaire();
 			vueLibre.modrep.bdsond.setSondeInterroger(questionnaire,lesonde);
 			this.s.afficherFenetrePrinc();
 

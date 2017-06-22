@@ -36,7 +36,19 @@ public class Vue_ChoixMultiples extends JPanel {
 	
 	JButton [] lesboutons;
 
-	
+	/**
+	 * 
+	 * @param sondeur
+	 	* Le sondeur actuel
+	 * @param lesonde
+	 	* Le sonde actuel
+	 * @param quest
+	 	* La question actuel
+	 * @param questnaire
+	 	* Le questionnaire actuel
+	 * @param modrep
+	 	* Le modele de reponse
+	 */
 	
 	public Vue_ChoixMultiples (Sondeur sondeur,Sonde lesonde,Question quest,Questionnaire questnaire,ModeleReponse modrep) {
 		super();
@@ -54,7 +66,9 @@ public class Vue_ChoixMultiples extends JPanel {
 		afficherChoixMultiples();
 	}
 	
-
+	/**
+	 * Affiche la question
+	 */
 	public void afficherChoixMultiples(){
 		
 		JPanel panelPrincipal = new JPanel();
@@ -131,7 +145,7 @@ public class Vue_ChoixMultiples extends JPanel {
 		for (Question q : modrep.bdgene.getListeQuestion(questnaire.getIdQuestionnaire()) ){
 			
 			lesboutons[q.getNumeroQuestion()-1]=new JButton(String.valueOf(q.getNumeroQuestion()));
-			if (q.getNumeroQuestion() > quest.getNumeroQuestion()){
+			if (q.getNumeroQuestion() > modrep.listerep.size()+1 ){
 				lesboutons[q.getNumeroQuestion()-1].setEnabled(false);
 			}
 			lesboutons[q.getNumeroQuestion()-1].addActionListener(new ControleurChoixMultiples(this));
@@ -170,6 +184,13 @@ public class Vue_ChoixMultiples extends JPanel {
 		}
 		
 		else {
+			
+			if (modrep.listerep.size()>=modrep.listeQuestion.size()){
+				JButton btnValide = new JButton("Valider sondage");
+				btnValide.addActionListener(new ControleurChoixMultiples(this));
+				panelValid.add(btnValide);
+			}
+			
 			JButton btnPrecedent = new JButton("Precedent");
 			btnPrecedent.setAlignmentX(Component.CENTER_ALIGNMENT);
 			btnPrecedent.addActionListener(new ControleurChoixMultiples(this));
@@ -181,6 +202,7 @@ public class Vue_ChoixMultiples extends JPanel {
 			panelNavi.add(btnSuivant);
 		}	
 		
+		System.out.println(modrep.listerep.size());
 
 }
 

@@ -24,7 +24,11 @@ public class ControleurChoixMultiples implements ActionListener {
 	private Sondeur s;
 
 	private ArrayList<Question> listeQuest;
-
+	/**
+ 	*Controlleur pour la vue Choix Multiples
+	*@param vueChoixmultiples
+		*La vue que l'on va utiliser pour ce controleur
+	*/
 	
 	public ControleurChoixMultiples(Vue_ChoixMultiples vueChoixmultiples){
 		this.vueChoixmultiples=vueChoixmultiples;
@@ -76,6 +80,8 @@ public class ControleurChoixMultiples implements ActionListener {
 		
 		else if (((JButton)e.getSource()).getText().equals("Valider sondage")){
 			vueChoixmultiples.modrep.ajouterReponse(questionnaire.getIdQuestionnaire(),vueChoixmultiples.quest.getNumeroQuestion(), val);
+
+			vueChoixmultiples.modrep.validerQuestionnaire();
 			vueChoixmultiples.modrep.bdsond.setSondeInterroger(questionnaire,lesonde);
 			this.s.afficherFenetrePrinc();
 

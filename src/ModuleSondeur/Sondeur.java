@@ -44,7 +44,12 @@ public class Sondeur extends JPanel {
 	ModeleCommun modcom;
 	BDConnexionMySQL connexion;
 	
-	
+
+	/**
+	 * 	
+	 * @param mc
+	 	* Le modele de la fenetre
+	 */
 	public Sondeur (ModeleCommun mc) {
 		super();
 		this.modcom = mc;
@@ -55,7 +60,10 @@ public class Sondeur extends JPanel {
 		this.setLayout(new BorderLayout());
 		afficherFenetrePrinc();
 	}
-	
+
+	/**
+	 * Affiche le haut de la fenetre
+	 */
 	public void afficherPanelDuHaut () {
 		setLayout(new BorderLayout(0, 0));
 		JPanel panelduhaut = new JPanel();
@@ -72,7 +80,10 @@ public class Sondeur extends JPanel {
 			ImageIcon imageconnexion = new ImageIcon(((ImageIcon) source).getImage().getScaledInstance(250, 200, Image.SCALE_DEFAULT));
 			labelImage.setIcon(imageconnexion);	
 	}
-	
+
+	/**
+	 * Affiche le corp principal de la fenetre	
+	 */
 	public void afficherFenetrePrinc(){
 		removeAll();
 		afficherPanelDuHaut();
@@ -81,7 +92,18 @@ public class Sondeur extends JPanel {
 
 
 	}
-	
+	/**
+ 	* Affiche une question a choix multiples
+ 	* 
+ 	* @param quest
+ 		* La question actuelle
+ 	* @param questionnaire
+ 		* Le questionnaire utilisé
+ 	* @param lesonde
+ 		* Le sonde actuel
+ 	* @param modrep
+ 		* Le modele de reponse
+ 	*/
 	public void afficherChoixMultiples(Question quest,Questionnaire questionnaire,Sonde lesonde,ModeleReponse modrep){
 		removeAll();
 		this.lesonde=lesonde;
@@ -95,6 +117,18 @@ public class Sondeur extends JPanel {
 		repaint();
 	}
 	
+	/**
+ 	* Affiche une question a classement
+ 	* 
+ 	* @param quest
+ 		* La question actuelle
+ 	* @param questionnaire
+ 		* Le questionnaire utilisé
+ 	* @param lesonde
+ 		* Le sonde actuel
+ 	* @param modrep
+ 		* Le modele de reponse
+ 	*/
 	public void afficherClassement(Question quest,Questionnaire questionnaire,Sonde lesonde,ModeleReponse modrep){
 		removeAll();
 		this.lesonde=lesonde;
@@ -107,6 +141,19 @@ public class Sondeur extends JPanel {
 		validate();
 		repaint();
 	}
+	
+	/**
+ 	* Affiche une question a note
+ 	* 
+ 	* @param quest
+ 		* La question actuelle
+ 	* @param questionnaire
+ 		* Le questionnaire utilisé
+ 	* @param lesonde
+ 		* Le sonde actuel
+ 	* @param modrep
+ 		* Le modele de reponse
+ 	*/
 	
 	public void afficherEchelle(Question quest,Questionnaire questionnaire,Sonde lesonde,ModeleReponse modrep){
 		removeAll();
@@ -121,6 +168,19 @@ public class Sondeur extends JPanel {
 		repaint();
 	}
 	
+	/**
+ 	* Affiche une question a réponse libre
+ 	* 
+ 	* @param quest
+ 		* La question actuelle
+ 	* @param questionnaire
+ 		* Le questionnaire utilisé
+ 	* @param lesonde
+ 		* Le sonde actuel
+ 	* @param modrep
+ 		* Le modele de reponse
+ 	*/
+	
 	public void afficherLibre(Question quest,Questionnaire questionnaire,Sonde lesonde,ModeleReponse modrep){
 		removeAll();
 		this.lesonde=lesonde;
@@ -134,6 +194,19 @@ public class Sondeur extends JPanel {
 		repaint();
 	}
 	
+	/**
+ 	* Affiche une question a choix unique
+ 	* 
+ 	* @param quest
+ 		* La question actuelle
+ 	* @param questionnaire
+ 		* Le questionnaire utilisé
+ 	* @param lesonde
+ 		* Le sonde actuel
+ 	* @param modrep
+ 		* Le modele de reponse
+ 	*/
+	
 	public void afficherUnique(Question quest,Questionnaire questionnaire,Sonde lesonde,ModeleReponse modrep){
 		removeAll();
 		this.lesonde=lesonde;
@@ -146,6 +219,10 @@ public class Sondeur extends JPanel {
 		validate();
 		repaint();
 	}
+	
+	/**
+	 * Affiche l'abscence de sondes pour la suite de ce sondage
+	 */
 	
 
 	public void afficherPlusDeSonde(){

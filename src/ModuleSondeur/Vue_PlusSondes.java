@@ -10,7 +10,11 @@ import javax.swing.JButton;
 
 public class Vue_PlusSondes extends JPanel {
 	Sondeur s;
-	
+	/**
+	 * 
+	 * @param sondeur
+	 	* Le sondeur actuel
+	 */	
 	public Vue_PlusSondes (Sondeur sondeur) {
 		super();
 		
@@ -18,7 +22,9 @@ public class Vue_PlusSondes extends JPanel {
 		afficher();
 	}
 	
-
+	/**
+	 * Affiche le texte et le corp de la question
+	 */
 	public void afficher () {
 		
 		JPanel panel_principal = new JPanel();
@@ -29,7 +35,7 @@ public class Vue_PlusSondes extends JPanel {
 		panel_corp.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_principal.add(panel_corp);
 			
-		JLabel lblPlusDeSonds = new JLabel("Plus de sondÃ© Ã  appeler");
+		JLabel lblPlusDeSonds = new JLabel("Plus de sondé à appeler");
 		panel_corp.add(lblPlusDeSonds);
 		
 		JPanel panelRetour = new JPanel();

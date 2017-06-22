@@ -35,6 +35,18 @@ public class Vue_FenetrPrinc extends JPanel {
 	JProgressBar [] progressBarSond;
 	JButton [] poursuivreButton;
 	JLabel [] lblSondage;
+	
+	/**
+	 * 
+	 * @param sondeur
+	 	* Le sondeur actuel
+	 * @param laBD
+	 	* La base de données commune
+	 * @param s
+	 	* Le sondeur actuel 
+	 * @param bdSond
+	 	* La base de données des sondeurs
+	 */
 
 	public Vue_FenetrPrinc (Sondeur sondeur,BDGeneral laBD,Sonde s,BDModuleSondeur bdSond) {
 		super();
@@ -50,7 +62,9 @@ public class Vue_FenetrPrinc extends JPanel {
 		afficherPanelCentral();
 	}
 	
-
+	/**
+	 * Affiche le panel
+	 */
 	
 	public void afficherPanelCentral() {
 		JPanel panelPrincipal = new JPanel(new BorderLayout());
