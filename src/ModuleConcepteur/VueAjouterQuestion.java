@@ -5,19 +5,20 @@ import java.awt.Font;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
-import BaseDeDonnees.Questionnaire;
+import BaseDeDonnees.*;
 
 public class VueAjouterQuestion extends JPanel{
 	Concepteur c;
 	Questionnaire q;
 	VuePanelAjouterQuestion vue;
 	AffichageQuestionnaire vueQuestionnaire;
+	BDModuleConcepteur bdc;
 	
-	VueAjouterQuestion(Concepteur c,AffichageQuestionnaire vueQuestionnaire,Questionnaire q){
+	VueAjouterQuestion(Concepteur c,AffichageQuestionnaire vueQuestionnaire,Questionnaire q, BDModuleConcepteur bdc){
 		super();
 		this.c = c;
 		this.q = q;
+		this.bdc = bdc;
 		this.vueQuestionnaire = vueQuestionnaire;
 		this.vue = new VuePanelAjouterQuestion();
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -35,7 +36,7 @@ public class VueAjouterQuestion extends JPanel{
 		boutonAnnuler.setFont(police);
 		JButton boutonCreer = new JButton("Créer");
 		boutonCreer.setFont(police);
-		ActBoutonInfoAjouterQuestion actBouton = new ActBoutonInfoAjouterQuestion(c,this,vueQuestionnaire,this.q);
+		ActBoutonInfoAjouterQuestion actBouton = new ActBoutonInfoAjouterQuestion(c,this,vueQuestionnaire,this.q,this.bdc,this.vue);
 		boutonAnnuler.addActionListener(actBouton);
 		boutonCreer.addActionListener(actBouton);
 		panelBoutons.add(boutonAnnuler);

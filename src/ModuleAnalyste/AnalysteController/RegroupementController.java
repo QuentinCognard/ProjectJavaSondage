@@ -42,8 +42,8 @@ public class RegroupementController implements ActionListener {
 	   */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		System.out.println(((JComboBox)arg0.getSource()).getSelectedItem());
-		System.out.println(((JComboBox)arg0.getSource()).getName());
+		//System.out.println(((JComboBox)arg0.getSource()).getSelectedItem());
+		//System.out.println(((JComboBox)arg0.getSource()).getName());
 		String regroupement = (String) ((JComboBox)arg0.getSource()).getSelectedItem();
 		int numQuest = Integer.parseInt(((JComboBox)arg0.getSource()).getName());
 		//TODO : on peut rajouter un if pour ne mettre à jour que la vue directe et rajouter un listener sur le tabbedPane quand on change de vue

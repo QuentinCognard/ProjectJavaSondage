@@ -39,7 +39,7 @@ public class TabbedController implements ChangeListener {
 		JTabbedPane tabGeneral = ((JTabbedPane)arg0.getSource());
 		int tabIndex = tabGeneral.getSelectedIndex();
 		String tabName = tabGeneral.getTitleAt(tabIndex);
-		System.out.println(tabName);
+		//System.out.println(tabName);
 		for (JComboBox<String> br : ana.getAnalysteModification().getListeBoutonsRegroupement())
 		{
 			if (tabGeneral.getName().equals(br.getName()))
@@ -58,7 +58,7 @@ public class TabbedController implements ChangeListener {
 					if (br.getItemCount() == 3)
 						br.removeItemAt(2); //on sup le 3ème qui a pour indice 2
 				}
-				System.out.println("idTypequestion :" + ana.getModeleAnalyste().getListeQuestions().get(Integer.parseInt(tabGeneral.getName())-1).getIdTypeQuestion());
+				//System.out.println("idTypequestion :" + ana.getModeleAnalyste().getListeQuestions().get(Integer.parseInt(tabGeneral.getName())-1).getIdTypeQuestion());
 				if (ana.getModeleAnalyste().getListeQuestions().get(Integer.parseInt(tabGeneral.getName())-1).getIdTypeQuestion() == 'm' || ana.getModeleAnalyste().getListeQuestions().get(Integer.parseInt(tabGeneral.getName())-1).getIdTypeQuestion() == 'c')
 					br.setEnabled(false);
 				return;

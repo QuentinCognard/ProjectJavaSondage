@@ -183,7 +183,7 @@ public class BDModuleAnalyste {
 		{
 			try{
 				String requete = "SELECT count(valeur) nb FROM REPONDRE natural join CARACTERISTIQUE natural join TRANCHE WHERE idQ = "+idQuestionnaire+" and numQ = "+numQuest+" and valeur = '"+listeRep.get(i)+"' and idTr = "+tr.getIdTranche();
-				System.out.println(requete);
+				//System.out.println(requete);
 				ResultSet rs = this.st.executeQuery(requete);  
 				rs.next();
 				listeNbRepParTranche.add(rs.getInt("nb"));
@@ -213,7 +213,7 @@ public class BDModuleAnalyste {
 		{
 			try{
 				String requete = "SELECT count(valeur) nb FROM REPONDRE natural join CARACTERISTIQUE natural join CATEGORIE WHERE idQ = "+idQuestionnaire+" and numQ = "+numQuest+" and valeur = '"+listeRep.get(i)+"' and idCat = "+cat.getIdCategorie();
-				System.out.println(requete);
+				//System.out.println(requete);
 				ResultSet rs = this.st.executeQuery(requete);  
 				rs.next();
 				listeNbRepParCategorie.add(rs.getInt("nb"));
@@ -243,7 +243,7 @@ public class BDModuleAnalyste {
 		{
 			try{
 				String requete = "SELECT count(valeur) nb FROM REPONDRE WHERE idQ = "+idQuestionnaire+" and numQ = "+numQuest+" and valeur = '"+listeRep.get(i) +"'";
-				System.out.println(requete);
+				//System.out.println(requete);
 				ResultSet rs = this.st.executeQuery(requete);  
 				rs.next();
 				listeNbRepParCategorie.add(rs.getInt("nb"));
