@@ -26,7 +26,7 @@ public class ActionBoutonInfoQuestionnaire  implements ActionListener {
 		}else if (((JButton)arg0.getSource()).getText().equals("Ajouter la question")){
 			this.vue.ajouterQuestionQuestionnaire();
 		}else if (((JButton)arg0.getSource()).getText().equals("Terminer")){
-			System.out.println("Terminer");
+			this.vue.enregistrerQuestionnaire();
 		}
 	}
 }
