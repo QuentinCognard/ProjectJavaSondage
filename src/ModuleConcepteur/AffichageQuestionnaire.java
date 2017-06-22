@@ -110,7 +110,7 @@ public class AffichageQuestionnaire extends JPanel{
 		JPanel panelQuestionsBorder = new JPanel();
 		panelQuestionsBorder.setLayout(new BoxLayout(panelQuestionsBorder,BoxLayout.Y_AXIS));
 		JLabel titrePanelQuestions = new JLabel("Liste questions");
-		titrePanelQuestions.setPreferredSize(new Dimension(320,50));
+		titrePanelQuestions.setPreferredSize(new Dimension(550,50));
 		titrePanelQuestions.setFont(new Font("Calibri",Font.BOLD,26));
 		titrePanelQuestions.setBorder(new EmptyBorder(20,20,20,20));
 		JPanel panelPanelsQuestions = new JPanel();
@@ -133,8 +133,8 @@ public class AffichageQuestionnaire extends JPanel{
 	}
 	private QuestionPanel creerQuestion(Question q){
 		QuestionPanel panelQuestion = new QuestionPanel(q);
-		panelQuestion.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JPanel panelQuestionBis = new JPanel(); 
+		panelQuestionBis.setPreferredSize(new Dimension(500,40));
 		//Permet d'avoir un second panel pour avoir à la fois un contour et un espacement
 		JLabel nomQuestion = new JLabel(q.getTexteQuestion());
 		nomQuestion.setBorder(new EmptyBorder(3,30,3,30));
@@ -149,7 +149,7 @@ public class AffichageQuestionnaire extends JPanel{
 		JPanel panelBoutons = new JPanel();
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER,60,0));
 		panelBoutons.setBorder(new EmptyBorder(50,10,50,10));
-		ActBoutonAffichageQuestionnaire actBoutons = new ActBoutonAffichageQuestionnaire(this.c,this,this.q);
+		ActBoutonAffichageQuestionnaire actBoutons = new ActBoutonAffichageQuestionnaire(this.c,this,this.q,this.bd);
 		JButton boutonRetour = new JButton("Retour");
 		boutonRetour.addActionListener(actBoutons);
 		boutonRetour.setFont(police);

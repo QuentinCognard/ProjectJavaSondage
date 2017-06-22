@@ -154,7 +154,7 @@ public class ModificationQuestionnaire extends JPanel{
 		JPanel panelQuestionsBorder = new JPanel();
 		panelQuestionsBorder.setLayout(new BoxLayout(panelQuestionsBorder,BoxLayout.Y_AXIS));
 		JLabel titrePanelQuestions = new JLabel("Liste questions");
-		titrePanelQuestions.setPreferredSize(new Dimension(320,50));
+		titrePanelQuestions.setPreferredSize(new Dimension(550,50));
 		titrePanelQuestions.setFont(new Font("Calibri",Font.BOLD,26));
 		titrePanelQuestions.setBorder(new EmptyBorder(20,20,20,20));
 		JPanel panelListeQuestions = new JPanel();
@@ -177,21 +177,27 @@ public class ModificationQuestionnaire extends JPanel{
 	}
 	private QuestionPanel creerQuestion(Question q){
 		QuestionPanel panelQuestion = new QuestionPanel(q);
-		panelQuestion.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JPanel panelQuestionBis = new JPanel();
+		JPanel panelGroupe = new JPanel();
+		panelGroupe.setLayout(new BorderLayout());
+		panelGroupe.setPreferredSize(new Dimension(500,50));
 		//Permet d'avoir un second panel pour avoir à la fois un contour et un espacement
 		JLabel nomQuestion = new JLabel(q.getTexteQuestion());
+		nomQuestion.setPreferredSize(new Dimension(300,40));
+		JPanel panelNomQuestion = new JPanel();
+		panelNomQuestion.add(nomQuestion);
 		nomQuestion.setBorder(new EmptyBorder(3,0,3,0));
-		panelQuestionBis.setBorder(BorderFactory.createLineBorder(Color.black));
-		panelQuestionBis.add(nomQuestion);
+		panelGroupe.setBorder(BorderFactory.createLineBorder(Color.black));
 		JButton modifier = new JButton("Modifier");
 		panelQuestionBis.add(modifier);
 		JButton supprimer = new JButton("X");
-		ActBoutonModifQuestionnaire actBouton = new ActBoutonModifQuestionnaire(this.c,this,this.q,this.bd,this.bdc);
+		ActBoutonModifQuestionnaireSup actBouton = new ActBoutonModifQuestionnaireSup(this.c,this,this.q,this.bdc,q);
 		supprimer.addActionListener(actBouton);
 		panelQuestionBis.add(supprimer);
 		panelQuestion.setBorder(new EmptyBorder(3,10,3,10));
-		panelQuestion.add(panelQuestionBis);
+		panelGroupe.add(panelNomQuestion,"West");
+		panelGroupe.add(panelQuestionBis,"East");
+		panelQuestion.add(panelGroupe);
 		return panelQuestion;
 	}
 	private void afficherBoutons(){
@@ -199,7 +205,7 @@ public class ModificationQuestionnaire extends JPanel{
 		JPanel panelBoutons = new JPanel();
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER,120,0));
 		panelBoutons.setBorder(new EmptyBorder(50,10,50,10));
-		ActBoutonModifQuestionnaire actBoutons = new ActBoutonModifQuestionnaire(this.c,this,this.q,this.bd,this.bdc);
+		ActBoutonModifQuestionnaire actBoutons = new ActBoutonModifQuestionnaire(this.c,this,this.q,this.bdc);
 		JButton boutonRetour = new JButton("Annuler");
 		boutonRetour.addActionListener(actBoutons);
 		boutonRetour.setFont(police);
@@ -209,6 +215,9 @@ public class ModificationQuestionnaire extends JPanel{
 		panelBoutons.add(boutonRetour);
 		panelBoutons.add(boutonSave);
 		panelCentral.add(panelBoutons,"South");
+	}
+	public void majAffichage(){
+		this.c.afficherModifQuestionnaire(this.vue, this.q);
 	}
 	public int getId(){
 		return Integer.parseInt(this.valId.getText());

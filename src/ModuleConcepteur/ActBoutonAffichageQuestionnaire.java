@@ -12,12 +12,15 @@ public class ActBoutonAffichageQuestionnaire implements ActionListener {
 	Concepteur concepteur;
 	AffichageQuestionnaire vue;
 	Questionnaire q;
+	BDGeneral bd;
 	
-	public ActBoutonAffichageQuestionnaire(Concepteur concepteur,AffichageQuestionnaire vue,Questionnaire q) {
+	public ActBoutonAffichageQuestionnaire(Concepteur concepteur,AffichageQuestionnaire vue,Questionnaire q,
+			BDGeneral bd) {
 		super();
 		this.concepteur = concepteur;
 		this.vue = vue;
 		this.q = q;
+		this.bd = bd;
 	}
 	
 	
@@ -39,7 +42,7 @@ public class ActBoutonAffichageQuestionnaire implements ActionListener {
 				    "Supprimer le questionnaire",
 				    JOptionPane.YES_NO_OPTION);
 			if(box == JOptionPane.YES_OPTION){
-				//Implémenter la suppression du questionnaire
+				this.bd.supprimerQuestionnaire(q.getIdQuestionnaire());
 				this.concepteur.afficherConcepteur();
 			}
 		}
