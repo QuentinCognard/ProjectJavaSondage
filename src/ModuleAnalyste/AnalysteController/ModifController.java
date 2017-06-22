@@ -76,11 +76,8 @@ public class ModifController implements ActionListener {
 					System.out.println(chooseSave.getSelectedFile().getAbsolutePath());
 					try {
 						ana.getModeleAnalyste().createPDF(chooseSave.getSelectedFile().getAbsolutePath()+".pdf", ana.getAnalysteModification().getListePGraphs(),ana.getAnalysteModification().getFieldCommentaireFinal().getText());
-					} catch (MalformedURLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(ana,"Impossible de créer un pdf avec des tableaux pour le moment","INFORMATION",JOptionPane.INFORMATION_MESSAGE);
 						e1.printStackTrace();
 					}
 				}

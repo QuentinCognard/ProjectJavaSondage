@@ -323,10 +323,10 @@ public class AnalysteModification {
 			pFieldCommentaire.setViewportView(fieldCommentaire);
 			
 		//SELECTION DE BASE
-			System.out.println("Index Selectioné :"+pGraph.getSelectedIndex());
+			//System.out.println("Index Selectioné :"+pGraph.getSelectedIndex());
 			pGraph.setSelectedIndex(1);
 			pGraph.setSelectedIndex(0);
-			System.out.println("Index Selectioné :"+pGraph.getSelectedIndex());
+			//System.out.println("Index Selectioné :"+pGraph.getSelectedIndex());
 		
 	}
 	

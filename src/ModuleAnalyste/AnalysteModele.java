@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -237,7 +238,7 @@ public class AnalysteModele {
 		return null;
 	}
 	
-	public void createPDF(String dest, ArrayList<JTabbedPane> listepGraphs, String commentaireFinal) throws MalformedURLException, FileNotFoundException{
+	public void createPDF(String dest, ArrayList<JTabbedPane> listepGraphs, String commentaireFinal) throws IOException{
 		//TODO: crée pdf et le renvoie pour enregistrement
 		//Initialize PDF writer
         PdfWriter writer = new PdfWriter(dest);
@@ -253,24 +254,23 @@ public class AnalysteModele {
         
         // Add a Paragraph TITLE
         document.add(new Paragraph("Questionnaire n°1547 : Des gouts et des couleurs").setFontSize(18).setTextAlignment(TextAlignment.CENTER));
+        
+        String destChart = "./temp/temp.png";
+        int cpt = 0;
 		for (int i=0; i < listeQuestions.size(); i++)
 		{
 			// Add a Paragraph NAME QUESTION
 	        document.add(new Paragraph("Question n°"+listeQuestions.get(i).getNumeroQuestion()+": "+listeQuestions.get(i).getTexteQuestion()).setFontSize(14).setTextAlignment(TextAlignment.LEFT));
 	        
 	        //Add the CHART
-	        String destChart = "./temp/temp.png";
 	        File f = new File(destChart);
-	        try {
-	        	JFreeChart chart = ((ChartPanel)listepGraphs.get(i).getSelectedComponent()).getChart();
-				ChartUtilities.saveChartAsPNG(f,chart,250,250);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+	        f.getParentFile().mkdirs();
+	        JFreeChart chart = ((ChartPanel)listepGraphs.get(i).getSelectedComponent()).getChart();
+			ChartUtilities.saveChartAsPNG(f,chart,250,250);
 	        document.add(new Image(ImageDataFactory.create(destChart)));
 	        
 	        // Add a Paragraph COMMENT
-	        document.add(new Paragraph("Commentaire :\nTRUC a changer").setFontSize(12).setTextAlignment(TextAlignment.LEFT));//TODO: rajouter une liste dans analysteModification qui garde en memoir le commentaire de chaque question 
+	        document.add(new Paragraph("Commentaire :\n blablablabla").setFontSize(12).setTextAlignment(TextAlignment.LEFT));//TODO: rajouter une liste dans analysteModification qui garde en memoir le commentaire de chaque question 
 		}
 		// Add a Paragraph COMMENT
         document.add(new Paragraph("Commentaire Global :\n"+commentaireFinal).setFontSize(12).setTextAlignment(TextAlignment.LEFT));
@@ -359,7 +359,7 @@ public class AnalysteModele {
 					values[l][0] = listeTranchesPresentes.get(l).getValeurDebut() + "-" + listeTranchesPresentes.get(l).getValeurFin() + " ans";
 					ArrayList<Integer> listeNbRep = BDAnalyste.getNbPersParReponseParTranche(idQuestionnaireChoisi, numQuest, listeTranchesPresentes.get(l), ReponsesPossible);
 					for (int c = 1; c-1<listeNbRep.size(); c++){
-						System.out.println(listeNbRep.get(c-1));
+						//System.out.println(listeNbRep.get(c-1));
 						values[l][c] = listeNbRep.get(c-1)+"";
 					}
 				}
@@ -420,15 +420,15 @@ public class AnalysteModele {
 					
 			}
 		}
-		System.out.println(listeReponsesID);
+		//System.out.println(listeReponsesID);
 		ArrayList<Integer> listeNbRep = BDAnalyste.getNbPersParReponse(idQuestionnaireChoisi, numQuest, listeReponsesID);
 		int nbPersDansPanel = BDAnalyste.getNbPersPanel(BDGen.getPanelDuQuestionnaireX(idQuestionnaireChoisi));
-		System.out.println(nbPersDansPanel);
+		//System.out.println(nbPersDansPanel);
 		for (int i=0; i<listeReponses.size();i++)
 		{
 			float percentageNbPers = listeNbRep.get(i)*100/nbPersDansPanel;
-			System.out.println(listeReponses.get(i) + percentageNbPers );
-			System.out.println("-----------------");
+			//System.out.println(listeReponses.get(i) + percentageNbPers );
+			//System.out.println("-----------------");
 			data.setValue(listeReponses.get(i), percentageNbPers);//TODO : a changer quand on aura la fct correcte
 		}
 		return data;
