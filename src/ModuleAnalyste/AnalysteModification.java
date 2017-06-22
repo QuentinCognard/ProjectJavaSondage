@@ -131,13 +131,13 @@ public class AnalysteModification {
 		JPanel pBouttonAnnuleSave = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		pGeneDroit.add(pBouttonAnnuleSave,"South");
 		
-		JButton annule = new JButton("Annuler");
+		/*JButton annule = new JButton("Annuler");
 		annule.addActionListener(mc);
 		pBouttonAnnuleSave.add(annule);
 		
 		JButton save = new JButton("Enregistrer");
 		save.addActionListener(mc);
-		pBouttonAnnuleSave.add(save);
+		pBouttonAnnuleSave.add(save);*/
 		
 		afficherPanelDeconnexion(pGeneDroit);
 	}

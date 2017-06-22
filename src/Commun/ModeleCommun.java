@@ -71,7 +71,15 @@ public class ModeleCommun {
 		return bdGeneral;
 	}
 
-
+	/**
+	   * Permet de revenir à l'écran de connexion de l'application
+	   * @param sondio
+	   * 	 La classe principale de l'application
+	   */
+	public void deconnexion(){
+		this.user = null;
+		this.sondio.afficherConnexion();
+	}
 	
 	
 	

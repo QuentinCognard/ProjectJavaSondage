@@ -82,7 +82,7 @@ public class ModifController implements ActionListener {
 		}
 		else if (((JButton)e.getSource()).getText().equals("Se deconnecter")){
 			System.out.println("DECONNEXION");
-			ana.getModeleAnalyste().deconnexion(ana.getSondio());
+			ana.getModeleAnalyste().deconnexion();
 			//TODO:Revient � l'�cran de connexion AVEC un message si le Travail non enregistr�
 		}
 		

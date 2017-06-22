@@ -33,7 +33,7 @@ import ModuleAnalyste.AnalysteController.ValiderController;
  */
 
 public class Analyste extends JPanel {
-	
+		
 	/**
 	 * La classe principale
 	 */
